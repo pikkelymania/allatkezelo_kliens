@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hotcakes.CommerceDTO.v1.Client;
+using Hotcakes.CommerceDTO.v1.Catalog;
 
 namespace allatkezelo_kliens
 {
@@ -15,6 +16,7 @@ namespace allatkezelo_kliens
     {
         private Hotcakes.CommerceDTO.v1.Client.Api _api;
         private List<Hotcakes.CommerceDTO.v1.Catalog.CategorySnapshotDTO> _mindenKategoria;
+        private Hotcakes.CommerceDTO.v1.Catalog.ProductDTO _kivalasztottTermek;
 
         private const string ApiKey = "1-45782d8b-85b9-4924-aafe-ea09050cbc9e";
         private const string StoreUrl = "http://www.pikkelymania.hu/";
@@ -67,6 +69,17 @@ namespace allatkezelo_kliens
                 {
                     // A terméklista megjelenítése a táblázatban
                     dataGridView1.DataSource = prodResponse.Content.Products.OrderBy(p => p.Sku).ToList();
+
+                    string[] lathatoOszlopok = { "Sku", "ProductName", "SitePrice", "ListPrice", "LongDescription", "IsAvailableForSale" };
+
+                    foreach (DataGridViewColumn oszlop in dataGridView1.Columns)
+                    {
+                        // Ha az oszlop neve nincs benne a fenti listában, akkor elrejtjük
+                        if (!lathatoOszlopok.Contains(oszlop.Name))
+                        {
+                            oszlop.Visible = false;
+                        }
+                    }
                 }
             }
             else
