@@ -66,7 +66,7 @@ namespace allatkezelo_kliens
                 if (prodResponse.Errors == null || prodResponse.Errors.Count == 0)
                 {
                     // A terméklista megjelenítése a táblázatban
-                    dataGridView1.DataSource = prodResponse.Content.Products;
+                    dataGridView1.DataSource = prodResponse.Content.Products.OrderBy(p => p.Sku).ToList();
                 }
             }
             else
@@ -77,27 +77,71 @@ namespace allatkezelo_kliens
 
         private void button1_Click(object sender, EventArgs e)
         {
+            AktivGombKijeloles((Button)sender);
             KategoriaSzures("Királypitonok");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            AktivGombKijeloles((Button)sender);
             KategoriaSzures("Szakállas agámák");
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            AktivGombKijeloles((Button)sender);
             KategoriaSzures("Leopárdgekkók");
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            AktivGombKijeloles((Button)sender);
             KategoriaSzures("Vitorlásgekkók");
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            AktivGombKijeloles((Button)sender);
             KategoriaSzures("Gabonasiklók");
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            AktivGombKijeloles((Button)sender);
+            KategoriaSzures("Hüllők");
+        }
+
+
+
+
+
+        private void AktivGombKijeloles(Button klikkeltGomb)
+        {
+            // 1. Definiáljuk a színeket (ezeket írd át a saját dizájnodhoz!)
+            Color alapHatter = Color.FromArgb(215, 215, 215); // Világosszürke
+            Color alapBetu = Color.Black;                     // Fekete betű
+
+            Color aktivHatter = Color.FromArgb(120, 120, 120); 
+            Color aktivBetu = Color.White;                    // Fehér betű az aktívnak
+
+            // 2. Végigmegyünk azon a panelen, amiben a gombok vannak
+            foreach (Control vezerlo in klikkeltGomb.Parent.Controls)
+            {
+                // Ha a vezérlő egy gomb, akkor visszaállítjuk az alapszínére
+                if (vezerlo is Button gomb)
+                {
+                    gomb.BackColor = alapHatter;
+                    gomb.ForeColor = alapBetu;
+                }
+            }
+
+            // 3. A ténylegesen megnyomott gombot átszínezzük az aktív színre
+            klikkeltGomb.BackColor = aktivHatter;
+            klikkeltGomb.ForeColor = aktivBetu;
+        }
+
+
+
+
     }
 }

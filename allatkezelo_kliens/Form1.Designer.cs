@@ -28,59 +28,75 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnHullok = new System.Windows.Forms.Button();
-            this.btnHalak = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.hullokUC1 = new allatkezelo_kliens.hullokUC();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnHullok
+            // tabControl1
             // 
-            this.btnHullok.Location = new System.Drawing.Point(12, 12);
-            this.btnHullok.Name = "btnHullok";
-            this.btnHullok.Size = new System.Drawing.Size(75, 23);
-            this.btnHullok.TabIndex = 0;
-            this.btnHullok.Text = "Hüllők";
-            this.btnHullok.UseVisualStyleBackColor = true;
-            this.btnHullok.Click += new System.EventHandler(this.btnHullok_Click);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1184, 717);
+            this.tabControl1.TabIndex = 3;
             // 
-            // btnHalak
+            // tabPage1
             // 
-            this.btnHalak.Location = new System.Drawing.Point(93, 12);
-            this.btnHalak.Name = "btnHalak";
-            this.btnHalak.Size = new System.Drawing.Size(75, 23);
-            this.btnHalak.TabIndex = 1;
-            this.btnHalak.Text = "Halak";
-            this.btnHalak.UseVisualStyleBackColor = true;
+            this.tabPage1.Controls.Add(this.hullokUC1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1176, 684);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Hüllők";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // hullokUC1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(0, 41);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1021, 628);
-            this.panel1.TabIndex = 2;
+            this.hullokUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hullokUC1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.hullokUC1.Location = new System.Drawing.Point(3, 3);
+            this.hullokUC1.Name = "hullokUC1";
+            this.hullokUC1.Size = new System.Drawing.Size(1170, 678);
+            this.hullokUC1.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1176, 688);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Halak";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1019, 667);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.btnHalak);
-            this.Controls.Add(this.btnHullok);
+            this.ClientSize = new System.Drawing.Size(1184, 717);
+            this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnHullok;
-        private System.Windows.Forms.Button btnHalak;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private hullokUC hullokUC1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
