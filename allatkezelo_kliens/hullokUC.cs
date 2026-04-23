@@ -111,10 +111,6 @@ namespace allatkezelo_kliens
             KategoriaSzures("Hüllők");
         }
 
-
-
-
-
         private void AktivGombKijeloles(Button klikkeltGomb)
         {
             // 1. Definiáljuk a színeket (ezeket írd át a saját dizájnodhoz!)
@@ -139,9 +135,5 @@ namespace allatkezelo_kliens
             klikkeltGomb.BackColor = aktivHatter;
             klikkeltGomb.ForeColor = aktivBetu;
         }
-
-
-
-
     }
 }
