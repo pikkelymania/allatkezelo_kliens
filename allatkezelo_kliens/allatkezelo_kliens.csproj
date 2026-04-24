@@ -33,11 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hotcakes.CommerceDTO">
-      <HintPath>..\..\..\..\Desktop\Hotcakes.CommerceDTO.dll</HintPath>
+    <Reference Include="Hotcakes.CommerceDTO, Version=3.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Hotcakes.CommerceDTO.dll</HintPath>
     </Reference>
-    <Reference Include="Hotcakes.Web">
-      <HintPath>..\..\..\..\Desktop\Hotcakes.Web.dll</HintPath>
+    <Reference Include="Hotcakes.Web, Version=3.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Hotcakes.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,6 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\Hotcakes.CommerceDTO.dll" />
+    <Content Include="lib\Hotcakes.Web.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
