@@ -184,6 +184,26 @@ namespace allatkezelo_kliens
             szerkesztettTermek.ProductName = txtProductName.Text;
             szerkesztettTermek.IsAvailableForSale = chkElerheto.Checked;
 
+            // Egyed adatainak frissítése a description mezőhöz
+            // 1. Az értékek kiolvasása a UI elemekből (a Trim() eltávolítja a felesleges szóközöket az elejéről/végéről)
+            string nev = textboxNev.Text.Trim();
+            string szuletett = dateTimePicker1.Value.ToString("yyyy. MM. dd."); // Szép magyar dátumformátum
+            string nem = comboBoxNem.Text.Trim();
+            string genetika = textboxGenetika.Text.Trim();
+            string szemelyiseg = textboxSzemelyiseg.Text.Trim();
+
+            // 2. A HTML string összeállítása
+            // A $@ jelzés teszi lehetővé a többsoros stringet és a változók { } közötti behelyettesítését.
+            // Fontos: A dupla idézőjeleket a HTML attribútumokban (mint a style="") meg kell duplázni a C# kódban (""text-align..."")!
+            string generaltHtmlLeiras = $@"<p style=""text-align: left;""><strong>Név</strong>: <br />{nev}</p>
+                                           <p style=""text-align: left;""><strong>Született</strong>: <br />{szuletett}</p>
+                                           <p style=""text-align: left;""><strong>Nem</strong>: <br />{nem}</p>
+                                           <p style=""text-align: left;""><strong>Genetika</strong>: <br />{genetika}</p>
+                                           <p style=""text-align: left;""><strong>Személyiség</strong>: <br />{szemelyiseg}</p>";
+
+            // 3. A generált HTML kód betöltése a termék LongDescription mezőjébe
+            szerkesztettTermek.LongDescription = generaltHtmlLeiras;
+
             // 4. Árak visszaalakítása számmá
             // A NumberStyles.Any segít abban, hogy a pénznem jelek (pl. "Ft") és a szóközök ne okozzanak hibát konvertáláskor
             if (decimal.TryParse(txtListPrice.Text, System.Globalization.NumberStyles.Any, null, out decimal ujListPrice))
