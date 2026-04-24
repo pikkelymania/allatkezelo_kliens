@@ -148,5 +148,88 @@ namespace allatkezelo_kliens
             klikkeltGomb.BackColor = aktivHatter;
             klikkeltGomb.ForeColor = aktivBetu;
         }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            // Ellenőrizzük, hogy van-e egyáltalán aktív sor és van-e mögötte adat
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.DataBoundItem != null)
+            {
+                var kivalasztottTermek = (Hotcakes.CommerceDTO.v1.Catalog.ProductDTO)dataGridView1.CurrentRow.DataBoundItem;
+
+                if (kivalasztottTermek != null)
+                {
+                    txtSku.Text = kivalasztottTermek.Sku;
+                    txtProductName.Text = kivalasztottTermek.ProductName;
+                    txtListPrice.Text = kivalasztottTermek.ListPrice.ToString("C");
+                    txtSitePrice.Text = kivalasztottTermek.SitePrice.ToString("C");
+                    chkElerheto.Checked = kivalasztottTermek.IsAvailableForSale;
+                }
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            // 1. Ellenőrizzük, hogy van-e kiválasztott termék a táblázatban
+            if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.DataBoundItem == null)
+            {
+                MessageBox.Show("Kérlek, először válassz ki egy terméket a listából!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Kinyerjük a jelenleg kiválasztott terméket közvetlenül a táblázatból
+            var szerkesztettTermek = (Hotcakes.CommerceDTO.v1.Catalog.ProductDTO)dataGridView1.CurrentRow.DataBoundItem;
+
+            // 3. Szöveges és logikai adatok frissítése az űrlapról
+            szerkesztettTermek.Sku = txtSku.Text;
+            szerkesztettTermek.ProductName = txtProductName.Text;
+            szerkesztettTermek.IsAvailableForSale = chkElerheto.Checked;
+
+            // 4. Árak visszaalakítása számmá
+            // A NumberStyles.Any segít abban, hogy a pénznem jelek (pl. "Ft") és a szóközök ne okozzanak hibát konvertáláskor
+            if (decimal.TryParse(txtListPrice.Text, System.Globalization.NumberStyles.Any, null, out decimal ujListPrice))
+            {
+                szerkesztettTermek.ListPrice = ujListPrice;
+            }
+            else
+            {
+                MessageBox.Show("A Listaár formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // Ha hiba van, megszakítjuk a mentést
+            }
+
+            if (decimal.TryParse(txtSitePrice.Text, System.Globalization.NumberStyles.Any, null, out decimal ujSitePrice))
+            {
+                szerkesztettTermek.SitePrice = ujSitePrice;
+            }
+            else
+            {
+                MessageBox.Show("Az Eladási ár formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 5. Küldés az API-nak a webre
+            try
+            {
+                // A ProductsUpdate metódus automatikusan frissíti a terméket a Bvin (rejtett azonosító) alapján
+                var valasz = _api.ProductsUpdate(szerkesztettTermek);
+
+                // Ellenőrizzük, hogy a szerver dobott-e vissza valamilyen hibát
+                if (valasz.Errors == null || valasz.Errors.Count == 0)
+                {
+                    MessageBox.Show("A termék adatai sikeresen frissítve a webshopban!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Frissítjük a táblázatot, hogy azonnal mutassa az új (elmentett) adatokat
+                    dataGridView1.Refresh();
+                }
+                else
+                {
+                    MessageBox.Show($"Hiba a mentés során a szerveren: {valasz.Errors[0].Description}", "API Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ha valami váratlan technikai hiba történik (pl. nincs internet)
+                MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hálózati Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
