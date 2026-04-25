@@ -29,19 +29,21 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.hullokPage = new System.Windows.Forms.TabPage();
             this.hullokUC1 = new allatkezelo_kliens.hullokUC();
+            this.halakPage = new System.Windows.Forms.TabPage();
             this.halakUC1 = new allatkezelo_kliens.halakUC();
+            this.foglalasokPage = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.hullokPage.SuspendLayout();
+            this.halakPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.hullokPage);
+            this.tabControl1.Controls.Add(this.halakPage);
+            this.tabControl1.Controls.Add(this.foglalasokPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -51,29 +53,17 @@
             this.tabControl1.Size = new System.Drawing.Size(1776, 1120);
             this.tabControl1.TabIndex = 3;
             // 
-            // tabPage1
+            // hullokPage
             // 
-            this.tabPage1.Controls.Add(this.hullokUC1);
-            this.tabPage1.Location = new System.Drawing.Point(8, 45);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Size = new System.Drawing.Size(1760, 1067);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Hüllők";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.halakUC1);
-            this.tabPage2.Location = new System.Drawing.Point(8, 45);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Size = new System.Drawing.Size(1760, 1067);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Halak";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.hullokPage.Controls.Add(this.hullokUC1);
+            this.hullokPage.Location = new System.Drawing.Point(8, 45);
+            this.hullokPage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.hullokPage.Name = "hullokPage";
+            this.hullokPage.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.hullokPage.Size = new System.Drawing.Size(1760, 1067);
+            this.hullokPage.TabIndex = 0;
+            this.hullokPage.Text = "Hüllők";
+            this.hullokPage.UseVisualStyleBackColor = true;
             // 
             // hullokUC1
             // 
@@ -84,6 +74,18 @@
             this.hullokUC1.Name = "hullokUC1";
             this.hullokUC1.Size = new System.Drawing.Size(1752, 1057);
             this.hullokUC1.TabIndex = 0;
+            // 
+            // halakPage
+            // 
+            this.halakPage.Controls.Add(this.halakUC1);
+            this.halakPage.Location = new System.Drawing.Point(8, 45);
+            this.halakPage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.halakPage.Name = "halakPage";
+            this.halakPage.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.halakPage.Size = new System.Drawing.Size(1760, 1067);
+            this.halakPage.TabIndex = 1;
+            this.halakPage.Text = "Halak";
+            this.halakPage.UseVisualStyleBackColor = true;
             // 
             // halakUC1
             // 
@@ -96,6 +98,15 @@
             this.halakUC1.TabIndex = 0;
             this.halakUC1.Load += new System.EventHandler(this.halakUC1_Load);
             // 
+            // foglalasokPage
+            // 
+            this.foglalasokPage.Location = new System.Drawing.Point(8, 45);
+            this.foglalasokPage.Name = "foglalasokPage";
+            this.foglalasokPage.Size = new System.Drawing.Size(1760, 1067);
+            this.foglalasokPage.TabIndex = 2;
+            this.foglalasokPage.Text = "Foglalások";
+            this.foglalasokPage.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -106,18 +117,19 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.hullokPage.ResumeLayout(false);
+            this.halakPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage hullokPage;
         private hullokUC hullokUC1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage halakPage;
         private halakUC halakUC1;
+        private System.Windows.Forms.TabPage foglalasokPage;
     }
 }
 

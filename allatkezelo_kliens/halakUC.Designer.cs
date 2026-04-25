@@ -37,6 +37,18 @@
             this.button3 = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.textboxVizparameterek = new System.Windows.Forms.TextBox();
+            this.textboxTartas = new System.Windows.Forms.TextBox();
+            this.textboxTaplalkozas = new System.Windows.Forms.TextBox();
+            this.textboxSzaporitas = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textboxJellemzok = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.txtSitePrice = new System.Windows.Forms.TextBox();
@@ -49,29 +61,17 @@
             this.label10 = new System.Windows.Forms.Label();
             this.txtSku = new System.Windows.Forms.TextBox();
             this.chkElerheto = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.textboxTaplalkozas = new System.Windows.Forms.TextBox();
-            this.textboxSzaporitas = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textboxJellemzok = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.textboxTartas = new System.Windows.Forms.TextBox();
-            this.textboxVizparameterek = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -231,6 +231,147 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Állat Adatai";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(677, 36);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(672, 516);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Leírás";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.textboxVizparameterek, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.textboxTartas, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.textboxTaplalkozas, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.textboxSzaporitas, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.textboxJellemzok, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 29);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(664, 482);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // textboxVizparameterek
+            // 
+            this.textboxVizparameterek.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxVizparameterek.Location = new System.Drawing.Point(180, 197);
+            this.textboxVizparameterek.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxVizparameterek.Multiline = true;
+            this.textboxVizparameterek.Name = "textboxVizparameterek";
+            this.textboxVizparameterek.Size = new System.Drawing.Size(480, 86);
+            this.textboxVizparameterek.TabIndex = 9;
+            // 
+            // textboxTartas
+            // 
+            this.textboxTartas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxTartas.Location = new System.Drawing.Point(180, 101);
+            this.textboxTartas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxTartas.Multiline = true;
+            this.textboxTartas.Name = "textboxTartas";
+            this.textboxTartas.Size = new System.Drawing.Size(480, 86);
+            this.textboxTartas.TabIndex = 8;
+            // 
+            // textboxTaplalkozas
+            // 
+            this.textboxTaplalkozas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxTaplalkozas.Location = new System.Drawing.Point(180, 293);
+            this.textboxTaplalkozas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxTaplalkozas.Multiline = true;
+            this.textboxTaplalkozas.Name = "textboxTaplalkozas";
+            this.textboxTaplalkozas.Size = new System.Drawing.Size(480, 86);
+            this.textboxTaplalkozas.TabIndex = 6;
+            // 
+            // textboxSzaporitas
+            // 
+            this.textboxSzaporitas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxSzaporitas.Location = new System.Drawing.Point(180, 389);
+            this.textboxSzaporitas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxSzaporitas.Multiline = true;
+            this.textboxSzaporitas.Name = "textboxSzaporitas";
+            this.textboxSzaporitas.Size = new System.Drawing.Size(480, 88);
+            this.textboxSzaporitas.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(114, 25);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Jellemzők:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 96);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 25);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Tartás:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 192);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(168, 25);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Vízparaméterek:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 288);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(134, 25);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Táplálkozás:";
+            // 
+            // textboxJellemzok
+            // 
+            this.textboxJellemzok.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxJellemzok.Location = new System.Drawing.Point(180, 5);
+            this.textboxJellemzok.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxJellemzok.Multiline = true;
+            this.textboxJellemzok.Name = "textboxJellemzok";
+            this.textboxJellemzok.Size = new System.Drawing.Size(480, 86);
+            this.textboxJellemzok.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 384);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(115, 25);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Szaportás:";
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.tableLayoutPanel2);
@@ -369,124 +510,6 @@
             this.chkElerheto.Text = "checkBox1";
             this.chkElerheto.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(677, 36);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(672, 516);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Leírás";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.textboxVizparameterek, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.textboxTartas, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textboxTaplalkozas, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textboxSzaporitas, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textboxJellemzok, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 29);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(664, 482);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // textboxTaplalkozas
-            // 
-            this.textboxTaplalkozas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxTaplalkozas.Location = new System.Drawing.Point(180, 293);
-            this.textboxTaplalkozas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxTaplalkozas.Name = "textboxTaplalkozas";
-            this.textboxTaplalkozas.Size = new System.Drawing.Size(480, 31);
-            this.textboxTaplalkozas.TabIndex = 6;
-            // 
-            // textboxSzaporitas
-            // 
-            this.textboxSzaporitas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxSzaporitas.Location = new System.Drawing.Point(180, 389);
-            this.textboxSzaporitas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxSzaporitas.Name = "textboxSzaporitas";
-            this.textboxSzaporitas.Size = new System.Drawing.Size(480, 31);
-            this.textboxSzaporitas.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Jellemzők:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 96);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 25);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Tartás:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 192);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(168, 25);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Vízparaméterek:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 288);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 25);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Táplálkozás:";
-            // 
-            // textboxJellemzok
-            // 
-            this.textboxJellemzok.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxJellemzok.Location = new System.Drawing.Point(180, 5);
-            this.textboxJellemzok.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxJellemzok.Name = "textboxJellemzok";
-            this.textboxJellemzok.Size = new System.Drawing.Size(480, 31);
-            this.textboxJellemzok.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 384);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(115, 25);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Szaportás:";
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -499,24 +522,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(1361, 558);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-            // 
-            // textboxTartas
-            // 
-            this.textboxTartas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxTartas.Location = new System.Drawing.Point(180, 101);
-            this.textboxTartas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxTartas.Name = "textboxTartas";
-            this.textboxTartas.Size = new System.Drawing.Size(480, 31);
-            this.textboxTartas.TabIndex = 8;
-            // 
-            // textboxVizparameterek
-            // 
-            this.textboxVizparameterek.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxVizparameterek.Location = new System.Drawing.Point(180, 197);
-            this.textboxVizparameterek.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxVizparameterek.Name = "textboxVizparameterek";
-            this.textboxVizparameterek.Size = new System.Drawing.Size(480, 31);
-            this.textboxVizparameterek.TabIndex = 9;
             // 
             // halakUC
             // 
@@ -534,12 +539,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

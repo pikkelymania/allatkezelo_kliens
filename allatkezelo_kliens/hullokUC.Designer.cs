@@ -40,18 +40,6 @@
             this.button6 = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtSitePrice = new System.Windows.Forms.TextBox();
-            this.txtListPrice = new System.Windows.Forms.TextBox();
-            this.txtProductName = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtSku = new System.Windows.Forms.TextBox();
-            this.chkElerheto = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textboxGenetika = new System.Windows.Forms.TextBox();
@@ -64,6 +52,18 @@
             this.textboxNev = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtSitePrice = new System.Windows.Forms.TextBox();
+            this.txtListPrice = new System.Windows.Forms.TextBox();
+            this.txtProductName = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtSku = new System.Windows.Forms.TextBox();
+            this.chkElerheto = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -71,10 +71,10 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -284,6 +284,149 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Állat Adatai";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(677, 36);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(672, 516);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Leírás";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.textboxGenetika, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.textboxSzemelyiseg, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.comboBoxNem, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.textboxNev, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.dateTimePicker1, 1, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 29);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(664, 482);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // textboxGenetika
+            // 
+            this.textboxGenetika.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxGenetika.Location = new System.Drawing.Point(183, 293);
+            this.textboxGenetika.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxGenetika.Multiline = true;
+            this.textboxGenetika.Name = "textboxGenetika";
+            this.textboxGenetika.Size = new System.Drawing.Size(477, 86);
+            this.textboxGenetika.TabIndex = 6;
+            // 
+            // textboxSzemelyiseg
+            // 
+            this.textboxSzemelyiseg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxSzemelyiseg.Location = new System.Drawing.Point(183, 389);
+            this.textboxSzemelyiseg.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxSzemelyiseg.Multiline = true;
+            this.textboxSzemelyiseg.Name = "textboxSzemelyiseg";
+            this.textboxSzemelyiseg.Size = new System.Drawing.Size(477, 88);
+            this.textboxSzemelyiseg.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 25);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Név:";
+            // 
+            // comboBoxNem
+            // 
+            this.comboBoxNem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxNem.FormattingEnabled = true;
+            this.comboBoxNem.Items.AddRange(new object[] {
+            "Hím",
+            "Nőstény",
+            "Nem meghatározott"});
+            this.comboBoxNem.Location = new System.Drawing.Point(183, 197);
+            this.comboBoxNem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxNem.Name = "comboBoxNem";
+            this.comboBoxNem.Size = new System.Drawing.Size(477, 33);
+            this.comboBoxNem.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 96);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(171, 25);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Születési dátum:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 192);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 25);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Nem:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 288);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(104, 25);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Genetika:";
+            // 
+            // textboxNev
+            // 
+            this.textboxNev.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textboxNev.Location = new System.Drawing.Point(183, 5);
+            this.textboxNev.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textboxNev.Name = "textboxNev";
+            this.textboxNev.Size = new System.Drawing.Size(477, 31);
+            this.textboxNev.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 384);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(140, 25);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Személyiség:";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dateTimePicker1.Location = new System.Drawing.Point(183, 101);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(477, 31);
+            this.dateTimePicker1.TabIndex = 8;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.tableLayoutPanel2);
@@ -422,147 +565,6 @@
             this.chkElerheto.Text = "checkBox1";
             this.chkElerheto.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(677, 36);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(672, 516);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Leírás";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.textboxGenetika, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textboxSzemelyiseg, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.comboBoxNem, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textboxNev, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.dateTimePicker1, 1, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 29);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(664, 482);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // textboxGenetika
-            // 
-            this.textboxGenetika.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxGenetika.Location = new System.Drawing.Point(183, 293);
-            this.textboxGenetika.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxGenetika.Name = "textboxGenetika";
-            this.textboxGenetika.Size = new System.Drawing.Size(477, 31);
-            this.textboxGenetika.TabIndex = 6;
-            // 
-            // textboxSzemelyiseg
-            // 
-            this.textboxSzemelyiseg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxSzemelyiseg.Location = new System.Drawing.Point(183, 389);
-            this.textboxSzemelyiseg.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxSzemelyiseg.Name = "textboxSzemelyiseg";
-            this.textboxSzemelyiseg.Size = new System.Drawing.Size(477, 31);
-            this.textboxSzemelyiseg.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Név:";
-            // 
-            // comboBoxNem
-            // 
-            this.comboBoxNem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxNem.FormattingEnabled = true;
-            this.comboBoxNem.Items.AddRange(new object[] {
-            "Hím",
-            "Nőstény",
-            "Nem meghatározott"});
-            this.comboBoxNem.Location = new System.Drawing.Point(183, 197);
-            this.comboBoxNem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.comboBoxNem.Name = "comboBoxNem";
-            this.comboBoxNem.Size = new System.Drawing.Size(477, 33);
-            this.comboBoxNem.TabIndex = 9;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 96);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(171, 25);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Születési dátum:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 192);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 25);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Nem:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 288);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 25);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Genetika:";
-            // 
-            // textboxNev
-            // 
-            this.textboxNev.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textboxNev.Location = new System.Drawing.Point(183, 5);
-            this.textboxNev.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textboxNev.Name = "textboxNev";
-            this.textboxNev.Size = new System.Drawing.Size(477, 31);
-            this.textboxNev.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 384);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(140, 25);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Személyiség:";
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateTimePicker1.Location = new System.Drawing.Point(183, 101);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(477, 31);
-            this.dateTimePicker1.TabIndex = 8;
-            // 
             // hullokUC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -580,12 +582,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
