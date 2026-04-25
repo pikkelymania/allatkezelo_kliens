@@ -16,5 +16,10 @@ namespace allatkezelo_kliens
         {
             InitializeComponent();
         }
+
+        private void halakUC1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

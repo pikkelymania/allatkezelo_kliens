@@ -30,8 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.hullokUC1 = new allatkezelo_kliens.hullokUC();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.hullokUC1 = new allatkezelo_kliens.hullokUC();
             this.halakUC1 = new allatkezelo_kliens.halakUC();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -63,16 +63,6 @@
             this.tabPage1.Text = "Hüllők";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // hullokUC1
-            // 
-            this.hullokUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hullokUC1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.hullokUC1.Location = new System.Drawing.Point(4, 5);
-            this.hullokUC1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.hullokUC1.Name = "hullokUC1";
-            this.hullokUC1.Size = new System.Drawing.Size(1752, 1057);
-            this.hullokUC1.TabIndex = 0;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.halakUC1);
@@ -85,14 +75,26 @@
             this.tabPage2.Text = "Halak";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // hullokUC1
+            // 
+            this.hullokUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hullokUC1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.hullokUC1.Location = new System.Drawing.Point(4, 5);
+            this.hullokUC1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.hullokUC1.Name = "hullokUC1";
+            this.hullokUC1.Size = new System.Drawing.Size(1752, 1057);
+            this.hullokUC1.TabIndex = 0;
+            // 
             // halakUC1
             // 
             this.halakUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.halakUC1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.halakUC1.Location = new System.Drawing.Point(4, 5);
             this.halakUC1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.halakUC1.Name = "halakUC1";
             this.halakUC1.Size = new System.Drawing.Size(1752, 1057);
             this.halakUC1.TabIndex = 0;
+            this.halakUC1.Load += new System.EventHandler(this.halakUC1_Load);
             // 
             // Form1
             // 

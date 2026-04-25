@@ -272,8 +272,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
+            this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -287,12 +287,12 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox3.Location = new System.Drawing.Point(12, 36);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox3.Size = new System.Drawing.Size(701, 516);
+            this.groupBox3.Size = new System.Drawing.Size(665, 516);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Termékadatok";
@@ -322,7 +322,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(693, 482);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(657, 482);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // txtSitePrice
@@ -331,7 +331,7 @@
             this.txtSitePrice.Location = new System.Drawing.Point(137, 293);
             this.txtSitePrice.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSitePrice.Name = "txtSitePrice";
-            this.txtSitePrice.Size = new System.Drawing.Size(552, 31);
+            this.txtSitePrice.Size = new System.Drawing.Size(516, 31);
             this.txtSitePrice.TabIndex = 8;
             // 
             // txtListPrice
@@ -340,7 +340,7 @@
             this.txtListPrice.Location = new System.Drawing.Point(137, 197);
             this.txtListPrice.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtListPrice.Name = "txtListPrice";
-            this.txtListPrice.Size = new System.Drawing.Size(552, 31);
+            this.txtListPrice.Size = new System.Drawing.Size(516, 31);
             this.txtListPrice.TabIndex = 7;
             // 
             // txtProductName
@@ -349,7 +349,7 @@
             this.txtProductName.Location = new System.Drawing.Point(137, 101);
             this.txtProductName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(552, 31);
+            this.txtProductName.Size = new System.Drawing.Size(516, 31);
             this.txtProductName.TabIndex = 6;
             // 
             // label6
@@ -408,7 +408,7 @@
             this.txtSku.Location = new System.Drawing.Point(137, 5);
             this.txtSku.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSku.Name = "txtSku";
-            this.txtSku.Size = new System.Drawing.Size(552, 31);
+            this.txtSku.Size = new System.Drawing.Size(516, 31);
             this.txtSku.TabIndex = 5;
             // 
             // chkElerheto
@@ -425,12 +425,12 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox2.Location = new System.Drawing.Point(713, 36);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(677, 36);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(636, 516);
+            this.groupBox2.Size = new System.Drawing.Size(672, 516);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Leírás";
@@ -460,7 +460,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(628, 482);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(664, 482);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // textboxGenetika
@@ -469,7 +469,7 @@
             this.textboxGenetika.Location = new System.Drawing.Point(183, 293);
             this.textboxGenetika.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textboxGenetika.Name = "textboxGenetika";
-            this.textboxGenetika.Size = new System.Drawing.Size(451, 31);
+            this.textboxGenetika.Size = new System.Drawing.Size(477, 31);
             this.textboxGenetika.TabIndex = 6;
             // 
             // textboxSzemelyiseg
@@ -478,7 +478,7 @@
             this.textboxSzemelyiseg.Location = new System.Drawing.Point(183, 389);
             this.textboxSzemelyiseg.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textboxSzemelyiseg.Name = "textboxSzemelyiseg";
-            this.textboxSzemelyiseg.Size = new System.Drawing.Size(451, 31);
+            this.textboxSzemelyiseg.Size = new System.Drawing.Size(477, 31);
             this.textboxSzemelyiseg.TabIndex = 7;
             // 
             // label1
@@ -502,7 +502,7 @@
             this.comboBoxNem.Location = new System.Drawing.Point(183, 197);
             this.comboBoxNem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxNem.Name = "comboBoxNem";
-            this.comboBoxNem.Size = new System.Drawing.Size(451, 33);
+            this.comboBoxNem.Size = new System.Drawing.Size(477, 33);
             this.comboBoxNem.TabIndex = 9;
             // 
             // label2
@@ -541,7 +541,7 @@
             this.textboxNev.Location = new System.Drawing.Point(183, 5);
             this.textboxNev.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textboxNev.Name = "textboxNev";
-            this.textboxNev.Size = new System.Drawing.Size(451, 31);
+            this.textboxNev.Size = new System.Drawing.Size(477, 31);
             this.textboxNev.TabIndex = 5;
             // 
             // label5
@@ -560,7 +560,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(183, 101);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(451, 31);
+            this.dateTimePicker1.Size = new System.Drawing.Size(477, 31);
             this.dateTimePicker1.TabIndex = 8;
             // 
             // hullokUC
