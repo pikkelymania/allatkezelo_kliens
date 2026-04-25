@@ -158,11 +158,60 @@ namespace allatkezelo_kliens
 
                 if (kivalasztottTermek != null)
                 {
+                    // 1. Alap Hotcakes API adatok a dobozokba
                     txtSku.Text = kivalasztottTermek.Sku;
                     txtProductName.Text = kivalasztottTermek.ProductName;
                     txtListPrice.Text = kivalasztottTermek.ListPrice.ToString("C");
                     txtSitePrice.Text = kivalasztottTermek.SitePrice.ToString("C");
                     chkElerheto.Checked = kivalasztottTermek.IsAvailableForSale;
+
+                    // 2. Kiegészítő adatok visszafejtése a LongDescription HTML kódjából
+
+                    // Először is lenullázzuk a mezőket
+                    textboxNev.Text = "";
+                    dateTimePicker1.Value = DateTime.Now;
+                    comboBoxNem.Text = "";
+                    textboxGenetika.Text = "";
+                    textboxSzemelyiseg.Text = "";
+
+                    // Kivesszük a nyers HTML-t
+                    string nyersHtml = kivalasztottTermek.LongDescription ?? "";
+
+                    // --- EZ A LÉNYEG! ---
+                    // Visszaalakítjuk a csúnya HTML kódokat (pl. &uuml;) normál ékezetes betűkké!
+                    string htmlLeiras = System.Net.WebUtility.HtmlDecode(nyersHtml);
+
+                    // Ha van benne valami, elkezdjük kinyerni az adatokat
+                    if (!string.IsNullOrWhiteSpace(htmlLeiras))
+                    {
+                        // Név kinyerése
+                        var matchNev = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Név</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
+                        if (matchNev.Success) textboxNev.Text = matchNev.Groups[1].Value.Trim();
+
+                        // Dátum kinyerése
+                        var matchSzuletett = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Született</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
+                        if (matchSzuletett.Success)
+                        {
+                            string datumSzoveg = matchSzuletett.Groups[1].Value.Trim();
+                            // A sima TryParse a magyar gépeken megérti a "2025.10.18." és a "2025. 10. 18." formátumot is
+                            if (DateTime.TryParse(datumSzoveg, out DateTime parsedDate))
+                            {
+                                dateTimePicker1.Value = parsedDate;
+                            }
+                        }
+
+                        // Nem kinyerése
+                        var matchNem = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Nem</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
+                        if (matchNem.Success) comboBoxNem.Text = matchNem.Groups[1].Value.Trim();
+
+                        // Genetika kinyerése
+                        var matchGenetika = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Genetika</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
+                        if (matchGenetika.Success) textboxGenetika.Text = matchGenetika.Groups[1].Value.Trim();
+
+                        // Személyiség kinyerése
+                        var matchSzemelyiseg = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Személyiség</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
+                        if (matchSzemelyiseg.Success) textboxSzemelyiseg.Text = matchSzemelyiseg.Groups[1].Value.Trim();
+                    }
                 }
             }
         }
