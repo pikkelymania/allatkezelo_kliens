@@ -266,7 +266,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(8);
             this.groupBox1.Size = new System.Drawing.Size(907, 361);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
