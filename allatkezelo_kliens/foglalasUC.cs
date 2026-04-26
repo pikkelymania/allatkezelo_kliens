@@ -294,6 +294,43 @@ namespace allatkezelo_kliens
 
                     if (valasz.Errors == null || valasz.Errors.Count == 0)
                     {
+                        // --- ÚJ RÉSZ: KÉSZLET (INVENTORY) VISSZAÁLLÍTÁSA LEMONDÁS ESETÉN ---
+                        if (ujNev == "Cancelled" && rendeles.Items != null)
+                        {
+                            foreach (var tetel in rendeles.Items)
+                            {
+                                try
+                                {
+                                    // Lekérjük az adott termék (állat) aktuális készlet-adatait
+                                    var keszletValasz = _api.ProductInventoryFindForProduct(tetel.ProductId);
+
+                                    if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
+                                    {
+                                        var aktualisKeszlet = keszletValasz.Content[0];
+                                        int rendeltDarab = (int)tetel.Quantity;
+
+                                        // 1. Levonjuk a lefoglaltból (Reserved)
+                                        aktualisKeszlet.QuantityReserved -= rendeltDarab;
+
+                                        // Biztonsági ellenőrzés, nehogy véletlenül negatívba menjen a lefoglalt készlet
+                                        if (aktualisKeszlet.QuantityReserved < 0)
+                                        {
+                                            aktualisKeszlet.QuantityReserved = 0;
+                                        }
+
+                                        // 3. Visszaküldjük a frissített készletet az API-nak
+                                        _api.ProductInventoryUpdate(aktualisKeszlet);
+                                    }
+                                }
+                                catch (Exception invEx)
+                                {
+                                    // Ha esetleg egy tétel készletét nem tudja frissíteni, attól még fusson tovább a program
+                                    MessageBox.Show($"Hiba a(z) {tetel.ProductName} készletének visszaállításakor: {invEx.Message}", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+                        // --- ÚJ RÉSZ VÉGE ---
+
                         MessageBox.Show($"A rendelés állapota sikeresen frissítve erre: {ujNev}", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // 5. Frissítjük a UI-t (Táblázat és a Label)
@@ -302,9 +339,6 @@ namespace allatkezelo_kliens
 
                         // Ha van egy label8, ami a státuszt mutatja, azt is átírjuk, hogy azonnal látszódjon
                         label8.Text = ujNev;
-
-                        // TIPP: Itt esetleg meghívhatsz egy készlet-visszaíró kódot, 
-                        // ha a státusz "Cancelled"-re változott (amit az előző kérdésedben tárgyaltunk).
                     }
                     else
                     {
