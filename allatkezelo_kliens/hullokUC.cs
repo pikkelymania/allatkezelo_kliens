@@ -127,7 +127,7 @@ namespace allatkezelo_kliens
         private void AktivGombKijeloles(Button klikkeltGomb)
         {
             // 1. Definiáljuk a színeket (ezeket írd át a saját dizájnodhoz!)
-            Color alapHatter = Color.FromArgb(215, 215, 215); // Világosszürke
+            Color alapHatter = SystemColors.ControlLight; // Világosszürke
             Color alapBetu = Color.Black;                     // Fekete betű
 
             Color aktivHatter = Color.FromArgb(120, 120, 120); 
@@ -317,11 +317,62 @@ namespace allatkezelo_kliens
                     // Ha van egy külön metódusod a betöltésre (pl. TermekekBetoltese()), hívd meg azt.
                     // Ha nincs, akkor a legegyszerűbb, ha újra lekérdezed a termékeket.
 
-                    MessageBox.Show("A lista frissítése folyamatban...", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Frissítsd a listát, hogy lásd az új terméket!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Példa a frissítésre (használd azt a metódust, amivel az elején betöltötted az adatokat):
                     // var termekek = _api.ProductsFindAll();
                     // dataGridView1.DataSource = termekek.Content;
+                }
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // 1. Ellenőrizzük, hogy van-e kijelölt sor
+            if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.DataBoundItem == null)
+            {
+                MessageBox.Show("Kérlek, válassz ki egy terméket a törléshez!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Kinyerjük a kijelölt terméket
+            var kivalasztottTermek = (Hotcakes.CommerceDTO.v1.Catalog.ProductDTO)dataGridView1.CurrentRow.DataBoundItem;
+
+            // 3. Megerősítés kérése a felhasználótól
+            var megerosites = MessageBox.Show(
+                $"Biztosan véglegesen törölni szeretnéd a következő terméket?\n\nNév: {kivalasztottTermek.ProductName}\nSKU: {kivalasztottTermek.Sku}",
+                "Törlés megerősítése",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2); // Biztonság kedvéért a "Nem" az alapértelmezett
+
+            if (megerosites == DialogResult.Yes)
+            {
+                try
+                {
+                    // 4. API hívás a törléshez (a Bvin alapján)
+                    var valasz = _api.ProductsDelete(kivalasztottTermek.Bvin);
+
+                    if (valasz.Errors == null || valasz.Errors.Count == 0)
+                    {
+                        MessageBox.Show("A termék sikeresen törölve a webshopból!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // 5. A kezelőfelület frissítése
+                        // A legegyszerűbb, ha "újra kattintunk" az éppen aktív kategória gombjára, 
+                        // vagy csak meghívjuk a szűrést a hüllőkre, hogy eltűnjön a törölt elem.
+                        KategoriaSzures("Hüllők");
+
+                        // Ha pontosabb akarsz lenni, tárolhatnád egy változóban, mi volt az utolsó szűrés, 
+                        // és azt hívnád meg itt.
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Hiba történt a törlés során: {valasz.Errors[0].Description}", "API Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

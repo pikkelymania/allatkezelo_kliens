@@ -112,7 +112,7 @@ namespace allatkezelo_kliens
         private void AktivGombKijeloles(Button klikkeltGomb)
         {
             // 1. Definiáljuk a színeket (ezeket írd át a saját dizájnodhoz!)
-            Color alapHatter = Color.FromArgb(215, 215, 215); // Világosszürke
+            Color alapHatter = SystemColors.ControlLight; // Világosszürke
             Color alapBetu = Color.Black;                     // Fekete betű
 
             Color aktivHatter = Color.FromArgb(120, 120, 120);

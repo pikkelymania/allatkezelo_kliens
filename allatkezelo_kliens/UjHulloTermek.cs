@@ -134,7 +134,7 @@ namespace allatkezelo_kliens
             ujTermek.UrlSlug = "";
 
             // Készlet és Megjelenés
-            ujTermek.InventoryMode = ProductInventoryModeDTO.WhenOutOfStockHide;
+            ujTermek.InventoryMode = ProductInventoryModeDTO.WhenOutOfStockShow;
             ujTermek.IsAvailableForSale = chkElerheto.Checked;
             ujTermek.Featured = false;
             ujTermek.AllowReviews = true;

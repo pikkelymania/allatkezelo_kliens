@@ -24,6 +24,19 @@ namespace allatkezelo_kliens
         {
             InitializeComponent();
         }
+        public class RendelesViewModel
+        {
+            public string Rendelésszám { get; set; }
+            public string Dátum { get; set; }
+            public string Vevő_Neve { get; set; }
+            public string Végösszeg { get; set; }
+            public string Státuszkód { get; set; }
+            public string Státusz { get; set; }
+
+            // Ez az attribútum elrejti ezt a property-t, így a DataGridView NEM csinál belőle oszlopot!
+            [Browsable(false)]
+            public OrderDTO EredetiRendeles { get; set; }
+        }
 
         private void foglalasUC_Load(object sender, EventArgs e)
         {
@@ -55,15 +68,41 @@ namespace allatkezelo_kliens
                 MessageBox.Show($"Hiba történt: {ex.Message}");
             }
         }
+        private void AktivGombKijeloles(Button klikkeltGomb)
+        {
+            // 1. Definiáljuk a színeket (ezeket írd át a saját dizájnodhoz!)
+            Color alapHatter = SystemColors.ControlLight; // Világosszürke
+            Color alapBetu = Color.Black;                     // Fekete betű
+
+            Color aktivHatter = Color.FromArgb(120, 120, 120);
+            Color aktivBetu = Color.White;                    // Fehér betű az aktívnak
+
+            // 2. Végigmegyünk azon a panelen, amiben a gombok vannak
+            foreach (Control vezerlo in klikkeltGomb.Parent.Controls)
+            {
+                // Ha a vezérlő egy gomb, akkor visszaállítjuk az alapszínére
+                if (vezerlo is Button gomb)
+                {
+                    gomb.BackColor = alapHatter;
+                    gomb.ForeColor = alapBetu;
+                }
+            }
+
+            // 3. A ténylegesen megnyomott gombot átszínezzük az aktív színre
+            klikkeltGomb.BackColor = aktivHatter;
+            klikkeltGomb.ForeColor = aktivBetu;
+        }
 
         private void btnHullok_Click(object sender, EventArgs e)
         {
             KategoriaSzures("Hüllők");
+            AktivGombKijeloles((Button)sender);
         }
 
         private void btnHalak_Click(object sender, EventArgs e)
         {
             KategoriaSzures("Halak");
+            AktivGombKijeloles((Button)sender);
         }
         private async void KategoriaSzures(string kategoriaNev)
         {
@@ -76,10 +115,10 @@ namespace allatkezelo_kliens
                 Cursor.Current = Cursors.WaitCursor;
 
                 // --- HÁTTÉRSZÁL INDÍTÁSA ---
-                // Az await miatt a felület itt NEM fagy le, hanem türelmesen megvárja, amíg a Task.Run végez a lekérdezésekkel.
                 var megjelenitendoAdatok = await Task.Run(() =>
                 {
-                    var eredmenyLista = new List<dynamic>();
+                    // Itt már a mi új ViewModelünket használjuk a dynamic helyett
+                    var eredmenyLista = new List<RendelesViewModel>();
 
                     // 1. Megkeressük a kategóriát
                     var kategoria = _mindenKategoria.FirstOrDefault(c => c.Name.Equals(kategoriaNev, StringComparison.OrdinalIgnoreCase));
@@ -90,16 +129,15 @@ namespace allatkezelo_kliens
 
                     if (prodResponse.Errors != null && prodResponse.Errors.Count > 0)
                     {
-                        throw new Exception(prodResponse.Errors[0].Description); // Ha hiba van, eldobjuk, a catch elkapja
+                        throw new Exception(prodResponse.Errors[0].Description);
                     }
 
                     var termekLista = prodResponse.Content.Products;
                     if (termekLista == null || termekLista.Count == 0)
                     {
-                        return eredmenyLista; // Üres lista visszaadása, ha nincsenek termékek
+                        return eredmenyLista;
                     }
 
-                    // Kimentjük az összes releváns termék azonosítóját (Bvin)
                     var kategoriaTermekBvinLista = termekLista.Select(p => p.Bvin).ToList();
 
                     // 3. Összes rendelés lekérése
@@ -108,13 +146,10 @@ namespace allatkezelo_kliens
 
                     if (rendelesekValasz.Content != null)
                     {
-                        // --- PÁRHUZAMOS (GYORS) LETÖLTÉS ---
-                        // A lassú foreach helyett 15 szálon bombázzuk a szervert, így a letöltési idő a töredékére csökken!
                         Parallel.ForEach(rendelesekValasz.Content, new ParallelOptions { MaxDegreeOfParallelism = 15 }, rendelesSnapshot =>
                         {
                             try
                             {
-                                // JAVÍTÁS: Nagy B betű a Bvin-ben!
                                 var rendelesKereses = _api.OrdersFind(rendelesSnapshot.bvin);
 
                                 if (rendelesKereses.Content != null)
@@ -123,7 +158,6 @@ namespace allatkezelo_kliens
 
                                     if (teljesRendeles.Items != null && teljesRendeles.Items.Any(t => kategoriaTermekBvinLista.Contains(t.ProductId)))
                                     {
-                                        // Szálbiztos (lock) hozzáadás, nehogy a 15 szál összeakadjon írás közben
                                         lock (szurtRendelesek)
                                         {
                                             szurtRendelesek.Add(teljesRendeles);
@@ -131,26 +165,23 @@ namespace allatkezelo_kliens
                                     }
                                 }
                             }
-                            catch
-                            {
-                                // Ha egy rendelés lekérdezése közben pillanatnyi hálózati hiba van, átugorja és megy tovább
-                            }
+                            catch { }
                         });
                     }
 
-                    // 4. Formázás és rendezés
-                    // Az OrderByDescending azért kell, mert a párhuzamos letöltés összekeverheti a sorrendet. Ezzel a legújabb rendelés lesz legfelül.
+                    // 4. Formázás és rendezés (Itt töltjük fel a ViewModel-t!)
                     eredmenyLista = szurtRendelesek
                         .OrderByDescending(r => r.TimeOfOrderUtc)
-                        .Select(r => new
+                        .Select(r => new RendelesViewModel
                         {
                             Rendelésszám = r.OrderNumber,
                             Dátum = r.TimeOfOrderUtc.ToLocalTime().ToString("yyyy. MM. dd. HH:mm"),
                             Vevő_Neve = r.BillingAddress.FirstName + " " + r.BillingAddress.LastName,
-                            Vevő_Email = r.UserEmail,
                             Végösszeg = r.TotalGrand.ToString("C"),
-                            Státusz = r.StatusCode
-                        }).ToList<dynamic>();
+                            Státuszkód = r.StatusCode,
+                            Státusz = r.StatusName,
+                            EredetiRendeles = r // Elmentjük a nyers, teljes API adatot a háttérben
+                        }).ToList();
 
                     return eredmenyLista;
                 });
@@ -162,7 +193,6 @@ namespace allatkezelo_kliens
                     return;
                 }
 
-                // Betöltjük a kész adatokat a táblázatba
                 dataGridView1.DataSource = megjelenitendoAdatok;
 
                 if (megjelenitendoAdatok.Count == 0)
@@ -176,9 +206,191 @@ namespace allatkezelo_kliens
             }
             finally
             {
-                // Bármi történik, az egeret visszaállítjuk normál állapotba a töltés (homokóra) után
                 Cursor.Current = Cursors.Default;
             }
+        }
+
+        private void btnAllOrders_Click(object sender, EventArgs e)
+        {
+            KategoriaSzures("Élő állatok");
+            AktivGombKijeloles((Button)sender);
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            // Ellenőrizzük, hogy van-e aktív sor
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.DataBoundItem != null)
+            {
+                // Most már az általunk készített RendelesViewModel-re castolunk!
+                var kivalasztottSor = (RendelesViewModel)dataGridView1.CurrentRow.DataBoundItem;
+
+                // És elővesszük belőle az elrejtett eredeti rendelést
+                var rendeles = kivalasztottSor.EredetiRendeles;
+
+                if (rendeles != null)
+                {
+                    // Vevő neve (Számlázási címből)
+                    if (rendeles.BillingAddress != null)
+                        label1.Text = $"{rendeles.BillingAddress.FirstName} {rendeles.BillingAddress.LastName}";
+                    else
+                        label1.Text = "Ismeretlen vevő";
+
+                    // Vevő E-mail címe
+                    label3.Text = rendeles.UserEmail;
+
+                    // Termék adatok (Az első lefoglalt termék lekérése)
+                    if (rendeles.Items != null && rendeles.Items.Count > 0)
+                    {
+                        var elsoTetel = rendeles.Items[0];
+                        label4.Text = elsoTetel.ProductName;
+                        label5.Text = elsoTetel.ProductSku;
+                        label6.Text = elsoTetel.Quantity.ToString();
+                    }
+                    else
+                    {
+                        label4.Text = "Nincs termék a rendelésben";
+                        label5.Text = "-";
+                        label6.Text = "0";
+                    }
+
+                    // Rendelés állapota
+                    label8.Text = rendeles.StatusName; // Vagy .StatusCode, amelyik neked szimpatikusabb
+                }
+            }
+            else
+            {
+                // Ha valamiért nincs kiválasztva semmi, lenullázzuk a labeleket
+                label1.Text = "-";
+                label3.Text = "-";
+                label4.Text = "-";
+                label5.Text = "-";
+                label6.Text = "-";
+                label8.Text = "-";
+            }
+        }
+        private void ValtoztassRendelesStatust(string ujKod, string ujNev)
+        {
+            // 1. Ellenőrizzük, van-e kiválasztott rendelés
+            if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.DataBoundItem == null)
+            {
+                MessageBox.Show("Kérlek, válassz ki egy rendelést a listából!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Kinyerjük az adatokat
+            var kivalasztottSor = (RendelesViewModel)dataGridView1.CurrentRow.DataBoundItem;
+            var rendeles = kivalasztottSor.EredetiRendeles;
+
+            if (rendeles != null)
+            {
+                // 3. Beállítjuk az új státuszt
+                rendeles.StatusCode = ujKod;
+                rendeles.StatusName = ujNev;
+
+                try
+                {
+                    // 4. API hívás: elküldjük a frissítést a webshopnak
+                    var valasz = _api.OrdersUpdate(rendeles);
+
+                    if (valasz.Errors == null || valasz.Errors.Count == 0)
+                    {
+                        MessageBox.Show($"A rendelés állapota sikeresen frissítve erre: {ujNev}", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // 5. Frissítjük a UI-t (Táblázat és a Label)
+                        kivalasztottSor.Státusz = ujNev;
+                        dataGridView1.Refresh();
+
+                        // Ha van egy label8, ami a státuszt mutatja, azt is átírjuk, hogy azonnal látszódjon
+                        label8.Text = ujNev;
+
+                        // TIPP: Itt esetleg meghívhatsz egy készlet-visszaíró kódot, 
+                        // ha a státusz "Cancelled"-re változott (amit az előző kérdésedben tárgyaltunk).
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Hiba a frissítés során: {valasz.Errors[0].Description}", "API Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hálózati Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void buttonTeljesitve_Click(object sender, EventArgs e)
+        {
+            ValtoztassRendelesStatust("09D7305D-BD95-48d2-A025-16ADC827582A", "Complete");
+        }
+
+        private void buttonLemondas_Click(object sender, EventArgs e)
+        {
+            ValtoztassRendelesStatust("A7FFDB90-C566-4cf2-93F4-D42367F359D5", "Cancelled");
+        }
+
+        private void buttonTorles_Click(object sender, EventArgs e)
+        {
+            // 1. Ellenőrzés
+    if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.DataBoundItem == null)
+    {
+        MessageBox.Show("Kérlek, válassz ki egy rendelést a listából a törléshez!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+    }
+
+    var kivalasztottSor = (RendelesViewModel)dataGridView1.CurrentRow.DataBoundItem;
+    var rendeles = kivalasztottSor.EredetiRendeles;
+
+    if (rendeles != null)
+    {
+        // 2. Megerősítés kérése (biztonsági lépés)
+        var megerosites = MessageBox.Show(
+            $"Biztosan véglegesen törölni szeretnéd a(z) {rendeles.OrderNumber} számú rendelést?\nEz a művelet nem vonható vissza!", 
+            "Törlés megerősítése", 
+            MessageBoxButtons.YesNo, 
+            MessageBoxIcon.Question,
+            MessageBoxDefaultButton.Button2); // A "Nem" az alapértelmezett gomb a biztonság kedvéért
+
+        if (megerosites == DialogResult.Yes)
+        {
+            try
+            {
+                // 3. API hívás: rendelés törlése a Bvin (belső azonosító) alapján
+                var valasz = _api.OrdersDelete(rendeles.Bvin);
+
+                if (valasz.Errors == null || valasz.Errors.Count == 0)
+                {
+                    MessageBox.Show("A rendelés sikeresen törölve a rendszerből!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 4. Eltávolítjuk a sort a helyi listából is, hogy eltűnjön a táblázatból
+                    var jelenlegiAdatok = (List<RendelesViewModel>)dataGridView1.DataSource;
+                    if (jelenlegiAdatok != null)
+                    {
+                        jelenlegiAdatok.Remove(kivalasztottSor);
+                        
+                        // Kis WinForms trükk a DataGridView frissítésére lista esetén:
+                        dataGridView1.DataSource = null;
+                        dataGridView1.DataSource = jelenlegiAdatok;
+                    }
+
+                    // Kijelölés megszűnt, szóval lenullázzuk a labeleket
+                    label1.Text = "-";
+                    label3.Text = "-";
+                    label4.Text = "-";
+                    label5.Text = "-";
+                    label6.Text = "-";
+                    label8.Text = "-";
+                }
+                else
+                {
+                    MessageBox.Show($"Hiba a törlés során: {valasz.Errors[0].Description}", "API Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Váratlan hiba történt: {ex.Message}", "Hálózati Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
         }
     }
 }

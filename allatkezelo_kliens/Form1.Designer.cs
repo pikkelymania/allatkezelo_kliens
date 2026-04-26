@@ -111,6 +111,7 @@
             // foglalasUC1
             // 
             this.foglalasUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.foglalasUC1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.foglalasUC1.Location = new System.Drawing.Point(0, 0);
             this.foglalasUC1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.foglalasUC1.Name = "foglalasUC1";

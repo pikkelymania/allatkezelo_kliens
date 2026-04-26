@@ -62,10 +62,10 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblKepNev = new System.Windows.Forms.Label();
+            this.btnKepTallozas = new System.Windows.Forms.Button();
             this.btnMentes = new System.Windows.Forms.Button();
             this.btnMegse = new System.Windows.Forms.Button();
-            this.btnKepTallozas = new System.Windows.Forms.Button();
-            this.lblKepNev = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -131,6 +131,7 @@
             // comboBoxFaj
             // 
             this.comboBoxFaj.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxFaj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFaj.FormattingEnabled = true;
             this.comboBoxFaj.Location = new System.Drawing.Point(113, 433);
             this.comboBoxFaj.Name = "comboBoxFaj";
@@ -177,6 +178,7 @@
             // comboBoxNem
             // 
             this.comboBoxNem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxNem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxNem.FormattingEnabled = true;
             this.comboBoxNem.Items.AddRange(new object[] {
             "Hím",
@@ -436,6 +438,32 @@
             this.panel1.Size = new System.Drawing.Size(1016, 51);
             this.panel1.TabIndex = 2;
             // 
+            // lblKepNev
+            // 
+            this.lblKepNev.AutoSize = true;
+            this.lblKepNev.Location = new System.Drawing.Point(215, 23);
+            this.lblKepNev.Name = "lblKepNev";
+            this.lblKepNev.Size = new System.Drawing.Size(80, 16);
+            this.lblKepNev.TabIndex = 10;
+            this.lblKepNev.Text = "képfájl neve";
+            // 
+            // btnKepTallozas
+            // 
+            this.btnKepTallozas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnKepTallozas.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnKepTallozas.FlatAppearance.BorderSize = 0;
+            this.btnKepTallozas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnKepTallozas.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnKepTallozas.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnKepTallozas.Location = new System.Drawing.Point(12, 6);
+            this.btnKepTallozas.Name = "btnKepTallozas";
+            this.btnKepTallozas.Size = new System.Drawing.Size(197, 33);
+            this.btnKepTallozas.TabIndex = 9;
+            this.btnKepTallozas.Text = "Kép tallózása";
+            this.btnKepTallozas.UseVisualStyleBackColor = false;
+            this.btnKepTallozas.Click += new System.EventHandler(this.btnKepTallozas_Click);
+            // 
             // btnMentes
             // 
             this.btnMentes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -469,32 +497,6 @@
             this.btnMegse.Text = "Mégse";
             this.btnMegse.UseVisualStyleBackColor = false;
             this.btnMegse.Click += new System.EventHandler(this.btnMegse_Click);
-            // 
-            // btnKepTallozas
-            // 
-            this.btnKepTallozas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnKepTallozas.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btnKepTallozas.FlatAppearance.BorderSize = 0;
-            this.btnKepTallozas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKepTallozas.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnKepTallozas.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnKepTallozas.Location = new System.Drawing.Point(12, 6);
-            this.btnKepTallozas.Name = "btnKepTallozas";
-            this.btnKepTallozas.Size = new System.Drawing.Size(197, 33);
-            this.btnKepTallozas.TabIndex = 9;
-            this.btnKepTallozas.Text = "Kép tallózása";
-            this.btnKepTallozas.UseVisualStyleBackColor = false;
-            this.btnKepTallozas.Click += new System.EventHandler(this.btnKepTallozas_Click);
-            // 
-            // lblKepNev
-            // 
-            this.lblKepNev.AutoSize = true;
-            this.lblKepNev.Location = new System.Drawing.Point(215, 23);
-            this.lblKepNev.Name = "lblKepNev";
-            this.lblKepNev.Size = new System.Drawing.Size(80, 16);
-            this.lblKepNev.TabIndex = 10;
-            this.lblKepNev.Text = "képfájl neve";
             // 
             // UjHulloTermek
             // 
