@@ -220,7 +220,7 @@
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(197, 33);
             this.btnNew.TabIndex = 8;
-            this.btnNew.Text = "Új állat felvétele";
+            this.btnNew.Text = "Új hüllő felvétele";
             this.btnNew.UseVisualStyleBackColor = false;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 

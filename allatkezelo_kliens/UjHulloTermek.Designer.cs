@@ -504,7 +504,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Name = "UjHulloTermek";
-            this.Text = "UjHulloTermrk";
+            this.Text = "Hüllő felvétele";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
