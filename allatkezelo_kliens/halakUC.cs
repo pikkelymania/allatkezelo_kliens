@@ -281,5 +281,56 @@ namespace allatkezelo_kliens
                 MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hálózati Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // 1. Ellenőrizzük, hogy van-e kijelölt sor
+            if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.DataBoundItem == null)
+            {
+                MessageBox.Show("Kérlek, válassz ki egy terméket a törléshez!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Kinyerjük a kijelölt terméket
+            var kivalasztottTermek = (Hotcakes.CommerceDTO.v1.Catalog.ProductDTO)dataGridView1.CurrentRow.DataBoundItem;
+
+            // 3. Megerősítés kérése a felhasználótól
+            var megerosites = MessageBox.Show(
+                $"Biztosan véglegesen törölni szeretnéd a következő terméket?\n\nNév: {kivalasztottTermek.ProductName}\nSKU: {kivalasztottTermek.Sku}",
+                "Törlés megerősítése",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2); // Biztonság kedvéért a "Nem" az alapértelmezett
+
+            if (megerosites == DialogResult.Yes)
+            {
+                try
+                {
+                    // 4. API hívás a törléshez (a Bvin alapján)
+                    var valasz = _api.ProductsDelete(kivalasztottTermek.Bvin);
+
+                    if (valasz.Errors == null || valasz.Errors.Count == 0)
+                    {
+                        MessageBox.Show("A termék sikeresen törölve a webshopból!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // 5. A kezelőfelület frissítése
+                        // A legegyszerűbb, ha "újra kattintunk" az éppen aktív kategória gombjára, 
+                        // vagy csak meghívjuk a szűrést a halakra, hogy eltűnjön a törölt elem.
+                        KategoriaSzures("Halak");
+
+                        // Ha pontosabb akarsz lenni, tárolhatnád egy változóban, mi volt az utolsó szűrés, 
+                        // és azt hívnád meg itt.
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Hiba történt a törlés során: {valasz.Errors[0].Description}", "API Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
