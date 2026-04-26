@@ -65,6 +65,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.txtSku = new System.Windows.Forms.TextBox();
             this.chkElerheto = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.labelraktaron = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -295,9 +297,9 @@
             // 
             this.groupBox2.Controls.Add(this.tableLayoutPanel1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(451, 23);
+            this.groupBox2.Location = new System.Drawing.Point(478, 23);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(448, 330);
+            this.groupBox2.Size = new System.Drawing.Size(421, 330);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Leírás";
@@ -326,7 +328,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(442, 309);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(415, 309);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // textboxGenetika
@@ -428,7 +430,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox3.Location = new System.Drawing.Point(8, 23);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(443, 330);
+            this.groupBox3.Size = new System.Drawing.Size(470, 330);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Termékadatok";
@@ -438,6 +440,7 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.label11, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.txtSitePrice, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.txtListPrice, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.txtProductName, 1, 1);
@@ -448,40 +451,42 @@
             this.tableLayoutPanel2.Controls.Add(this.label10, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.txtSku, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.chkElerheto, 1, 4);
+            this.tableLayoutPanel2.Controls.Add(this.labelraktaron, 1, 5);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 18);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 5;
+            this.tableLayoutPanel2.RowCount = 6;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(437, 309);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(464, 309);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // txtSitePrice
             // 
             this.txtSitePrice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSitePrice.Location = new System.Drawing.Point(88, 186);
+            this.txtSitePrice.Location = new System.Drawing.Point(88, 174);
             this.txtSitePrice.Name = "txtSitePrice";
-            this.txtSitePrice.Size = new System.Drawing.Size(346, 22);
+            this.txtSitePrice.Size = new System.Drawing.Size(373, 22);
             this.txtSitePrice.TabIndex = 8;
             // 
             // txtListPrice
             // 
             this.txtListPrice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtListPrice.Location = new System.Drawing.Point(88, 125);
+            this.txtListPrice.Location = new System.Drawing.Point(88, 117);
             this.txtListPrice.Name = "txtListPrice";
-            this.txtListPrice.Size = new System.Drawing.Size(346, 22);
+            this.txtListPrice.Size = new System.Drawing.Size(373, 22);
             this.txtListPrice.TabIndex = 7;
             // 
             // txtProductName
             // 
             this.txtProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtProductName.Location = new System.Drawing.Point(88, 64);
+            this.txtProductName.Location = new System.Drawing.Point(88, 60);
             this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(346, 22);
+            this.txtProductName.Size = new System.Drawing.Size(373, 22);
             this.txtProductName.TabIndex = 6;
             // 
             // label6
@@ -496,7 +501,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 61);
+            this.label7.Location = new System.Drawing.Point(3, 57);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(79, 16);
             this.label7.TabIndex = 1;
@@ -505,7 +510,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 122);
+            this.label8.Location = new System.Drawing.Point(3, 114);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(50, 16);
             this.label8.TabIndex = 2;
@@ -514,7 +519,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 183);
+            this.label9.Location = new System.Drawing.Point(3, 171);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(71, 16);
             this.label9.TabIndex = 3;
@@ -523,7 +528,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 244);
+            this.label10.Location = new System.Drawing.Point(3, 228);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(60, 16);
             this.label10.TabIndex = 4;
@@ -534,18 +539,37 @@
             this.txtSku.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSku.Location = new System.Drawing.Point(88, 3);
             this.txtSku.Name = "txtSku";
-            this.txtSku.Size = new System.Drawing.Size(346, 22);
+            this.txtSku.Size = new System.Drawing.Size(373, 22);
             this.txtSku.TabIndex = 5;
             // 
             // chkElerheto
             // 
             this.chkElerheto.AutoSize = true;
-            this.chkElerheto.Location = new System.Drawing.Point(88, 247);
+            this.chkElerheto.Location = new System.Drawing.Point(88, 231);
             this.chkElerheto.Name = "chkElerheto";
-            this.chkElerheto.Size = new System.Drawing.Size(95, 20);
+            this.chkElerheto.Size = new System.Drawing.Size(85, 20);
             this.chkElerheto.TabIndex = 9;
-            this.chkElerheto.Text = "checkBox1";
+            this.chkElerheto.Text = "elérhető?";
             this.chkElerheto.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 285);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 16);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Raktáron:";
+            // 
+            // labelraktaron
+            // 
+            this.labelraktaron.AutoSize = true;
+            this.labelraktaron.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelraktaron.Location = new System.Drawing.Point(88, 285);
+            this.labelraktaron.Name = "labelraktaron";
+            this.labelraktaron.Size = new System.Drawing.Size(373, 24);
+            this.labelraktaron.TabIndex = 11;
+            this.labelraktaron.Text = "labelraktaron";
             // 
             // hullokUC
             // 
@@ -612,5 +636,7 @@
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label labelraktaron;
     }
 }

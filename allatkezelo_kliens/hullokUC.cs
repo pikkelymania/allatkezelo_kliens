@@ -166,7 +166,6 @@ namespace allatkezelo_kliens
                     chkElerheto.Checked = kivalasztottTermek.IsAvailableForSale;
 
                     // 2. Kiegészítő adatok visszafejtése a LongDescription HTML kódjából
-
                     // Először is lenullázzuk a mezőket
                     textboxNev.Text = "";
                     dateTimePicker1.Value = DateTime.Now;
@@ -174,45 +173,78 @@ namespace allatkezelo_kliens
                     textboxGenetika.Text = "";
                     textboxSzemelyiseg.Text = "";
 
+                    // Alaphelyzetbe állítjuk a raktárkészlet labelt betöltés közben
+                    labelraktaron.Text = "Betöltés...";
+                    labelraktaron.ForeColor = Color.Black;
+
                     // Kivesszük a nyers HTML-t
                     string nyersHtml = kivalasztottTermek.LongDescription ?? "";
 
-                    // --- EZ A LÉNYEG! ---
                     // Visszaalakítjuk a csúnya HTML kódokat (pl. &uuml;) normál ékezetes betűkké!
                     string htmlLeiras = System.Net.WebUtility.HtmlDecode(nyersHtml);
 
                     // Ha van benne valami, elkezdjük kinyerni az adatokat
                     if (!string.IsNullOrWhiteSpace(htmlLeiras))
                     {
-                        // Név kinyerése
                         var matchNev = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Név</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
                         if (matchNev.Success) textboxNev.Text = matchNev.Groups[1].Value.Trim();
 
-                        // Dátum kinyerése
                         var matchSzuletett = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Született</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
                         if (matchSzuletett.Success)
                         {
                             string datumSzoveg = matchSzuletett.Groups[1].Value.Trim();
-                            // A sima TryParse a magyar gépeken megérti a "2025.10.18." és a "2025. 10. 18." formátumot is
                             if (DateTime.TryParse(datumSzoveg, out DateTime parsedDate))
                             {
                                 dateTimePicker1.Value = parsedDate;
                             }
                         }
 
-                        // Nem kinyerése
                         var matchNem = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Nem</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
                         if (matchNem.Success) comboBoxNem.Text = matchNem.Groups[1].Value.Trim();
 
-                        // Genetika kinyerése
                         var matchGenetika = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Genetika</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
                         if (matchGenetika.Success) textboxGenetika.Text = matchGenetika.Groups[1].Value.Trim();
 
-                        // Személyiség kinyerése
                         var matchSzemelyiseg = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Személyiség</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
                         if (matchSzemelyiseg.Success) textboxSzemelyiseg.Text = matchSzemelyiseg.Groups[1].Value.Trim();
                     }
+
+                    // --- 3. RAKTÁRKÉSZLET (INVENTORY) LEKÉRDEZÉSE ÉS MEGJELENÍTÉSE ---
+                    try
+                    {
+                        var keszletValasz = _api.ProductInventoryFindForProduct(kivalasztottTermek.Bvin);
+                        int darabszam = 0; // Alapértelmezetten 0-nak vesszük
+
+                        if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
+                        {
+                            darabszam = keszletValasz.Content[0].QuantityOnHand- keszletValasz.Content[0].QuantityReserved;
+                        }
+
+                        labelraktaron.Text = $"{darabszam} db";
+
+                        // Szín beállítása a darabszám alapján
+                        if (darabszam <= 0)
+                        {
+                            labelraktaron.ForeColor = Color.Red;
+                        }
+                        else
+                        {
+                            // A Color.Green néha túl világos világosszürke háttéren, a DarkGreen általában szebben mutat
+                            labelraktaron.ForeColor = Color.DarkGreen;
+                        }
+                    }
+                    catch
+                    {
+                        labelraktaron.Text = "Hiba";
+                        labelraktaron.ForeColor = Color.Red;
+                    }
                 }
+            }
+            else
+            {
+                // Ha valamiért nincs kiválasztva semmi (üres a lista), nullázzuk a labelt
+                labelraktaron.Text = "-";
+                labelraktaron.ForeColor = Color.Black;
             }
         }
 

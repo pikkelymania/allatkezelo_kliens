@@ -159,6 +159,10 @@ namespace allatkezelo_kliens
                     textboxTaplalkozas.Text = "";
                     textboxSzaporitas.Text = "";
 
+                    // Alaphelyzetbe állítjuk a raktárkészlet labelt betöltés közben
+                    labelraktaron.Text = "Betöltés...";
+                    labelraktaron.ForeColor = Color.Black;
+
                     // Kivesszük a nyers HTML-t
                     string nyersHtml = kivalasztottTermek.LongDescription ?? "";
 
@@ -194,7 +198,42 @@ namespace allatkezelo_kliens
                         if (matchSzaporitas.Success)
                             textboxSzaporitas.Text = System.Net.WebUtility.HtmlDecode(matchSzaporitas.Groups[1].Value.Trim());
                     }
+
+                    // --- 3. RAKTÁRKÉSZLET (INVENTORY) LEKÉRDEZÉSE ÉS MEGJELENÍTÉSE ---
+                    try
+                    {
+                        var keszletValasz = _api.ProductInventoryFindForProduct(kivalasztottTermek.Bvin);
+                        int darabszam = 0; // Alapértelmezetten 0-nak vesszük
+
+                        if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
+                        {
+                            darabszam = keszletValasz.Content[0].QuantityOnHand - keszletValasz.Content[0].QuantityReserved;
+                        }
+
+                        labelraktaron.Text = $"{darabszam} db";
+
+                        // Szín beállítása a darabszám alapján
+                        if (darabszam <= 0)
+                        {
+                            labelraktaron.ForeColor = Color.Red;
+                        }
+                        else
+                        {
+                            labelraktaron.ForeColor = Color.DarkGreen;
+                        }
+                    }
+                    catch
+                    {
+                        labelraktaron.Text = "Hiba";
+                        labelraktaron.ForeColor = Color.Red;
+                    }
                 }
+            }
+            else
+            {
+                // Ha valamiért nincs kiválasztva semmi (üres a lista), nullázzuk a labelt
+                labelraktaron.Text = "-";
+                labelraktaron.ForeColor = Color.Black;
             }
         }
 
@@ -329,6 +368,31 @@ namespace allatkezelo_kliens
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            // 1. Példányosítjuk az új állat felvitelére szolgáló ablakot
+            // Átadjuk neki a halakUC-ben már meglévő _api objektumot
+            using (var ujAblak = new UjHalTermek(_api))
+            {
+                // 2. Megjelenítjük az ablakot felugró (Modal) módban
+                var eredmeny = ujAblak.ShowDialog();
+
+                // 3. Ha a felhasználó a Mentés gombra kattintott és az API válasza sikeres volt
+                if (eredmeny == DialogResult.OK)
+                {
+                    // Itt frissítjük a főtáblázatot, hogy az új állat azonnal megjelenjen a listában.
+                    // Ha van egy külön metódusod a betöltésre (pl. TermekekBetoltese()), hívd meg azt.
+                    // Ha nincs, akkor a legegyszerűbb, ha újra lekérdezed a termékeket.
+
+                    MessageBox.Show("Frissítsd a listát, hogy lásd az új terméket!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Példa a frissítésre (használd azt a metódust, amivel az elején betöltötted az adatokat):
+                    // var termekek = _api.ProductsFindAll();
+                    // dataGridView1.DataSource = termekek.Content;
                 }
             }
         }

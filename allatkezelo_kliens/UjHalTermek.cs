@@ -13,21 +13,21 @@ using System.Windows.Forms;
 
 namespace allatkezelo_kliens
 {
-    public partial class UjHulloTermek : Form
+
+    public partial class UjHalTermek : Form
     {
         private Api _api;
         private byte[] _kivalasztottKepByteok = null;
-        private string _hullokFokategoriaBvin = "";
+        private string _halakFokategoriaBvin = "";
         private string _eloAllatokFokategoriaBvin = "";
-        public UjHulloTermek(Api api)
+        public UjHalTermek(Api api)
         {
             InitializeComponent();
             _api = api;
 
-            // Kategóriák (Fajok) betöltése a Hotcakes-ből a comboBoxFaj-ba
+            // Kategóriák betöltése a Hotcakes-ből a comboBoxKategoria-ba
             KategoriakBetoltese();
         }
-
         private void KategoriakBetoltese()
         {
             try
@@ -37,18 +37,22 @@ namespace allatkezelo_kliens
                 {
                     var osszesKategoria = kategoriakValasz.Content;
 
-                    // 1. Megkeressük a "Hüllők" kategóriát (ezt már megcsináltuk)
-                    var hullokKategoria = osszesKategoria.FirstOrDefault(k => k.Name.Equals("Hüllők", StringComparison.OrdinalIgnoreCase));
-                    if (hullokKategoria != null)
+                    // 1. Megkeressük a "Halak" főkategóriát
+                    var halakKategoria = osszesKategoria.FirstOrDefault(k => k.Name.Equals("Halak", StringComparison.OrdinalIgnoreCase));
+                    if (halakKategoria != null)
                     {
-                        _hullokFokategoriaBvin = hullokKategoria.Bvin;
-                        var hullokAlkategoriak = osszesKategoria.Where(k => k.ParentId == hullokKategoria.Bvin).ToList();
-                        comboBoxFaj.DataSource = hullokAlkategoriak;
-                        comboBoxFaj.DisplayMember = "Name";
-                        comboBoxFaj.ValueMember = "Bvin";
+                        _halakFokategoriaBvin = halakKategoria.Bvin;
+
+                        // Kikeressük a "Halak" kategória alkategóriáit (pl. Elevenszülők, Lazacfélék, stb.)
+                        var halakAlkategoriak = osszesKategoria.Where(k => k.ParentId == halakKategoria.Bvin).ToList();
+
+                        // Bekötjük a listát a ComboBox-ba
+                        comboBoxKategoria.DataSource = halakAlkategoriak;
+                        comboBoxKategoria.DisplayMember = "Name";
+                        comboBoxKategoria.ValueMember = "Bvin";
                     }
 
-                    // 2. ÚJ: Megkeressük az "Élő állatok" kategóriát is
+                    // 2. Megkeressük az "Élő állatok" legfelső kategóriát is
                     var eloAllatKateg = osszesKategoria.FirstOrDefault(k => k.Name.Equals("Élő Állatok", StringComparison.OrdinalIgnoreCase));
                     if (eloAllatKateg != null)
                     {
@@ -56,7 +60,10 @@ namespace allatkezelo_kliens
                     }
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hiba a kategóriák betöltésekor: {ex.Message}");
+            }
         }
 
         private void btnMentes_Click(object sender, EventArgs e)
@@ -73,25 +80,26 @@ namespace allatkezelo_kliens
                 return;
             }
 
-            // 2. A generált HTML leírás összeállítása
-            string nev = textboxNev.Text.Trim();
-            string szuletett = dateTimePicker1.Value.ToString("yyyy. MM. dd.");
-            string nem = comboBoxNem.Text.Trim();
-            string genetika = textboxGenetika.Text.Trim();
-            string szemelyiseg = textboxSzemelyiseg.Text.Trim();
+            // 2. A generált HTML leírás összeállítása a Halak új szerkezete alapján
+            string jellemzok = textBoxJellemzok.Text.Trim();
+            string tartas = textBoxTartas.Text.Trim();
+            string vizparameterek = textBoxVizparam.Text.Trim();
+            string taplalkozas = textBoxTaplalkozas.Text.Trim();
+            string szaporitas = textBoxSzaporitas.Text.Trim();
 
-            string generaltHtmlLeiras = $@"<p style=""text-align: left;""><strong>Név</strong>: <br />{nev}</p>
-<p style=""text-align: left;""><strong>Született</strong>: <br />{szuletett}</p>
-<p style=""text-align: left;""><strong>Nem</strong>: <br />{nem}</p>
-<p style=""text-align: left;""><strong>Genetika</strong>: <br />{genetika}</p>
-<p style=""text-align: left;""><strong>Személyiség</strong>: <br />{szemelyiseg}</p>";
+            // A $@ jelzés teszi lehetővé a többsoros stringet. NINCS <br />, egyből írjuk az adatot!
+            string generaltHtmlLeiras = $@"<p style=""text-align: left;""><strong>Jellemzők</strong>: {jellemzok}</p>
+<p style=""text-align: left;""><strong>Tartás</strong>: {tartas}</p>
+<p style=""text-align: left;""><strong>Vízparaméterek</strong>: {vizparameterek}</p>
+<p style=""text-align: left;""><strong>Táplálkozás</strong>: {taplalkozas}</p>
+<p style=""text-align: left;""><strong>Szaporítás</strong>: {szaporitas}</p>";
 
             // 3. Új Hotcakes Termék objektum létrehozása és kitöltése
             var ujTermek = new ProductDTO();
 
             ujTermek.Sku = txtSku.Text.Trim();
             ujTermek.ProductName = txtProductName.Text.Trim();
-            ujTermek.ProductTypeId = "";
+            ujTermek.ProductTypeId = ""; // Empty
 
             // Árak
             decimal.TryParse(txtListPrice.Text, System.Globalization.NumberStyles.Any, null, out decimal listPrice);
@@ -100,7 +108,7 @@ namespace allatkezelo_kliens
             decimal.TryParse(txtSitePrice.Text, System.Globalization.NumberStyles.Any, null, out decimal sitePrice);
             ujTermek.SitePrice = sitePrice;
 
-            ujTermek.SitePriceOverrideText = "";
+            ujTermek.SitePriceOverrideText = ""; // Empty
             ujTermek.SiteCost = 0m;
 
             // SEO / Meta adatok
@@ -120,7 +128,7 @@ namespace allatkezelo_kliens
             ujTermek.CreationDateUtc = DateTime.UtcNow;
 
             // Leírások
-            ujTermek.ShortDescription = "";
+            ujTermek.ShortDescription = ""; // Empty
             ujTermek.LongDescription = generaltHtmlLeiras;
 
             // Azonosítók és beállítások
@@ -133,7 +141,7 @@ namespace allatkezelo_kliens
             ujTermek.PostContentColumnId = "";
             ujTermek.UrlSlug = "";
 
-            // Készlet és Megjelenés (Ezt sokszor "elfelejti" a Create metódus, de azért beállítjuk)
+            // Készlet és Megjelenés
             ujTermek.InventoryMode = ProductInventoryModeDTO.WhenOutOfStockShow;
             ujTermek.IsAvailableForSale = chkElerheto.Checked;
             ujTermek.Featured = false;
@@ -143,7 +151,7 @@ namespace allatkezelo_kliens
 
             // Upcharge beállítások
             ujTermek.AllowUpcharge = false;
-            ujTermek.UpchargeAmount = 3m;
+            ujTermek.UpchargeAmount = 0m;
             ujTermek.UpchargeUnit = "1";
 
             // 4. Mentés az API-val 
@@ -157,29 +165,32 @@ namespace allatkezelo_kliens
                     return;
                 }
 
+                // 5. Kategóriák hozzárendelése az új termékhez
                 if (valasz.Content != null)
                 {
                     string ujTermekBvin = valasz.Content.Bvin;
 
-                    // 5. Kategória (Faj) hozzárendelése
-                    if (comboBoxFaj.SelectedValue != null)
+                    // A) Konkrét hal alkategória (ComboBox alapján)
+                    if (comboBoxKategoria.SelectedValue != null)
                     {
                         _api.CategoryProductAssociationsCreate(new CategoryProductAssociationDTO
                         {
                             ProductId = ujTermekBvin,
-                            CategoryId = comboBoxFaj.SelectedValue.ToString()
+                            CategoryId = comboBoxKategoria.SelectedValue.ToString()
                         });
                     }
 
-                    if (!string.IsNullOrEmpty(_hullokFokategoriaBvin))
+                    // B) "Halak" főkategória
+                    if (!string.IsNullOrEmpty(_halakFokategoriaBvin))
                     {
                         _api.CategoryProductAssociationsCreate(new CategoryProductAssociationDTO
                         {
                             ProductId = ujTermekBvin,
-                            CategoryId = _hullokFokategoriaBvin
+                            CategoryId = _halakFokategoriaBvin
                         });
                     }
 
+                    // C) "Élő állatok" főkategória
                     if (!string.IsNullOrEmpty(_eloAllatokFokategoriaBvin))
                     {
                         _api.CategoryProductAssociationsCreate(new CategoryProductAssociationDTO
@@ -189,15 +200,16 @@ namespace allatkezelo_kliens
                         });
                     }
 
-                    // --- 6. KÉSZLET (INVENTORY) BEÁLLÍTÁSA FIX 1-RE ---
+                    // --- 6. KÉSZLET (INVENTORY) BEÁLLÍTÁSA A NUMERICUPDOWN ALAPJÁN ---
                     try
                     {
+                        int megadottKeszlet = Convert.ToInt32(numericUpDown1.Value);
                         var keszletValasz = _api.ProductInventoryFindForProduct(ujTermekBvin);
 
                         if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
                         {
                             var aktualisKeszlet = keszletValasz.Content[0];
-                            aktualisKeszlet.QuantityOnHand = 1; // FIX 1-es darabszám
+                            aktualisKeszlet.QuantityOnHand = megadottKeszlet; // Itt használjuk a NumericUpDown értékét!
                             _api.ProductInventoryUpdate(aktualisKeszlet);
                         }
                         else
@@ -205,7 +217,7 @@ namespace allatkezelo_kliens
                             var ujKeszlet = new ProductInventoryDTO
                             {
                                 ProductBvin = ujTermekBvin,
-                                QuantityOnHand = 1 // FIX 1-es darabszám
+                                QuantityOnHand = megadottKeszlet // Itt is!
                             };
                             _api.ProductInventoryCreate(ujKeszlet);
                         }
@@ -221,7 +233,7 @@ namespace allatkezelo_kliens
                     }
                 }
 
-                MessageBox.Show("Az állat sikeresen hozzáadva a rendszerhez!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("A hal sikeresen hozzáadva a rendszerhez!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -242,18 +254,12 @@ namespace allatkezelo_kliens
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Title = "Válassz egy képet az állathoz";
-                // Csak a leggyakoribb képformátumokat engedjük
+                ofd.Title = "Válassz egy képet a halhoz";
                 ofd.Filter = "Képfájlok (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    // Beolvassuk a fájlt a számítógépről a memóriába
                     _kivalasztottKepByteok = System.IO.File.ReadAllBytes(ofd.FileName);
-
-                    // Megjelenítjük a fájl nevét a felületen (ha csináltál hozzá egy lblKepNev labelt)
-                    // lblKepNev.Text = System.IO.Path.GetFileName(ofd.FileName);
-
                     MessageBox.Show("Kép sikeresen kiválasztva!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
