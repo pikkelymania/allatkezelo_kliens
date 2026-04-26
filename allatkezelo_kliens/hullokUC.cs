@@ -72,14 +72,14 @@ namespace allatkezelo_kliens
 
                     string[] lathatoOszlopok = { "Sku", "ProductName", "SitePrice", "ListPrice", "LongDescription", "IsAvailableForSale" };
 
-                    foreach (DataGridViewColumn oszlop in dataGridView1.Columns)
-                    {
-                        // Ha az oszlop neve nincs benne a fenti listában, akkor elrejtjük
-                        if (!lathatoOszlopok.Contains(oszlop.Name))
-                        {
-                            oszlop.Visible = false;
-                        }
-                    }
+                    //foreach (DataGridViewColumn oszlop in dataGridView1.Columns)
+                    //{
+                    //    // Ha az oszlop neve nincs benne a fenti listában, akkor elrejtjük
+                    //    if (!lathatoOszlopok.Contains(oszlop.Name))
+                    //    {
+                    //        oszlop.Visible = false;
+                    //    }
+                    //}
                 }
             }
             else
@@ -298,6 +298,31 @@ namespace allatkezelo_kliens
             {
                 // Ha valami váratlan technikai hiba történik (pl. nincs internet)
                 MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hálózati Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            // 1. Példányosítjuk az új állat felvitelére szolgáló ablakot
+            // Átadjuk neki a hullokUC-ben már meglévő _api objektumot
+            using (var ujAblak = new UjHulloTermek(_api))
+            {
+                // 2. Megjelenítjük az ablakot felugró (Modal) módban
+                var eredmeny = ujAblak.ShowDialog();
+
+                // 3. Ha a felhasználó a Mentés gombra kattintott és az API válasza sikeres volt
+                if (eredmeny == DialogResult.OK)
+                {
+                    // Itt frissítjük a főtáblázatot, hogy az új állat azonnal megjelenjen a listában.
+                    // Ha van egy külön metódusod a betöltésre (pl. TermekekBetoltese()), hívd meg azt.
+                    // Ha nincs, akkor a legegyszerűbb, ha újra lekérdezed a termékeket.
+
+                    MessageBox.Show("A lista frissítése folyamatban...", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Példa a frissítésre (használd azt a metódust, amivel az elején betöltötted az adatokat):
+                    // var termekek = _api.ProductsFindAll();
+                    // dataGridView1.DataSource = termekek.Content;
+                }
             }
         }
     }
