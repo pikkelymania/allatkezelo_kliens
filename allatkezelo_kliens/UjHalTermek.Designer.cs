@@ -85,7 +85,7 @@
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(12, 12, 12, 12);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(12);
             this.groupBox1.Size = new System.Drawing.Size(1524, 893);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
@@ -569,7 +569,7 @@
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "UjHalTermek";
-            this.Text = "UjHalTermek";
+            this.Text = "Halfaj felvétele";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
