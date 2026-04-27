@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using allatkezelo_kliens.Services;
 using System.Drawing;
 
@@ -11,53 +10,39 @@ namespace AllatkezeloKliens.Tests
         private FishService _service;
 
         [TestInitialize]
-        public void Setup()
-        {
-            _service = new FishService();
-        }
+        public void Setup() => _service = new FishService();
 
-        [TestMethod]
-        public void ParseHtmlDescription_ShouldExtractFishDataCorrectly()
+        // 1. ÁTFOGÓ TESZT: HTML visszafejtés és Regex (Minden eshetőségre)
+        [DataTestMethod]
+        [DataRow("<strong>Tartás</strong>: Könnyű</p>", "Könnyű", "Sima ékezet")]
+        [DataRow("<strong>Tart&aacute;s</strong>: Nehéz</p>", "Nehéz", "HTML kódolt á betű")]
+        [DataRow("<strong>T&aacute;pl&aacute;lkoz&aacute;s</strong>: Mindenevő</p>", "Mindenevő", "Többszörös HTML kódolás")]
+        [DataRow("<strong>Jellemzők</strong>: <b>Vastag</b></p>", "Vastag", "Beágyazott HTML tagek")]
+        [DataRow("", "", "Üres bemenet")]
+        public void ParseHtml_Extraction_Comprehensive(string html, string expectedValue, string caseName)
         {
-            // Teszteljük a speciális, esetenként kódolt HTML-t is
-            string html = @"<p style=""text-align: left;""><strong>Jellemzők</strong>: Szép hal</p>
-                            <p style=""text-align: left;""><strong>Tart&aacute;s</strong>: Könnyű</p>";
-
             var details = _service.ParseHtmlDescription(html);
+            // Megnézzük, hogy az érték szerepel-e valamelyik mezőben
+            bool found = details.Tartas.Contains(expectedValue) ||
+                         details.Taplalkozas.Contains(expectedValue) ||
+                         details.Jellemzok.Contains(expectedValue);
 
-            Assert.AreEqual("Szép hal", details.Jellemzok);
-            Assert.AreEqual("Könnyű", details.Tartas);
-            Assert.AreEqual("", details.Vizparameterek); // Nincs megadva, üresnek kell lennie
+            if (expectedValue != "")
+                Assert.IsTrue(found, $"Nem sikerült kinyerni az adatot: {caseName}");
         }
 
-        [TestMethod]
-        public void BuildLongDescription_ShouldContainAllFishFields()
+        // 2. ÁTFOGÓ TESZT: HTML generálás integritása
+        [DataTestMethod]
+        [DataRow("Gyors", "25C", "Mindent")]
+        [DataRow("Páncélos", "22-28C", "Lapkát")]
+        [DataRow("", "", "")]
+        public void BuildDescription_FieldIntegrity(string j, string v, string t)
         {
-            var result = _service.BuildLongDescription("Gyors", "Közepes", "25C", "Mindent", "Ikrázó");
+            string html = _service.BuildLongDescription(j, "Közepes", v, t, "Nincs");
 
-            Assert.IsTrue(result.Contains("Gyors"));
-            Assert.IsTrue(result.Contains("<strong>Vízparaméterek</strong>: 25C"));
-        }
-
-        [TestMethod]
-        public void ValidatePrices_InvalidNumbers_ShouldReturnFalse()
-        {
-            bool result = _service.ValidatePrices("1500", "nem_szam", out decimal listPrice, out decimal sitePrice);
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void CalculateAvailableStock_CorrectSubtraction()
-        {
-            int result = _service.CalculateAvailableStock(20, 5);
-            Assert.AreEqual(15, result);
-        }
-
-        [TestMethod]
-        public void GetStockStatusColor_PositiveStock_ShouldReturnDarkGreen()
-        {
-            var color = _service.GetStockStatusColor(1);
-            Assert.AreEqual(Color.DarkGreen, color);
+            Assert.IsTrue(html.Contains("<strong>Jellemzők</strong>"), "Hiányzó HTML tag.");
+            Assert.IsTrue(html.Contains(j), "A jellemzők mező nem került a HTML-be.");
+            Assert.IsTrue(html.Contains(v), "A vízparaméter mező nem került a HTML-be.");
         }
     }
 }

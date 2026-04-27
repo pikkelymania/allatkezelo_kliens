@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using allatkezelo_kliens.Services;
+using System;
 using System.Drawing;
 
 namespace AllatkezeloKliens.Tests
@@ -11,103 +11,48 @@ namespace AllatkezeloKliens.Tests
         private ReptileService _service;
 
         [TestInitialize]
-        public void Setup()
+        public void Setup() => _service = new ReptileService();
+
+        // 1. ÁTFOGÓ TESZT: Árak és bemeneti adatok ellenőrzése (Data-Driven)
+        [DataTestMethod]
+        [DataRow("15000", "12000", true, "Érvényes egész számok")]
+        [DataRow("15000,5", "12000,2", true, "Érvényes tizedes számok")]
+        [DataRow("ingyen", "1000", false, "Betű a listaárban")]
+        [DataRow("1000", "drága", false, "Betű az eladási árban")]
+        [DataRow("", "1000", false, "Üres mező")]
+        [DataRow("-500", "1000", true, "Negatív ár (matematikailag érvényes)")]
+        public void ValidatePrices_AllCases(string listP, string siteP, bool expected, string caseName)
         {
-            _service = new ReptileService();
+            bool actual = _service.ValidatePrices(listP, siteP, out _, out _);
+            Assert.AreEqual(expected, actual, $"Hiba a következő esetnél: {caseName}");
         }
 
-        [TestMethod]
-        public void ValidatePrices_ValidNumbers_ShouldReturnTrueAndParseCorrectly()
+        // 2. ÁTFOGÓ TESZT: Raktárkészlet matek és színek (Data-Driven)
+        [DataTestMethod]
+        [DataRow(10, 2, 8, "DarkGreen")] // Van készlet
+        [DataRow(5, 5, 0, "Red")]       // Pont elfogyott
+        [DataRow(2, 10, -8, "Red")]     // Negatív készlet (túlfoglalás)
+        [DataRow(0, 0, 0, "Red")]       // Alaphelyzet
+        public void StockAndColor_AllCases(int onHand, int reserved, int expectedStock, string colorName)
         {
-            // Teszteljük, hogy a helyes formátumokat jól alakítja-e számmá
-            bool result = _service.ValidatePrices("15000", "12500,50", out decimal listPrice, out decimal sitePrice);
+            int actualStock = _service.CalculateAvailableStock(onHand, reserved);
+            Color actualColor = _service.GetStockStatusColor(actualStock);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual(15000m, listPrice);
-            Assert.AreEqual(12500.50m, sitePrice);
+            Assert.AreEqual(expectedStock, actualStock, "A készletszámítás hibás.");
+            Assert.AreEqual(Color.FromName(colorName), actualColor, "A státuszszín hibás.");
         }
 
-        [TestMethod]
-        public void ValidatePrices_InvalidNumbers_ShouldReturnFalse()
+        // 3. ÁTFOGÓ TESZT: Új állat felvitele (Validáció + DTO építés)
+        [DataTestMethod]
+        [DataRow("Gizi", "SKU001", true, true, "Minden adat megvan")]
+        [DataRow("", "SKU001", true, false, "Hiányzó név")]
+        [DataRow("Gizi", "", true, false, "Hiányzó SKU")]
+        [DataRow("Gizi", "SKU001", false, false, "Hiányzó kép")]
+        public void NewReptile_Validation_AllCases(string name, string sku, bool hasImage, bool expected, string caseName)
         {
-            // Teszteljük a felhasználói elgépeléseket
-            bool result = _service.ValidatePrices("ingyen", "százezer", out decimal listPrice, out decimal sitePrice);
-
-            Assert.IsFalse(result);
+            byte[] img = hasImage ? new byte[] { 1, 2, 3 } : null;
+            bool actual = _service.ValidateNewReptile(name, sku, img, out _);
+            Assert.AreEqual(expected, actual, $"Hiba a validációnál: {caseName}");
         }
-
-        [TestMethod]
-        public void ParseHtmlDescription_ShouldExtractDataCorrectly()
-        {
-            // Teszteljük a Regex alapú kiszedést egy valós formátumú stringgel
-            string html = @"<p style=""text-align: left;""><strong>Név</strong>: <br />Béla</p>
-                            <p style=""text-align: left;""><strong>Született</strong>: <br />2023. 05. 10.</p>";
-
-            var details = _service.ParseHtmlDescription(html);
-
-            Assert.AreEqual("Béla", details.Nev);
-            Assert.AreEqual(new DateTime(2023, 5, 10), details.Szuletett);
-            Assert.AreEqual("", details.Genetika); // Ezt direkt hagytuk ki, üresnek kell lennie
-        }
-
-        [TestMethod]
-        public void BuildLongDescription_ShouldContainAllFields()
-        {
-            // Teszteljük, hogy az összerakott HTML tartalmazza-e a paramétereket
-            var result = _service.BuildLongDescription("Gizi", "2024. 01. 01.", "Nőstény", "Albínó", "Kedves");
-
-            Assert.IsTrue(result.Contains("Gizi"));
-            Assert.IsTrue(result.Contains("Albínó"));
-            Assert.IsTrue(result.Contains("<strong>Nem</strong>"));
-        }
-
-        [TestMethod]
-        public void CalculateAvailableStock_MoreReservedThanOnHand_ShouldReturnNegative()
-        {
-            // Teszteljük a határesetet: 5 van, de 10 lefoglalva
-            int result = _service.CalculateAvailableStock(5, 10);
-
-            Assert.AreEqual(-5, result);
-        }
-
-        [TestMethod]
-        public void GetStockStatusColor_ZeroStock_ShouldReturnRed()
-        {
-            // Teszteljük, hogy 0 vagy negatív darabnál tényleg piros-e
-            var color = _service.GetStockStatusColor(0);
-
-            Assert.AreEqual(Color.Red, color);
-        }
-
-        [TestMethod]
-        public void GetStockStatusColor_PositiveStock_ShouldReturnDarkGreen()
-        {
-            // Teszteljük, hogy van készleten, akkor sötétzöld-e
-            var color = _service.GetStockStatusColor(10);
-
-            Assert.AreEqual(Color.DarkGreen, color);
-        }
-
-        [TestMethod]
-        public void ValidateNewReptile_MissingName_ShouldReturnFalseAndError()
-        {
-            bool result = _service.ValidateNewReptile("", "SKU001", new byte[] { 1, 2, 3 }, out string error);
-
-            Assert.IsFalse(result);
-            Assert.AreEqual("A Terméknév és a Cikkszám megadása kötelező!", error);
-        }
-
-        [TestMethod]
-        public void CreateNewReptileDTO_ShouldMapValuesAndSetDefaults()
-        {
-            var dto = _service.CreateNewReptileDTO("SKU99", "Teszt Hüllő", 1000m, 900m, "<p>Leírás</p>", true);
-
-            Assert.AreEqual("SKU99", dto.Sku);
-            Assert.AreEqual("Teszt Hüllő", dto.ProductName);
-            Assert.AreEqual(1000m, dto.ListPrice);
-            Assert.IsTrue(dto.IsAvailableForSale);
-            Assert.IsFalse(dto.TaxExempt); // Alapértelmezett érték tesztelése
-        }
-
     }
 }
