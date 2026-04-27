@@ -44,5 +44,20 @@ namespace AllatkezeloKliens.Tests
             Assert.IsTrue(html.Contains(j), "A jellemzők mező nem került a HTML-be.");
             Assert.IsTrue(html.Contains(v), "A vízparaméter mező nem került a HTML-be.");
         }
+
+        // 3. ÁTFOGÓ TESZT: Új hal felvitele (Validáció)
+        [DataTestMethod]
+        [DataRow("Némó", "SKU002", true, true, "Minden adat megvan")]
+        [DataRow("", "SKU002", true, false, "Hiányzó név")]
+        [DataRow("Némó", "", true, false, "Hiányzó SKU")]
+        [DataRow("Némó", "SKU002", false, false, "Hiányzó kép")]
+        public void NewFish_Validation_AllCases(string name, string sku, bool hasImage, bool expected, string caseName)
+        {
+            byte[] img = hasImage ? new byte[] { 1, 2, 3 } : null;
+            bool actual = _service.ValidateNewFish(name, sku, img, out _);
+            Assert.AreEqual(expected, actual, $"Hiba a validációnál: {caseName}");
+        }
+
+
     }
 }

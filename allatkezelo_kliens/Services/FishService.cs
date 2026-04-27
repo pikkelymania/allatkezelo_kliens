@@ -26,6 +26,8 @@ namespace allatkezelo_kliens.Services
         bool ValidatePrices(string listPriceText, string sitePriceText, out decimal listPrice, out decimal sitePrice);
         int CalculateAvailableStock(int onHand, int reserved);
         Color GetStockStatusColor(int availableStock);
+        bool ValidateNewFish(string productName, string sku, byte[] imageBytes, out string errorMessage);
+        Hotcakes.CommerceDTO.v1.Catalog.ProductDTO CreateNewFishDTO(string sku, string productName, decimal listPrice, decimal sitePrice, string htmlDescription, bool isAvailable);
     }
 
     public class FishService : IFishService
@@ -86,5 +88,63 @@ namespace allatkezelo_kliens.Services
             if (availableStock <= 0) return Color.Red;
             return Color.DarkGreen;
         }
+
+        public bool ValidateNewFish(string productName, string sku, byte[] imageBytes, out string errorMessage)
+        {
+            if (string.IsNullOrWhiteSpace(productName) || string.IsNullOrWhiteSpace(sku))
+            {
+                errorMessage = "A Terméknév és a Cikkszám megadása kötelező!";
+                return false;
+            }
+            if (imageBytes == null || imageBytes.Length == 0)
+            {
+                errorMessage = "Kérlek, válassz ki egy képet a mentés előtt!";
+                return false;
+            }
+            errorMessage = string.Empty;
+            return true;
+        }
+
+        public Hotcakes.CommerceDTO.v1.Catalog.ProductDTO CreateNewFishDTO(string sku, string productName, decimal listPrice, decimal sitePrice, string htmlDescription, bool isAvailable)
+        {
+            return new Hotcakes.CommerceDTO.v1.Catalog.ProductDTO
+            {
+                Sku = sku,
+                ProductName = productName,
+                ListPrice = listPrice,
+                SitePrice = sitePrice,
+                LongDescription = htmlDescription,
+                IsAvailableForSale = isAvailable,
+
+                // Alapértelmezett értékek
+                ProductTypeId = "",
+                SitePriceOverrideText = "",
+                SiteCost = 0m,
+                TaxExempt = false,
+                ShippingDetails = new Hotcakes.CommerceDTO.v1.Shipping.ShippableItemDTO { IsNonShipping = true },
+                ShippingMode = Hotcakes.CommerceDTO.v1.Shipping.ShippingModeDTO.ShipFromSite,
+                ShippingCharge = Hotcakes.CommerceDTO.v1.Shipping.ShippingChargeTypeDTO.ChargeShippingAndHandling,
+                Status = Hotcakes.CommerceDTO.v1.Catalog.ProductStatusDTO.Active,
+                CreationDateUtc = DateTime.UtcNow,
+                ShortDescription = "",
+                ManufacturerId = "",
+                VendorId = "",
+                GiftWrapAllowed = false,
+                GiftWrapPrice = 0m,
+                Keywords = "",
+                PreContentColumnId = "",
+                PostContentColumnId = "",
+                UrlSlug = "",
+                InventoryMode = Hotcakes.CommerceDTO.v1.Catalog.ProductInventoryModeDTO.WhenOutOfStockShow,
+                Featured = false,
+                AllowReviews = true,
+                StoreId = 1,
+                IsSearchable = true,
+                AllowUpcharge = false,
+                UpchargeAmount = 0m, // A halaknál a te kódodban ez 0 volt!
+                UpchargeUnit = "1"
+            };
+        }
+
     }
 }
