@@ -87,5 +87,27 @@ namespace AllatkezeloKliens.Tests
 
             Assert.AreEqual(Color.DarkGreen, color);
         }
+
+        [TestMethod]
+        public void ValidateNewReptile_MissingName_ShouldReturnFalseAndError()
+        {
+            bool result = _service.ValidateNewReptile("", "SKU001", new byte[] { 1, 2, 3 }, out string error);
+
+            Assert.IsFalse(result);
+            Assert.AreEqual("A Terméknév és a Cikkszám megadása kötelező!", error);
+        }
+
+        [TestMethod]
+        public void CreateNewReptileDTO_ShouldMapValuesAndSetDefaults()
+        {
+            var dto = _service.CreateNewReptileDTO("SKU99", "Teszt Hüllő", 1000m, 900m, "<p>Leírás</p>", true);
+
+            Assert.AreEqual("SKU99", dto.Sku);
+            Assert.AreEqual("Teszt Hüllő", dto.ProductName);
+            Assert.AreEqual(1000m, dto.ListPrice);
+            Assert.IsTrue(dto.IsAvailableForSale);
+            Assert.IsFalse(dto.TaxExempt); // Alapértelmezett érték tesztelése
+        }
+
     }
 }

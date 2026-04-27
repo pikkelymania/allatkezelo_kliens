@@ -19,6 +19,7 @@ namespace allatkezelo_kliens
         private byte[] _kivalasztottKepByteok = null;
         private string _hullokFokategoriaBvin = "";
         private string _eloAllatokFokategoriaBvin = "";
+        private readonly allatkezelo_kliens.Services.IReptileService _reptileService = new allatkezelo_kliens.Services.ReptileService();
         public UjHulloTermek(Api api)
         {
             InitializeComponent();
@@ -61,92 +62,40 @@ namespace allatkezelo_kliens
 
         private void btnMentes_Click(object sender, EventArgs e)
         {
-            // 1. Kötelező adatok gyors ellenőrzése
-            if (string.IsNullOrWhiteSpace(txtProductName.Text) || string.IsNullOrWhiteSpace(txtSku.Text))
+            // 1. Kötelező adatok ellenőrzése a Service-en keresztül
+            if (!_reptileService.ValidateNewReptile(txtProductName.Text, txtSku.Text, _kivalasztottKepByteok, out string errorMsg))
             {
-                MessageBox.Show("A Terméknév és a Cikkszám megadása kötelező!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (_kivalasztottKepByteok == null)
-            {
-                MessageBox.Show("Kérlek, válassz ki egy képet a mentés előtt!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(errorMsg, "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 2. A generált HTML leírás összeállítása
-            string nev = textboxNev.Text.Trim();
-            string szuletett = dateTimePicker1.Value.ToString("yyyy. MM. dd.");
-            string nem = comboBoxNem.Text.Trim();
-            string genetika = textboxGenetika.Text.Trim();
-            string szemelyiseg = textboxSzemelyiseg.Text.Trim();
+            // 2. Árak ellenőrzése a meglévő Service metódussal
+            if (!_reptileService.ValidatePrices(txtListPrice.Text, txtSitePrice.Text, out decimal listPrice, out decimal sitePrice))
+            {
+                MessageBox.Show("Az árak formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            string generaltHtmlLeiras = $@"<p style=""text-align: left;""><strong>Név</strong>: <br />{nev}</p>
-<p style=""text-align: left;""><strong>Született</strong>: <br />{szuletett}</p>
-<p style=""text-align: left;""><strong>Nem</strong>: <br />{nem}</p>
-<p style=""text-align: left;""><strong>Genetika</strong>: <br />{genetika}</p>
-<p style=""text-align: left;""><strong>Személyiség</strong>: <br />{szemelyiseg}</p>";
+            // 3. A generált HTML leírás összeállítása a Service-szel
+            string generaltHtmlLeiras = _reptileService.BuildLongDescription(
+                textboxNev.Text.Trim(),
+                dateTimePicker1.Value.ToString("yyyy. MM. dd."),
+                comboBoxNem.Text.Trim(),
+                textboxGenetika.Text.Trim(),
+                textboxSzemelyiseg.Text.Trim()
+            );
 
-            // 3. Új Hotcakes Termék objektum létrehozása és kitöltése
-            var ujTermek = new ProductDTO();
+            // 4. Új Hotcakes Termék objektum kérése a Service-től
+            var ujTermek = _reptileService.CreateNewReptileDTO(
+                txtSku.Text.Trim(),
+                txtProductName.Text.Trim(),
+                listPrice,
+                sitePrice,
+                generaltHtmlLeiras,
+                chkElerheto.Checked
+            );
 
-            ujTermek.Sku = txtSku.Text.Trim();
-            ujTermek.ProductName = txtProductName.Text.Trim();
-            ujTermek.ProductTypeId = "";
-
-            // Árak
-            decimal.TryParse(txtListPrice.Text, System.Globalization.NumberStyles.Any, null, out decimal listPrice);
-            ujTermek.ListPrice = listPrice;
-
-            decimal.TryParse(txtSitePrice.Text, System.Globalization.NumberStyles.Any, null, out decimal sitePrice);
-            ujTermek.SitePrice = sitePrice;
-
-            ujTermek.SitePriceOverrideText = "";
-            ujTermek.SiteCost = 0m;
-
-            // SEO / Meta adatok
-            ujTermek.MetaKeywords = txtMetaK.Text.Trim();
-            ujTermek.MetaDescription = txtMetaD.Text.Trim();
-            ujTermek.MetaTitle = txtMetaT.Text.Trim();
-
-            // Adó és Szállítás
-            ujTermek.TaxExempt = false;
-            ujTermek.ShippingDetails = new ShippableItemDTO();
-            ujTermek.ShippingDetails.IsNonShipping = true;
-            ujTermek.ShippingMode = ShippingModeDTO.ShipFromSite;
-            ujTermek.ShippingCharge = ShippingChargeTypeDTO.ChargeShippingAndHandling;
-
-            // Státusz, Dátumok
-            ujTermek.Status = ProductStatusDTO.Active;
-            ujTermek.CreationDateUtc = DateTime.UtcNow;
-
-            // Leírások
-            ujTermek.ShortDescription = "";
-            ujTermek.LongDescription = generaltHtmlLeiras;
-
-            // Azonosítók és beállítások
-            ujTermek.ManufacturerId = "";
-            ujTermek.VendorId = "";
-            ujTermek.GiftWrapAllowed = false;
-            ujTermek.GiftWrapPrice = 0m;
-            ujTermek.Keywords = "";
-            ujTermek.PreContentColumnId = "";
-            ujTermek.PostContentColumnId = "";
-            ujTermek.UrlSlug = "";
-
-            // Készlet és Megjelenés (Ezt sokszor "elfelejti" a Create metódus, de azért beállítjuk)
-            ujTermek.InventoryMode = ProductInventoryModeDTO.WhenOutOfStockShow;
-            ujTermek.IsAvailableForSale = chkElerheto.Checked;
-            ujTermek.Featured = false;
-            ujTermek.AllowReviews = true;
-            ujTermek.StoreId = 1;
-            ujTermek.IsSearchable = true;
-
-            // Upcharge beállítások
-            ujTermek.AllowUpcharge = false;
-            ujTermek.UpchargeAmount = 3m;
-            ujTermek.UpchargeUnit = "1";
-
-            // 4. Mentés az API-val 
+            // 5. Mentés az API-val (INNENTŐL A RÉGI KÓD MARAD)
             try
             {
                 var valasz = _api.ProductsCreate(ujTermek, _kivalasztottKepByteok);
@@ -161,7 +110,7 @@ namespace allatkezelo_kliens
                 {
                     string ujTermekBvin = valasz.Content.Bvin;
 
-                    // 5. Kategória (Faj) hozzárendelése
+                    // Kategória (Faj) hozzárendelése
                     if (comboBoxFaj.SelectedValue != null)
                     {
                         _api.CategoryProductAssociationsCreate(new CategoryProductAssociationDTO
@@ -189,7 +138,7 @@ namespace allatkezelo_kliens
                         });
                     }
 
-                    // --- 6. KÉSZLET (INVENTORY) BEÁLLÍTÁSA FIX 1-RE ---
+                    // KÉSZLET BEÁLLÍTÁSA FIX 1-RE
                     try
                     {
                         var keszletValasz = _api.ProductInventoryFindForProduct(ujTermekBvin);
@@ -197,7 +146,7 @@ namespace allatkezelo_kliens
                         if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
                         {
                             var aktualisKeszlet = keszletValasz.Content[0];
-                            aktualisKeszlet.QuantityOnHand = 1; // FIX 1-es darabszám
+                            aktualisKeszlet.QuantityOnHand = 1;
                             _api.ProductInventoryUpdate(aktualisKeszlet);
                         }
                         else
@@ -205,13 +154,12 @@ namespace allatkezelo_kliens
                             var ujKeszlet = new ProductInventoryDTO
                             {
                                 ProductBvin = ujTermekBvin,
-                                QuantityOnHand = 1 // FIX 1-es darabszám
+                                QuantityOnHand = 1
                             };
                             _api.ProductInventoryCreate(ujKeszlet);
                         }
 
-                        // --- 7. INVENTORY MODE KIKÉNYSZERÍTÉSE (A MEGOLDÁS) ---
-                        // Ezzel kiküszöböljük a Hotcakes API bugját: a már létrehozott terméket külön frissítjük!
+                        // INVENTORY MODE KIKÉNYSZERÍTÉSE 
                         valasz.Content.InventoryMode = ProductInventoryModeDTO.WhenOutOfStockShow;
                         _api.ProductsUpdate(valasz.Content);
                     }
@@ -222,7 +170,6 @@ namespace allatkezelo_kliens
                 }
 
                 MessageBox.Show("Az állat sikeresen hozzáadva a rendszerhez!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
