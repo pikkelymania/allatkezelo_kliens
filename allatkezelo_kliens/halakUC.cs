@@ -16,6 +16,7 @@ namespace allatkezelo_kliens
         private Hotcakes.CommerceDTO.v1.Client.Api _api;
         private List<Hotcakes.CommerceDTO.v1.Catalog.CategorySnapshotDTO> _mindenKategoria;
         //private Hotcakes.CommerceDTO.v1.Catalog.ProductDTO _kivalasztottTermek;
+        private readonly allatkezelo_kliens.Services.IFishService _fishService = new allatkezelo_kliens.Services.FishService();
 
         private const string ApiKey = "1-45782d8b-85b9-4924-aafe-ea09050cbc9e";
         private const string StoreUrl = "http://www.pikkelymania.hu/";
@@ -254,48 +255,29 @@ namespace allatkezelo_kliens
             szerkesztettTermek.ProductName = txtProductName.Text;
             szerkesztettTermek.IsAvailableForSale = chkElerheto.Checked;
 
-            // 4. Halak specifikus adatok kiolvasása a UI elemekből
-            // (A Trim() eltávolítja a felesleges szóközöket az elejéről/végéről)
-            string jellemzok = textboxJellemzok.Text.Trim();
-            string tartas = textboxTartas.Text.Trim();
-            string vizparameterek = textboxVizparameterek.Text.Trim();
-            string taplalkozas = textboxTaplalkozas.Text.Trim();
-            string szaporitas = textboxSzaporitas.Text.Trim();
+            // 4. HTML string összeállítása a Service segítségével
+            string generaltHtmlLeiras = _fishService.BuildLongDescription(
+                textboxJellemzok.Text.Trim(),
+                textboxTartas.Text.Trim(),
+                textboxVizparameterek.Text.Trim(),
+                textboxTaplalkozas.Text.Trim(),
+                textboxSzaporitas.Text.Trim()
+            );
 
-            // 5. A HTML string összeállítása az ÚJ szerkezet alapján (NINCS <br /> tag!)
-            // Figyelem: A dupla idézőjeleket a HTML attribútumokban (mint a style="") meg kell duplázni a C# kódban (""text-align..."")!
-            string generaltHtmlLeiras = $@"<p style=""text-align: left;""><strong>Jellemzők</strong>: {jellemzok}</p>
-<p style=""text-align: left;""><strong>Tartás</strong>: {tartas}</p>
-<p style=""text-align: left;""><strong>Vízparaméterek</strong>: {vizparameterek}</p>
-<p style=""text-align: left;""><strong>Táplálkozás</strong>: {taplalkozas}</p>
-<p style=""text-align: left;""><strong>Szaporítás</strong>: {szaporitas}</p>";
-
-            // 6. A generált HTML kód betöltése a termék LongDescription mezőjébe
+            // 5. A generált HTML kód betöltése a termék LongDescription mezőjébe
             szerkesztettTermek.LongDescription = generaltHtmlLeiras;
 
-            // 7. Árak visszaalakítása számmá
-            // A NumberStyles.Any segít abban, hogy a pénznem jelek (pl. "Ft") és a szóközök ne okozzanak hibát konvertáláskor
-            if (decimal.TryParse(txtListPrice.Text, System.Globalization.NumberStyles.Any, null, out decimal ujListPrice))
+            // 6. Árak validálása a Service segítségével
+            if (!_fishService.ValidatePrices(txtListPrice.Text, txtSitePrice.Text, out decimal ujListPrice, out decimal ujSitePrice))
             {
-                szerkesztettTermek.ListPrice = ujListPrice;
-            }
-            else
-            {
-                MessageBox.Show("A Listaár formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Az árak formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return; // Ha hiba van, megszakítjuk a mentést
             }
 
-            if (decimal.TryParse(txtSitePrice.Text, System.Globalization.NumberStyles.Any, null, out decimal ujSitePrice))
-            {
-                szerkesztettTermek.SitePrice = ujSitePrice;
-            }
-            else
-            {
-                MessageBox.Show("Az Eladási ár formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            szerkesztettTermek.ListPrice = ujListPrice;
+            szerkesztettTermek.SitePrice = ujSitePrice;
 
-            // 8. Küldés az API-nak a webre
+            // 7. Küldés az API-nak a webre
             try
             {
                 // A ProductsUpdate metódus automatikusan frissíti a terméket a Bvin (rejtett azonosító) alapján

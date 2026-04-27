@@ -17,6 +17,7 @@ namespace allatkezelo_kliens
     {
         private Hotcakes.CommerceDTO.v1.Client.Api _api;
         private List<Hotcakes.CommerceDTO.v1.Catalog.CategorySnapshotDTO> _mindenKategoria;
+    
         //private Hotcakes.CommerceDTO.v1.Catalog.ProductDTO _kivalasztottTermek;
         private readonly IReptileService _reptileService = new ReptileService();
 
