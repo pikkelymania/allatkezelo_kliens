@@ -1,4 +1,7 @@
-﻿using System;
+﻿using allatkezelo_kliens.Services;
+using Hotcakes.CommerceDTO.v1.Catalog;
+using Hotcakes.CommerceDTO.v1.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Hotcakes.CommerceDTO.v1.Client;
-using Hotcakes.CommerceDTO.v1.Catalog;
 
 namespace allatkezelo_kliens
 {
@@ -17,6 +18,7 @@ namespace allatkezelo_kliens
         private Hotcakes.CommerceDTO.v1.Client.Api _api;
         private List<Hotcakes.CommerceDTO.v1.Catalog.CategorySnapshotDTO> _mindenKategoria;
         //private Hotcakes.CommerceDTO.v1.Catalog.ProductDTO _kivalasztottTermek;
+        private readonly IReptileService _reptileService = new ReptileService();
 
         private const string ApiKey = "1-45782d8b-85b9-4924-aafe-ea09050cbc9e";
         private const string StoreUrl = "http://www.pikkelymania.hu/";
@@ -179,64 +181,35 @@ namespace allatkezelo_kliens
 
                     // Kivesszük a nyers HTML-t
                     string nyersHtml = kivalasztottTermek.LongDescription ?? "";
+                    var reszletek = _reptileService.ParseHtmlDescription(nyersHtml);
 
-                    // Visszaalakítjuk a csúnya HTML kódokat (pl. &uuml;) normál ékezetes betűkké!
-                    string htmlLeiras = System.Net.WebUtility.HtmlDecode(nyersHtml);
-
-                    // Ha van benne valami, elkezdjük kinyerni az adatokat
-                    if (!string.IsNullOrWhiteSpace(htmlLeiras))
-                    {
-                        var matchNev = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Név</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
-                        if (matchNev.Success) textboxNev.Text = matchNev.Groups[1].Value.Trim();
-
-                        var matchSzuletett = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Született</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
-                        if (matchSzuletett.Success)
-                        {
-                            string datumSzoveg = matchSzuletett.Groups[1].Value.Trim();
-                            if (DateTime.TryParse(datumSzoveg, out DateTime parsedDate))
-                            {
-                                dateTimePicker1.Value = parsedDate;
-                            }
-                        }
-
-                        var matchNem = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Nem</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
-                        if (matchNem.Success) comboBoxNem.Text = matchNem.Groups[1].Value.Trim();
-
-                        var matchGenetika = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Genetika</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
-                        if (matchGenetika.Success) textboxGenetika.Text = matchGenetika.Groups[1].Value.Trim();
-
-                        var matchSzemelyiseg = System.Text.RegularExpressions.Regex.Match(htmlLeiras, @"<strong>Személyiség</strong>:\s*<br\s*/>\s*(.*?)\s*</p>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
-                        if (matchSzemelyiseg.Success) textboxSzemelyiseg.Text = matchSzemelyiseg.Groups[1].Value.Trim();
-                    }
+                    textboxNev.Text = reszletek.Nev;
+                    if (reszletek.Szuletett.HasValue) dateTimePicker1.Value = reszletek.Szuletett.Value;
+                    comboBoxNem.Text = reszletek.Nem;
+                    textboxGenetika.Text = reszletek.Genetika;
+                    textboxSzemelyiseg.Text = reszletek.Szemelyiseg;
 
                     // --- 3. RAKTÁRKÉSZLET (INVENTORY) LEKÉRDEZÉSE ÉS MEGJELENÍTÉSE ---
                     try
                     {
                         var keszletValasz = _api.ProductInventoryFindForProduct(kivalasztottTermek.Bvin);
-                        int darabszam = 0; // Alapértelmezetten 0-nak vesszük
+                        int darabszam = 0;
 
                         if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
                         {
-                            darabszam = keszletValasz.Content[0].QuantityOnHand- keszletValasz.Content[0].QuantityReserved;
+                            var inv = keszletValasz.Content[0];
+                            // A Service végzi a matekot
+                            darabszam = _reptileService.CalculateAvailableStock(inv.QuantityOnHand, inv.QuantityReserved);
                         }
 
                         labelraktaron.Text = $"{darabszam} db";
-
-                        // Szín beállítása a darabszám alapján
-                        if (darabszam <= 0)
-                        {
-                            labelraktaron.ForeColor = Color.Red;
-                        }
-                        else
-                        {
-                            // A Color.Green néha túl világos világosszürke háttéren, a DarkGreen általában szebben mutat
-                            labelraktaron.ForeColor = Color.DarkGreen;
-                        }
+                        // A Service mondja meg a színt
+                        labelraktaron.ForeColor = _reptileService.GetStockStatusColor(darabszam);
                     }
                     catch
                     {
                         labelraktaron.Text = "Hiba";
-                        labelraktaron.ForeColor = Color.Red;
+                        labelraktaron.ForeColor = System.Drawing.Color.Red;
                     }
                 }
             }
@@ -265,52 +238,29 @@ namespace allatkezelo_kliens
             szerkesztettTermek.ProductName = txtProductName.Text;
             szerkesztettTermek.IsAvailableForSale = chkElerheto.Checked;
 
-            // Egyed adatainak frissítése a description mezőhöz
-            // 1. Az értékek kiolvasása a UI elemekből (a Trim() eltávolítja a felesleges szóközöket az elejéről/végéről)
-            string nev = textboxNev.Text.Trim();
-            string szuletett = dateTimePicker1.Value.ToString("yyyy. MM. dd."); // Szép magyar dátumformátum
-            string nem = comboBoxNem.Text.Trim();
-            string genetika = textboxGenetika.Text.Trim();
-            string szemelyiseg = textboxSzemelyiseg.Text.Trim();
+            // 4. HTML leírás generálása a Service segítségével
+            szerkesztettTermek.LongDescription = _reptileService.BuildLongDescription(
+                textboxNev.Text.Trim(),
+                dateTimePicker1.Value.ToString("yyyy. MM. dd."),
+                comboBoxNem.Text.Trim(),
+                textboxGenetika.Text.Trim(),
+                textboxSzemelyiseg.Text.Trim()
+            );
 
-            // 2. A HTML string összeállítása
-            // A $@ jelzés teszi lehetővé a többsoros stringet és a változók { } közötti behelyettesítését.
-            // Fontos: A dupla idézőjeleket a HTML attribútumokban (mint a style="") meg kell duplázni a C# kódban (""text-align..."")!
-            string generaltHtmlLeiras = $@"<p style=""text-align: left;""><strong>Név</strong>: <br />{nev}</p>
-                                           <p style=""text-align: left;""><strong>Született</strong>: <br />{szuletett}</p>
-                                           <p style=""text-align: left;""><strong>Nem</strong>: <br />{nem}</p>
-                                           <p style=""text-align: left;""><strong>Genetika</strong>: <br />{genetika}</p>
-                                           <p style=""text-align: left;""><strong>Személyiség</strong>: <br />{szemelyiseg}</p>";
-
-            // 3. A generált HTML kód betöltése a termék LongDescription mezőjébe
-            szerkesztettTermek.LongDescription = generaltHtmlLeiras;
-
-            // 4. Árak visszaalakítása számmá
-            // A NumberStyles.Any segít abban, hogy a pénznem jelek (pl. "Ft") és a szóközök ne okozzanak hibát konvertáláskor
-            if (decimal.TryParse(txtListPrice.Text, System.Globalization.NumberStyles.Any, null, out decimal ujListPrice))
+            // 5. Árak validálása a Service segítségével
+            if (!_reptileService.ValidatePrices(txtListPrice.Text, txtSitePrice.Text, out decimal ujListPrice, out decimal ujSitePrice))
             {
-                szerkesztettTermek.ListPrice = ujListPrice;
-            }
-            else
-            {
-                MessageBox.Show("A Listaár formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Az árak formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return; // Ha hiba van, megszakítjuk a mentést
             }
 
-            if (decimal.TryParse(txtSitePrice.Text, System.Globalization.NumberStyles.Any, null, out decimal ujSitePrice))
-            {
-                szerkesztettTermek.SitePrice = ujSitePrice;
-            }
-            else
-            {
-                MessageBox.Show("Az Eladási ár formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            szerkesztettTermek.ListPrice = ujListPrice;
+            szerkesztettTermek.SitePrice = ujSitePrice;
 
-            // 5. Küldés az API-nak a webre
+            // 6. Küldés az API-nak a webre
             try
             {
-                // A ProductsUpdate metódus automatikusan frissíti a terméket a Bvin (rejtett azonosító) alapján
+                // A ProductsUpdate metódus automatikusan frissíti a terméket a Bvin alapján
                 var valasz = _api.ProductsUpdate(szerkesztettTermek);
 
                 // Ellenőrizzük, hogy a szerver dobott-e vissza valamilyen hibát

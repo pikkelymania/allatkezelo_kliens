@@ -4,7 +4,7 @@ using System;
 namespace AllatkezeloKliens.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class FishTests
     {
         [TestMethod]
         public void TestMethod1()

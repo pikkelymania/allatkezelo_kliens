@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="AllatkezeloKliens.Tests/AllatkezeloKliens.Tests.csproj" Id="d89bd5f8-d78f-43b9-9c6b-939b72e1e915" />
   <Project Path="allatkezelo_kliens/allatkezelo_kliens.csproj" Id="b544b86f-7ae0-4b89-a2c7-b051aa06e72b" />
 </Solution>
