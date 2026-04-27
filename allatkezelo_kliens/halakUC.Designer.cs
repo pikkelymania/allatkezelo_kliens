@@ -89,7 +89,7 @@
             this.panel1.Controls.Add(this.button3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(152, 587);
             this.panel1.TabIndex = 7;
@@ -104,7 +104,7 @@
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnDelete.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnDelete.Location = new System.Drawing.Point(2, 526);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(148, 27);
             this.btnDelete.TabIndex = 11;
@@ -122,7 +122,7 @@
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnSave.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnSave.Location = new System.Drawing.Point(2, 557);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(148, 27);
             this.btnSave.TabIndex = 9;
@@ -140,7 +140,7 @@
             this.btnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnNew.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnNew.Location = new System.Drawing.Point(2, 494);
-            this.btnNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNew.Margin = new System.Windows.Forms.Padding(2);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(148, 27);
             this.btnNew.TabIndex = 8;
@@ -158,7 +158,7 @@
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button6.Location = new System.Drawing.Point(2, 2);
-            this.button6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(148, 27);
             this.button6.TabIndex = 6;
@@ -176,7 +176,7 @@
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button1.Location = new System.Drawing.Point(2, 34);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(148, 27);
             this.button1.TabIndex = 1;
@@ -194,7 +194,7 @@
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button2.Location = new System.Drawing.Point(2, 66);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(148, 27);
             this.button2.TabIndex = 2;
@@ -212,7 +212,7 @@
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button3.Location = new System.Drawing.Point(2, 98);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(148, 27);
             this.button3.TabIndex = 3;
@@ -224,7 +224,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(152, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -246,9 +246,9 @@
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox1.Size = new System.Drawing.Size(680, 293);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -259,9 +259,9 @@
             this.groupBox2.Controls.Add(this.tableLayoutPanel1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(358, 19);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(316, 268);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
@@ -284,7 +284,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 15);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -299,7 +299,7 @@
             // 
             this.textboxVizparameterek.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textboxVizparameterek.Location = new System.Drawing.Point(91, 102);
-            this.textboxVizparameterek.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxVizparameterek.Margin = new System.Windows.Forms.Padding(2);
             this.textboxVizparameterek.Multiline = true;
             this.textboxVizparameterek.Name = "textboxVizparameterek";
             this.textboxVizparameterek.Size = new System.Drawing.Size(273, 46);
@@ -309,7 +309,7 @@
             // 
             this.textboxTartas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textboxTartas.Location = new System.Drawing.Point(91, 52);
-            this.textboxTartas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxTartas.Margin = new System.Windows.Forms.Padding(2);
             this.textboxTartas.Multiline = true;
             this.textboxTartas.Name = "textboxTartas";
             this.textboxTartas.Size = new System.Drawing.Size(273, 46);
@@ -319,7 +319,7 @@
             // 
             this.textboxTaplalkozas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textboxTaplalkozas.Location = new System.Drawing.Point(91, 152);
-            this.textboxTaplalkozas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxTaplalkozas.Margin = new System.Windows.Forms.Padding(2);
             this.textboxTaplalkozas.Multiline = true;
             this.textboxTaplalkozas.Name = "textboxTaplalkozas";
             this.textboxTaplalkozas.Size = new System.Drawing.Size(273, 46);
@@ -329,7 +329,7 @@
             // 
             this.textboxSzaporitas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textboxSzaporitas.Location = new System.Drawing.Point(91, 202);
-            this.textboxSzaporitas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxSzaporitas.Margin = new System.Windows.Forms.Padding(2);
             this.textboxSzaporitas.Multiline = true;
             this.textboxSzaporitas.Name = "textboxSzaporitas";
             this.textboxSzaporitas.Size = new System.Drawing.Size(273, 47);
@@ -379,7 +379,7 @@
             // 
             this.textboxJellemzok.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textboxJellemzok.Location = new System.Drawing.Point(91, 2);
-            this.textboxJellemzok.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxJellemzok.Margin = new System.Windows.Forms.Padding(2);
             this.textboxJellemzok.Multiline = true;
             this.textboxJellemzok.Name = "textboxJellemzok";
             this.textboxJellemzok.Size = new System.Drawing.Size(273, 46);
@@ -400,9 +400,9 @@
             this.groupBox3.Controls.Add(this.tableLayoutPanel2);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox3.Location = new System.Drawing.Point(6, 19);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(352, 268);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
@@ -427,7 +427,7 @@
             this.tableLayoutPanel2.Controls.Add(this.chkElerheto, 1, 4);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 15);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 6;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -464,7 +464,7 @@
             // 
             this.txtSitePrice.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSitePrice.Location = new System.Drawing.Point(70, 143);
-            this.txtSitePrice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSitePrice.Margin = new System.Windows.Forms.Padding(2);
             this.txtSitePrice.Name = "txtSitePrice";
             this.txtSitePrice.Size = new System.Drawing.Size(276, 20);
             this.txtSitePrice.TabIndex = 8;
@@ -473,7 +473,7 @@
             // 
             this.txtListPrice.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtListPrice.Location = new System.Drawing.Point(70, 96);
-            this.txtListPrice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtListPrice.Margin = new System.Windows.Forms.Padding(2);
             this.txtListPrice.Name = "txtListPrice";
             this.txtListPrice.Size = new System.Drawing.Size(276, 20);
             this.txtListPrice.TabIndex = 7;
@@ -482,7 +482,7 @@
             // 
             this.txtProductName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtProductName.Location = new System.Drawing.Point(70, 49);
-            this.txtProductName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtProductName.Margin = new System.Windows.Forms.Padding(2);
             this.txtProductName.Name = "txtProductName";
             this.txtProductName.Size = new System.Drawing.Size(276, 20);
             this.txtProductName.TabIndex = 6;
@@ -541,7 +541,7 @@
             // 
             this.txtSku.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSku.Location = new System.Drawing.Point(70, 2);
-            this.txtSku.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSku.Margin = new System.Windows.Forms.Padding(2);
             this.txtSku.Name = "txtSku";
             this.txtSku.Size = new System.Drawing.Size(276, 20);
             this.txtSku.TabIndex = 5;
@@ -550,7 +550,7 @@
             // 
             this.chkElerheto.AutoSize = true;
             this.chkElerheto.Location = new System.Drawing.Point(70, 190);
-            this.chkElerheto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkElerheto.Margin = new System.Windows.Forms.Padding(2);
             this.chkElerheto.Name = "chkElerheto";
             this.chkElerheto.Size = new System.Drawing.Size(70, 17);
             this.chkElerheto.TabIndex = 9;
@@ -562,7 +562,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -576,7 +576,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "halakUC";
             this.Size = new System.Drawing.Size(832, 587);
             this.Load += new System.EventHandler(this.halakUC_Load);
