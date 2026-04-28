@@ -1,4 +1,5 @@
-﻿using Hotcakes.CommerceDTO.v1.Catalog;
+﻿using allatkezelo_kliens.Services;
+using Hotcakes.CommerceDTO.v1.Catalog;
 using Hotcakes.CommerceDTO.v1.Client;
 using Hotcakes.CommerceDTO.v1.Shipping;
 using System;
@@ -19,11 +20,15 @@ namespace allatkezelo_kliens
         private byte[] _kivalasztottKepByteok = null;
         private string _hullokFokategoriaBvin = "";
         private string _eloAllatokFokategoriaBvin = "";
-        private readonly allatkezelo_kliens.Services.IReptileService _reptileService = new allatkezelo_kliens.Services.ReptileService();
+        private readonly allatkezelo_kliens.Services.IReptileService _reptileService;
         public UjHulloTermek(Api api)
         {
             InitializeComponent();
             _api = api;
+
+            // A híd bekötése itt is szükséges
+            var wrapper = new HotcakesApiWrapper(_api);
+            _reptileService = new ReptileService(wrapper);
 
             // Kategóriák (Fajok) betöltése a Hotcakes-ből a comboBoxFaj-ba
             KategoriakBetoltese();

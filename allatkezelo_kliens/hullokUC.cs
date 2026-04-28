@@ -19,12 +19,21 @@ namespace allatkezelo_kliens
         private List<Hotcakes.CommerceDTO.v1.Catalog.CategorySnapshotDTO> _mindenKategoria;
     
         //private Hotcakes.CommerceDTO.v1.Catalog.ProductDTO _kivalasztottTermek;
-        private readonly IReptileService _reptileService = new ReptileService();
+        private readonly IReptileService _reptileService;
 
         private const string ApiKey = "1-45782d8b-85b9-4924-aafe-ea09050cbc9e";
         private const string StoreUrl = "http://www.pikkelymania.hu/";
         public hullokUC()
         {
+
+            // 2. Itt építjük fel az igazi kapcsolatot
+            var realApi = new Hotcakes.CommerceDTO.v1.Client.Api(StoreUrl, ApiKey);
+            var wrapper = new HotcakesApiWrapper(realApi);
+
+            // Injektáljuk a szervizbe
+            _reptileService = new ReptileService(wrapper);
+            _api = realApi;
+
             InitializeComponent();
         }
 

@@ -11,7 +11,7 @@ namespace AllatkezeloKliens.Tests
         private ReptileService _service;
 
         [TestInitialize]
-        public void Setup() => _service = new ReptileService();
+        public void Setup() => _service = new ReptileService(null);
 
         // 1. ÁTFOGÓ TESZT: Árak és bemeneti adatok ellenőrzése (Data-Driven)
         [DataTestMethod]

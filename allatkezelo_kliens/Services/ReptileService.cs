@@ -25,10 +25,38 @@ namespace allatkezelo_kliens.Services
         bool ValidateNewReptile(string productName, string sku, byte[] imageBytes, out string errorMessage);
         Hotcakes.CommerceDTO.v1.Catalog.ProductDTO CreateNewReptileDTO(string sku, string productName, decimal listPrice, decimal sitePrice, string htmlDescription, bool isAvailable);
 
+        // ÚJ: A mentés metódus az interfészben is szerepel
+        bool SaveReptileToWebshop(Hotcakes.CommerceDTO.v1.Catalog.ProductDTO reptile, byte[] img);
     }
 
     public class ReptileService : IReptileService
     {
+        // --- 0. FÜGGŐSÉGINJEKTÁLÁS ÉS MENTÉS (Moq teszteléshez) ---
+        private readonly IHotcakesApi _apiWrapper;
+
+        // A konstruktor most már kéri a "hidat" az API-hoz
+        public ReptileService(IHotcakesApi apiWrapper)
+        {
+            _apiWrapper = apiWrapper;
+        }
+
+        // ÚJ: Ezt a metódust fogjuk Moq-val tesztelni
+        public bool SaveReptileToWebshop(Hotcakes.CommerceDTO.v1.Catalog.ProductDTO reptile, byte[] img)
+        {
+            if (_apiWrapper == null) return false;
+
+            try
+            {
+                var response = _apiWrapper.ProductsCreate(reptile, img);
+                return response.Errors == null || response.Errors.Count == 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        // ----------------------------------------------------------
+
         // 1. HTML Generálása
         public string BuildLongDescription(string nev, string szuletett, string nem, string genetika, string szemelyiseg)
         {
@@ -92,6 +120,7 @@ namespace allatkezelo_kliens.Services
             }
             return Color.DarkGreen;
         }
+
         // 6. Új hüllő adatainak validálása
         public bool ValidateNewReptile(string productName, string sku, byte[] imageBytes, out string errorMessage)
         {

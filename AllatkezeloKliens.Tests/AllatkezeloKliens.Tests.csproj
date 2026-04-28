@@ -71,6 +71,7 @@
     <Compile Include="ReptileTests.cs" />
     <Compile Include="OrderTests.cs" />
     <Compile Include="FishMoqTests.cs" />
+    <Compile Include="ReptileMoqTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
