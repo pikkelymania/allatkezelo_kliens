@@ -1,4 +1,5 @@
-﻿using Hotcakes.CommerceDTO.v1.Client;
+﻿using allatkezelo_kliens.Services;
+using Hotcakes.CommerceDTO.v1.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,13 +17,17 @@ namespace allatkezelo_kliens
         private Hotcakes.CommerceDTO.v1.Client.Api _api;
         private List<Hotcakes.CommerceDTO.v1.Catalog.CategorySnapshotDTO> _mindenKategoria;
         //private Hotcakes.CommerceDTO.v1.Catalog.ProductDTO _kivalasztottTermek;
-        private readonly allatkezelo_kliens.Services.IFishService _fishService = new allatkezelo_kliens.Services.FishService();
+        private readonly allatkezelo_kliens.Services.IFishService _fishService;
 
         private const string ApiKey = "1-45782d8b-85b9-4924-aafe-ea09050cbc9e";
         private const string StoreUrl = "http://www.pikkelymania.hu/";
         public halakUC()
         {
             InitializeComponent();
+
+            var realApi = new Hotcakes.CommerceDTO.v1.Client.Api("URL", "KEY");
+            var wrapper = new HotcakesApiWrapper(realApi);
+            _fishService = new FishService(wrapper);
         }
 
         private void halakUC_Load(object sender, EventArgs e)

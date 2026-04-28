@@ -20,11 +20,17 @@ namespace allatkezelo_kliens
         private byte[] _kivalasztottKepByteok = null;
         private string _halakFokategoriaBvin = "";
         private string _eloAllatokFokategoriaBvin = "";
-        private readonly allatkezelo_kliens.Services.IFishService _fishService = new allatkezelo_kliens.Services.FishService();
+        private readonly allatkezelo_kliens.Services.IFishService _fishService;
         public UjHalTermek(Api api)
         {
             InitializeComponent();
             _api = api;
+
+            // 1. Csomagoljuk be a kapott api-t a Wrapperbe
+            var wrapper = new allatkezelo_kliens.Services.HotcakesApiWrapper(_api);
+
+            // 2. Adjuk át a Service-nek
+            _fishService = new allatkezelo_kliens.Services.FishService(wrapper);
 
             // Kategóriák betöltése a Hotcakes-ből a comboBoxKategoria-ba
             KategoriakBetoltese();

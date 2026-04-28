@@ -10,7 +10,7 @@ namespace AllatkezeloKliens.Tests
         private FishService _service;
 
         [TestInitialize]
-        public void Setup() => _service = new FishService();
+        public void Setup() => _service = new FishService(null);
 
         // 1. ÁTFOGÓ TESZT: HTML visszafejtés és Regex (Minden eshetőségre)
         [DataTestMethod]

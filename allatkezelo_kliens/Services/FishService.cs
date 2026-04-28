@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Hotcakes.CommerceDTO.v1.Catalog;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace allatkezelo_kliens.Services
 {
@@ -32,6 +33,36 @@ namespace allatkezelo_kliens.Services
 
     public class FishService : IFishService
     {
+
+        private readonly IHotcakesApi _apiWrapper;
+
+        // Konstruktor: Ha kap API-t, azt használja, ha nem (null), akkor is lefut a többi teszt
+        public FishService(IHotcakesApi apiWrapper)
+        {
+            _apiWrapper = apiWrapper;
+        }
+
+        // Az új metódus, amit Moq-val fogunk tesztelni
+        public bool SaveFishToWebshop(Hotcakes.CommerceDTO.v1.Catalog.ProductDTO fish, byte[] img)
+        {
+            if (_apiWrapper == null) return false;
+
+            try
+            {
+                // Megpróbáljuk elküldeni az adatokat a (szimulált vagy igazi) API-nak
+                var response = _apiWrapper.ProductsCreate(fish, img);
+
+                // Ha nincs hiba a válaszban, akkor a mentés sikeres volt
+                return response.Errors == null || response.Errors.Count == 0;
+            }
+            catch
+            {
+                // Ha bármilyen váratlan hiba történik (pl. kábelszakadás, Exception), 
+                // megfogjuk a hibát, és lefagyás helyett simán hamisat adunk vissza.
+                return false;
+            }
+        }
+
         // 1. HTML Generálása (A halas formátum szerint)
         public string BuildLongDescription(string jellemzok, string tartas, string vizparameterek, string taplalkozas, string szaporitas)
         {
