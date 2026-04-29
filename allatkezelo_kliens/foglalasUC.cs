@@ -198,6 +198,36 @@ namespace allatkezelo_kliens
                                 }
                             }
                         }
+                        // --- INNENTŐL KEZDŐDIK AZ ÚJ RÉSZ A "COMPLETE" STÁTUSZHOZ ---
+                        else if (ujNev == "Complete" && rendeles.Items != null)
+                        {
+                            foreach (var tetel in rendeles.Items)
+                            {
+                                try
+                                {
+                                    var keszletValasz = _api.ProductInventoryFindForProduct(tetel.ProductId);
+                                    if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
+                                    {
+                                        var aktualisKeszlet = keszletValasz.Content[0];
+                                        int rendeltDarab = (int)tetel.Quantity;
+
+                                        // Levonjuk az OnHand-ből és a Reserved-ből is a rendelt darabszámot
+                                        aktualisKeszlet.QuantityOnHand -= rendeltDarab;
+                                        if (aktualisKeszlet.QuantityOnHand < 0) aktualisKeszlet.QuantityOnHand = 0;
+
+                                        aktualisKeszlet.QuantityReserved -= rendeltDarab;
+                                        if (aktualisKeszlet.QuantityReserved < 0) aktualisKeszlet.QuantityReserved = 0;
+
+                                        _api.ProductInventoryUpdate(aktualisKeszlet);
+                                    }
+                                }
+                                catch (Exception invEx)
+                                {
+                                    MessageBox.Show($"Hiba a(z) {tetel.ProductName} készletének frissítésekor: {invEx.Message}", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+                        // --- ITT VÉGE AZ ÚJ RÉSZNEK ---
 
                         MessageBox.Show($"A rendelés állapota sikeresen frissítve erre: {ujNev}", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         kivalasztottSor.Státusz = ujNev;
