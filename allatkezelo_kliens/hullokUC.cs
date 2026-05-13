@@ -39,6 +39,7 @@ namespace allatkezelo_kliens
 
         private void hullokUC_Load(object sender, EventArgs e)
         {
+            ThemeManager.ApplyTheme(this);
             try
             {
                 // Az API kliens inicializálása
@@ -92,6 +93,35 @@ namespace allatkezelo_kliens
                             oszlop.Visible = false;
                         }
                     }
+
+                    // --- ÚJ RÉSZ: OSZLOPNEVEK MAGYARÍTÁSA ÉS FORMÁZÁSA ---
+
+                    if (dataGridView1.Columns.Contains("Sku"))
+                        dataGridView1.Columns["Sku"].HeaderText = "Cikkszám";
+
+                    if (dataGridView1.Columns.Contains("ProductName"))
+                        dataGridView1.Columns["ProductName"].HeaderText = "Megnevezés";
+
+                    if (dataGridView1.Columns.Contains("SitePrice"))
+                    {
+                        dataGridView1.Columns["SitePrice"].HeaderText = "Eladási ár";
+                        dataGridView1.Columns["SitePrice"].DefaultCellStyle.Format = "C0"; // Ft formátum tizedesek nélkül
+                    }
+
+                    if (dataGridView1.Columns.Contains("ListPrice"))
+                    {
+                        dataGridView1.Columns["ListPrice"].HeaderText = "Listaár";
+                        dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0"; // Ft formátum tizedesek nélkül
+                    }
+
+                    if (dataGridView1.Columns.Contains("IsAvailableForSale"))
+                        dataGridView1.Columns["IsAvailableForSale"].HeaderText = "Elérhető";
+
+                    // Mivel a kódodban a LongDescription is szerepel a látható oszlopok között:
+                    if (dataGridView1.Columns.Contains("LongDescription"))
+                        dataGridView1.Columns["LongDescription"].HeaderText = "Leírás (HTML)";
+
+                    // -----------------------------------------------------
                 }
             }
             else
@@ -138,27 +168,19 @@ namespace allatkezelo_kliens
 
         private void AktivGombKijeloles(Button klikkeltGomb)
         {
-            // 1. Definiáljuk a színeket (ezeket írd át a saját dizájnodhoz!)
-            Color alapHatter = SystemColors.ControlLight; // Világosszürke
-            Color alapBetu = Color.Black;                     // Fekete betű
-
-            Color aktivHatter = Color.FromArgb(120, 120, 120); 
-            Color aktivBetu = Color.White;                    // Fehér betű az aktívnak
-
-            // 2. Végigmegyünk azon a panelen, amiben a gombok vannak
+            // A többi gomb visszaállítása halványra
             foreach (Control vezerlo in klikkeltGomb.Parent.Controls)
             {
-                // Ha a vezérlő egy gomb, akkor visszaállítjuk az alapszínére
                 if (vezerlo is Button gomb)
                 {
-                    gomb.BackColor = alapHatter;
-                    gomb.ForeColor = alapBetu;
+                    gomb.BackColor = Color.FromArgb(246, 249, 248); // HalvanyHatter (Zöldes)
+                    gomb.ForeColor = Color.FromArgb(30, 41, 59);    // SzovegSzin
                 }
             }
 
-            // 3. A ténylegesen megnyomott gombot átszínezzük az aktív színre
-            klikkeltGomb.BackColor = aktivHatter;
-            klikkeltGomb.ForeColor = aktivBetu;
+            // A kiválasztott gomb elegáns ZÖLD kiemelése
+            klikkeltGomb.BackColor = Color.FromArgb(220, 235, 230); // Nagyon halvány zöld háttér
+            klikkeltGomb.ForeColor = Color.FromArgb(55, 95, 82);    // PikkelyMánia sötétzöld szöveg
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)

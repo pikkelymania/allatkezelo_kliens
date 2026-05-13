@@ -85,6 +85,7 @@
     <Compile Include="Services\IHotcakesApi.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ReptileService.cs" />
+    <Compile Include="ThemeManager.cs" />
     <Compile Include="UjHalTermek.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -15,6 +15,7 @@ namespace allatkezelo_kliens
         public Form1()
         {
             InitializeComponent();
+            ThemeManager.ApplyTheme(this);
         }
 
         private void halakUC1_Load(object sender, EventArgs e)

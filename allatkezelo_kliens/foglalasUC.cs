@@ -31,7 +31,7 @@ namespace allatkezelo_kliens
         private void foglalasUC_Load(object sender, EventArgs e)
         {
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
-
+            ThemeManager.ApplyTheme(this);
             try
             {
                 _api = new Api(StoreUrl, ApiKey);

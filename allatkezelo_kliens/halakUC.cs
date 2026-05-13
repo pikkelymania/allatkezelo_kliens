@@ -32,6 +32,7 @@ namespace allatkezelo_kliens
 
         private void halakUC_Load(object sender, EventArgs e)
         {
+            ThemeManager.ApplyTheme(this);
             try
             {
                 // Az API kliens inicializálása
@@ -84,6 +85,35 @@ namespace allatkezelo_kliens
                             oszlop.Visible = false;
                         }
                     }
+
+                    // --- ÚJ RÉSZ: OSZLOPNEVEK MAGYARÍTÁSA ÉS FORMÁZÁSA ---
+
+                    if (dataGridView1.Columns.Contains("Sku"))
+                        dataGridView1.Columns["Sku"].HeaderText = "Cikkszám";
+
+                    if (dataGridView1.Columns.Contains("ProductName"))
+                        dataGridView1.Columns["ProductName"].HeaderText = "Megnevezés";
+
+                    if (dataGridView1.Columns.Contains("SitePrice"))
+                    {
+                        dataGridView1.Columns["SitePrice"].HeaderText = "Eladási ár";
+                        dataGridView1.Columns["SitePrice"].DefaultCellStyle.Format = "C0"; // Ft formátum tizedesek nélkül
+                    }
+
+                    if (dataGridView1.Columns.Contains("ListPrice"))
+                    {
+                        dataGridView1.Columns["ListPrice"].HeaderText = "Listaár";
+                        dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0"; // Ft formátum tizedesek nélkül
+                    }
+
+                    if (dataGridView1.Columns.Contains("IsAvailableForSale"))
+                        dataGridView1.Columns["IsAvailableForSale"].HeaderText = "Elérhető";
+
+                    // Mivel a kódodban a LongDescription is szerepel a látható oszlopok között:
+                    if (dataGridView1.Columns.Contains("LongDescription"))
+                        dataGridView1.Columns["LongDescription"].HeaderText = "Leírás (HTML)";
+
+                    // -----------------------------------------------------
                 }
             }
             else
