@@ -135,7 +135,8 @@
             this.btnAllOrders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAllOrders.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAllOrders.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnAllOrders.Location = new System.Drawing.Point(3, 3);
+            this.btnAllOrders.Location = new System.Drawing.Point(3, 2);
+            this.btnAllOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAllOrders.Name = "btnAllOrders";
             this.btnAllOrders.Size = new System.Drawing.Size(197, 33);
             this.btnAllOrders.TabIndex = 10;
@@ -153,6 +154,7 @@
             this.btnHullok.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnHullok.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnHullok.Location = new System.Drawing.Point(3, 42);
+            this.btnHullok.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnHullok.Name = "btnHullok";
             this.btnHullok.Size = new System.Drawing.Size(197, 33);
             this.btnHullok.TabIndex = 6;
@@ -170,6 +172,7 @@
             this.btnHalak.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnHalak.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnHalak.Location = new System.Drawing.Point(3, 81);
+            this.btnHalak.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnHalak.Name = "btnHalak";
             this.btnHalak.Size = new System.Drawing.Size(197, 33);
             this.btnHalak.TabIndex = 1;
