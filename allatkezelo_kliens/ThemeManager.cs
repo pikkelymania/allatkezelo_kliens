@@ -35,35 +35,40 @@ namespace allatkezelo_kliens
         }
         private static void TabControl_DrawItem(object sender, DrawItemEventArgs e)
         {
-            TabControl tabControl = sender as TabControl;
-            TabPage tabPage = tabControl.TabPages[e.Index];
-            Rectangle tabBounds = tabControl.GetTabRect(e.Index);
-
-            // Megnézzük, hogy épp ez a fül van-e kiválasztva
+            TabControl tab = (TabControl)sender;
+            Graphics g = e.Graphics;
+            Rectangle bounds = tab.GetTabRect(e.Index);
             bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 
-            // 1. Háttér kifestése
-            // Ha ki van választva, akkor PikkelyMánia Zöld, ha nincs, akkor halvány szürke/fehér
-            using (SolidBrush bgBrush = new SolidBrush(isSelected ? KiemeloZold : HalvanyHatter))
+            // 1. KÉPMINŐSÉG JAVÍTÁSA (Éles, gyönyörű szövegek recésedés nélkül!)
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+            // 2. HÁTTÉR TISZTÍTÁSA (Eltüntetjük a 3D kereteket egy picit nagyobb kitöltéssel)
+            Rectangle fillRect = new Rectangle(bounds.X - 2, bounds.Y - 2, bounds.Width + 4, bounds.Height + 4);
+
+            // A kiválasztott sötétzöld, a többi beolvad a fehér háttérbe
+            using (SolidBrush bgBrush = new SolidBrush(isSelected ? KiemeloZold : FeherHatter))
             {
-                e.Graphics.FillRectangle(bgBrush, tabBounds);
+                g.FillRectangle(bgBrush, fillRect);
             }
 
-            // 2. Szöveg kifestése
-            // Ha ki van választva, akkor fehér betűk, ha nincs, akkor a sötétszürke alapbetű
-            using (SolidBrush textBrush = new SolidBrush(isSelected ? Color.White : SzovegSzin))
+            // 3. VIZUÁLIS ELVÁLASZTÓ (Az inaktív fülek kapnak egy finom alsó vonalat)
+            if (!isSelected)
             {
-                StringFormat sf = new StringFormat
+                using (Pen borderPen = new Pen(VonalSzin, 1))
                 {
-                    Alignment = StringAlignment.Center,
-                    LineAlignment = StringAlignment.Center
-                };
-
-                // A betűtípust egy picit vastagítjuk a kiválasztott fülnél
-                Font betutipus = isSelected ? new Font(tabControl.Font, FontStyle.Bold) : tabControl.Font;
-
-                e.Graphics.DrawString(tabPage.Text, betutipus, textBrush, tabBounds, sf);
+                    g.DrawLine(borderPen, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
+                }
             }
+
+            // 4. SZÖVEG KIRAJZOLÁSA
+            Color textColor = isSelected ? Color.White : HalvanySzoveg;
+            Font textFont = isSelected ? new Font(tab.Font, FontStyle.Bold) : tab.Font;
+
+            // A TextRenderer a modern WinForms szövegmegjelenítő, sokkal szebb a régi DrawString-nél
+            TextFormatFlags flags = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
+            TextRenderer.DrawText(g, tab.TabPages[e.Index].Text, textFont, bounds, textColor, flags);
         }
 
         private static void StilusBeallitasa(Control vezerlo)
@@ -87,8 +92,12 @@ namespace allatkezelo_kliens
             {
                 gomb.UseVisualStyleBackColor = false;
                 gomb.FlatStyle = FlatStyle.Flat;
-                gomb.FlatAppearance.BorderSize = 0;
-                gomb.BackColor = HalvanyHatter;
+
+                // --- LÁTHATÓ GOMBOK ---
+                gomb.FlatAppearance.BorderSize = 1;           // Visszaadjuk a keretet (0 helyett 1)
+                gomb.FlatAppearance.BorderColor = VonalSzin;  // Finom szürke keretszín
+                gomb.BackColor = FeherHatter;             // Hófehér háttér, hogy elüssön a panel színétől
+
                 gomb.ForeColor = SzovegSzin;
                 gomb.Cursor = Cursors.Hand;
                 gomb.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -142,11 +151,12 @@ namespace allatkezelo_kliens
             }
             else if (vezerlo is TabControl tabControl)
             {
-                // Megmondjuk, hogy mi rajzoljuk a füleket
                 tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
-                tabControl.Padding = new Point(20, 8); // Tágasabb, nagyobb fülek
 
-                // Lecsatoljuk a régit (hogy ne fusson le kétszer), majd rákötjük a saját rajzoló metódusunkat
+                // --- ÚJ RÉSZ: Fix, egyenletes méretű, modern fülek ---
+                tabControl.SizeMode = TabSizeMode.Fixed;
+                tabControl.ItemSize = new Size(160, 45); // Széles és magas fülek a modern kinézetért
+
                 tabControl.DrawItem -= TabControl_DrawItem;
                 tabControl.DrawItem += TabControl_DrawItem;
             }

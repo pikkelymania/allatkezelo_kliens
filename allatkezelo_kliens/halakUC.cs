@@ -147,27 +147,19 @@ namespace allatkezelo_kliens
         }
         private void AktivGombKijeloles(Button klikkeltGomb)
         {
-            // 1. Definiáljuk a színeket (ezeket írd át a saját dizájnodhoz!)
-            Color alapHatter = SystemColors.ControlLight; // Világosszürke
-            Color alapBetu = Color.Black;                     // Fekete betű
-
-            Color aktivHatter = Color.FromArgb(120, 120, 120);
-            Color aktivBetu = Color.White;                    // Fehér betű az aktívnak
-
-            // 2. Végigmegyünk azon a panelen, amiben a gombok vannak
+            // A többi gomb visszaállítása a látható alapállapotra
             foreach (Control vezerlo in klikkeltGomb.Parent.Controls)
             {
-                // Ha a vezérlő egy gomb, akkor visszaállítjuk az alapszínére
                 if (vezerlo is Button gomb)
                 {
-                    gomb.BackColor = alapHatter;
-                    gomb.ForeColor = alapBetu;
+                    gomb.BackColor = Color.White;                   // Fehér "doboz"
+                    gomb.ForeColor = Color.FromArgb(30, 41, 59);    // Sötétszürke szöveg
                 }
             }
 
-            // 3. A ténylegesen megnyomott gombot átszínezzük az aktív színre
-            klikkeltGomb.BackColor = aktivHatter;
-            klikkeltGomb.ForeColor = aktivBetu;
+            // A kiválasztott gomb elegáns ZÖLD kiemelése
+            klikkeltGomb.BackColor = Color.FromArgb(220, 235, 230); // Halvány menta háttér
+            klikkeltGomb.ForeColor = Color.FromArgb(55, 95, 82);    // Sötétzöld szöveg
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)

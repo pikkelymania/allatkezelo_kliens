@@ -168,19 +168,19 @@ namespace allatkezelo_kliens
 
         private void AktivGombKijeloles(Button klikkeltGomb)
         {
-            // A többi gomb visszaállítása halványra
+            // A többi gomb visszaállítása a látható alapállapotra
             foreach (Control vezerlo in klikkeltGomb.Parent.Controls)
             {
                 if (vezerlo is Button gomb)
                 {
-                    gomb.BackColor = Color.FromArgb(246, 249, 248); // HalvanyHatter (Zöldes)
-                    gomb.ForeColor = Color.FromArgb(30, 41, 59);    // SzovegSzin
+                    gomb.BackColor = Color.White;                   // Fehér "doboz"
+                    gomb.ForeColor = Color.FromArgb(30, 41, 59);    // Sötétszürke szöveg
                 }
             }
 
             // A kiválasztott gomb elegáns ZÖLD kiemelése
-            klikkeltGomb.BackColor = Color.FromArgb(220, 235, 230); // Nagyon halvány zöld háttér
-            klikkeltGomb.ForeColor = Color.FromArgb(55, 95, 82);    // PikkelyMánia sötétzöld szöveg
+            klikkeltGomb.BackColor = Color.FromArgb(220, 235, 230); // Halvány menta háttér
+            klikkeltGomb.ForeColor = Color.FromArgb(55, 95, 82);    // Sötétzöld szöveg
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)

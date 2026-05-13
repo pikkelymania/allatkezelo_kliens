@@ -291,16 +291,19 @@ namespace allatkezelo_kliens
 
         private void AktivGombKijeloles(Button klikkeltGomb)
         {
+            // A többi gomb visszaállítása a látható alapállapotra
             foreach (Control vezerlo in klikkeltGomb.Parent.Controls)
             {
                 if (vezerlo is Button gomb)
                 {
-                    gomb.BackColor = SystemColors.ControlLight;
-                    gomb.ForeColor = Color.Black;
+                    gomb.BackColor = Color.White;                   // Fehér "doboz"
+                    gomb.ForeColor = Color.FromArgb(30, 41, 59);    // Sötétszürke szöveg
                 }
             }
-            klikkeltGomb.BackColor = Color.FromArgb(120, 120, 120);
-            klikkeltGomb.ForeColor = Color.White;
+
+            // A kiválasztott gomb elegáns ZÖLD kiemelése
+            klikkeltGomb.BackColor = Color.FromArgb(220, 235, 230); // Halvány menta háttér
+            klikkeltGomb.ForeColor = Color.FromArgb(55, 95, 82);    // Sötétzöld szöveg
         }
 
         private void btnHullok_Click(object sender, EventArgs e) { KategoriaSzures("Hüllők"); AktivGombKijeloles((Button)sender); }
