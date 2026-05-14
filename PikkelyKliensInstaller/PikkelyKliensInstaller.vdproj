@@ -52,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A7C903D3CA4E40E09AF012CA841A317E"
+        "OwnerKey" = "8:_C66C9F7907C50CCC16C451F25C9FE5F0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -64,7 +64,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C66C9F7907C50CCC16C451F25C9FE5F0"
+        "OwnerKey" = "8:_A7C903D3CA4E40E09AF012CA841A317E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -85,6 +85,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -101,6 +109,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -137,11 +153,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_1CA112DF62A36D5C8C35021EA548AE42"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -168,11 +179,6 @@
             "AssemblyAsmDisplayName" = "8:Hotcakes.CommerceDTO, Version=3.9.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_658339377BDC05513EEA054E64FD289E"
-                    {
-                    "Name" = "8:Hotcakes.CommerceDTO.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Hotcakes.CommerceDTO.dll"
             "TargetName" = "8:"
@@ -199,11 +205,6 @@
             "AssemblyAsmDisplayName" = "8:Hotcakes.Web, Version=3.9.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C66C9F7907C50CCC16C451F25C9FE5F0"
-                    {
-                    "Name" = "8:Hotcakes.Web.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Hotcakes.Web.dll"
             "TargetName" = "8:"
@@ -279,15 +280,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PikkelyKliensInstaller"
-        "ProductCode" = "8:{1E467522-D772-4B3E-B299-00E10869756E}"
-        "PackageCode" = "8:{FEF54DAD-7F68-42D7-9FDE-7330875CEBC6}"
+        "ProductCode" = "8:{0CE1731F-CE83-4D2A-B254-45A6018D4898}"
+        "PackageCode" = "8:{FAB2CE2C-B388-4175-A9EF-088ADAE93774}"
         "UpgradeCode" = "8:{A0D107C8-E032-4542-8DC3-FA9A71DEF26E}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.5"
         "Manufacturer" = "8:hargitai.marcell@gmail.com"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -829,7 +830,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A7C903D3CA4E40E09AF012CA841A317E"
             {
-            "SourcePath" = "8:..\\allatkezelo_kliens\\obj\\Debug\\allatkezelo_kliens.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_8AA5F8386E99474D8E948C6C25B74FB4"
