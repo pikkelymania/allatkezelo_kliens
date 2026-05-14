@@ -70,7 +70,7 @@ namespace allatkezelo_kliens
             TextFormatFlags flags = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
             TextRenderer.DrawText(g, tab.TabPages[e.Index].Text, textFont, bounds, textColor, flags);
         }
-
+        public static Color HalvanyPiros = Color.FromArgb(255, 235, 235);
         private static void StilusBeallitasa(Control vezerlo)
         {
             if (vezerlo is Panel pnl)
@@ -148,6 +148,9 @@ namespace allatkezelo_kliens
                 dgv.RowHeadersVisible = false;
                 dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                dgv.CellFormatting -= Dgv_CellFormatting; // Biztonsági lecsatolás
+                dgv.CellFormatting += Dgv_CellFormatting; // Feliratkozás a színező eseményre
             }
             else if (vezerlo is TabControl tabControl)
             {
@@ -165,6 +168,39 @@ namespace allatkezelo_kliens
                 num.BackColor = FeherHatter;
                 num.ForeColor = SzovegSzin;
                 num.BorderStyle = BorderStyle.FixedSingle;
+            }
+        }
+        private static void Dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var dgv = (DataGridView)sender;
+            var sor = dgv.Rows[e.RowIndex];
+
+            // Itt keressük meg a "készlet" vagy "darabszám" oszlopot. 
+            // Fontos: a táblázatban az oszlop HEADER szövege alapján keresünk!
+            bool hianyzik = false;
+
+            // Végignézzük az oszlopokat, keressük azt, amiben a darabszám van
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                if (col.HeaderText.Contains("Készlet") || col.HeaderText.Contains("Raktáron") || col.HeaderText.Contains("db"))
+                {
+                    var cellaErtek = sor.Cells[col.Index].Value;
+                    if (cellaErtek != null && int.TryParse(cellaErtek.ToString(), out int db) && db == 0)
+                    {
+                        hianyzik = true;
+                        break;
+                    }
+                }
+            }
+
+            // Ha 0 db van, bepirosítjuk a sor hátterét
+            if (hianyzik)
+            {
+
+                e.CellStyle.BackColor = HalvanyPiros;
+                // Kijelöléskor is maradjon pirosas, vagy legyen egyértelmű
+                e.CellStyle.SelectionBackColor = Color.FromArgb(255, 200, 200);
+                e.CellStyle.SelectionForeColor = Color.Maroon;
             }
         }
     }

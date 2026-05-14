@@ -70,63 +70,70 @@ namespace allatkezelo_kliens
         {
             if (_mindenKategoria == null) return;
 
-            // Megkeressük az alkategóriát a név alapján a letöltött listából
             var kategoria = _mindenKategoria.FirstOrDefault(c => c.Name.Equals(alkategoriaNev, StringComparison.OrdinalIgnoreCase));
 
             if (kategoria != null)
             {
-                // Termékek lekérése a kategória azonosítója alapján
                 var prodResponse = _api.ProductsFindForCategory(kategoria.Bvin, 1, 100);
 
                 if (prodResponse.Errors == null || prodResponse.Errors.Count == 0)
                 {
-                    // A terméklista megjelenítése a táblázatban
-                    dataGridView1.DataSource = prodResponse.Content.Products.OrderBy(p => p.Sku).ToList();
+                    var termekLista = prodResponse.Content.Products;
+                    var megjelenitendoLista = new List<ProductViewModel>();
 
-                    string[] lathatoOszlopok = { "Sku", "ProductName", "SitePrice", "ListPrice", "LongDescription", "IsAvailableForSale" };
+                    // Végigmegyünk a termékeken és lekérjük a készletüket
+                    foreach (var p in termekLista)
+                    {
+                        int keszlet = 0;
+                        var invValasz = _api.ProductInventoryFindForProduct(p.Bvin);
+                        if (invValasz.Content != null && invValasz.Content.Count > 0)
+                        {
+                            // Itt használjuk a szervized matekját
+                            keszlet = _reptileService.CalculateAvailableStock(
+                                invValasz.Content[0].QuantityOnHand,
+                                invValasz.Content[0].QuantityReserved);
+                        }
+
+                        megjelenitendoLista.Add(new ProductViewModel
+                        {
+                            Sku = p.Sku,
+                            ProductName = p.ProductName,
+                            SitePrice = p.SitePrice,
+                            ListPrice = p.ListPrice,
+                            LongDescription = p.LongDescription,
+                            IsAvailableForSale = p.IsAvailableForSale,
+                            Raktarkeszlet = keszlet, // Beállítjuk a darabszámot
+                            EredetiTermek = p
+                        });
+                    }
+
+                    dataGridView1.DataSource = megjelenitendoLista.OrderBy(x => x.Sku).ToList();
+
+                    // Oszlopok nevei és láthatósága
+                    string[] lathatoOszlopok = { "Sku", "ProductName","ListPrice" ,"SitePrice", "Raktarkeszlet", "IsAvailableForSale" };
 
                     foreach (DataGridViewColumn oszlop in dataGridView1.Columns)
                     {
-                        // Ha az oszlop neve nincs benne a fenti listában, akkor elrejtjük
-                        if (!lathatoOszlopok.Contains(oszlop.Name))
-                        {
-                            oszlop.Visible = false;
-                        }
+                        oszlop.Visible = lathatoOszlopok.Contains(oszlop.Name);
                     }
 
-                    // --- ÚJ RÉSZ: OSZLOPNEVEK MAGYARÍTÁSA ÉS FORMÁZÁSA ---
-
-                    if (dataGridView1.Columns.Contains("Sku"))
-                        dataGridView1.Columns["Sku"].HeaderText = "Cikkszám";
-
-                    if (dataGridView1.Columns.Contains("ProductName"))
-                        dataGridView1.Columns["ProductName"].HeaderText = "Megnevezés";
-
+                    // Magyarítás
+                    if (dataGridView1.Columns.Contains("Sku")) dataGridView1.Columns["Sku"].HeaderText = "Cikkszám";
+                    if (dataGridView1.Columns.Contains("ProductName")) dataGridView1.Columns["ProductName"].HeaderText = "Megnevezés";
                     if (dataGridView1.Columns.Contains("SitePrice"))
                     {
                         dataGridView1.Columns["SitePrice"].HeaderText = "Eladási ár";
-                        dataGridView1.Columns["SitePrice"].DefaultCellStyle.Format = "C0"; // Ft formátum tizedesek nélkül
+                        dataGridView1.Columns["SitePrice"].DefaultCellStyle.Format = "C0"; // <--- EZ HIÁNYZOTT!
                     }
 
                     if (dataGridView1.Columns.Contains("ListPrice"))
                     {
                         dataGridView1.Columns["ListPrice"].HeaderText = "Listaár";
-                        dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0"; // Ft formátum tizedesek nélkül
+                        dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0"; // <--- EZ HIÁNYZOTT!
                     }
-
-                    if (dataGridView1.Columns.Contains("IsAvailableForSale"))
-                        dataGridView1.Columns["IsAvailableForSale"].HeaderText = "Elérhető";
-
-                    // Mivel a kódodban a LongDescription is szerepel a látható oszlopok között:
-                    if (dataGridView1.Columns.Contains("LongDescription"))
-                        dataGridView1.Columns["LongDescription"].HeaderText = "Leírás (HTML)";
-
-                    // -----------------------------------------------------
+                    if (dataGridView1.Columns.Contains("Raktarkeszlet")) dataGridView1.Columns["Raktarkeszlet"].HeaderText = "Raktáron (db)";
+                    if (dataGridView1.Columns.Contains("IsAvailableForSale")) dataGridView1.Columns["IsAvailableForSale"].HeaderText = "Elérhető";
                 }
-            }
-            else
-            {
-                MessageBox.Show($"Nem található '{alkategoriaNev}' nevű kategória.");
             }
         }
 
@@ -188,30 +195,28 @@ namespace allatkezelo_kliens
             // Ellenőrizzük, hogy van-e egyáltalán aktív sor és van-e mögötte adat
             if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.DataBoundItem != null)
             {
-                var kivalasztottTermek = (Hotcakes.CommerceDTO.v1.Catalog.ProductDTO)dataGridView1.CurrentRow.DataBoundItem;
+                // 1. ÁTÍRVA: Most már a ProductViewModel-t vesszük ki a táblázatból!
+                var vm = (ProductViewModel)dataGridView1.CurrentRow.DataBoundItem;
+
+                // Ebből nyerjük ki az eredeti termékadatokat
+                var kivalasztottTermek = vm.EredetiTermek;
 
                 if (kivalasztottTermek != null)
                 {
-                    // 1. Alap Hotcakes API adatok a dobozokba
+                    // 2. Alap Hotcakes API adatok a dobozokba
                     txtSku.Text = kivalasztottTermek.Sku;
                     txtProductName.Text = kivalasztottTermek.ProductName;
                     txtListPrice.Text = kivalasztottTermek.ListPrice.ToString("C");
                     txtSitePrice.Text = kivalasztottTermek.SitePrice.ToString("C");
                     chkElerheto.Checked = kivalasztottTermek.IsAvailableForSale;
 
-                    // 2. Kiegészítő adatok visszafejtése a LongDescription HTML kódjából
-                    // Először is lenullázzuk a mezőket
+                    // 3. Kiegészítő adatok visszafejtése a LongDescription HTML kódjából
                     textboxNev.Text = "";
                     dateTimePicker1.Value = DateTime.Now;
                     comboBoxNem.Text = "";
                     textboxGenetika.Text = "";
                     textboxSzemelyiseg.Text = "";
 
-                    // Alaphelyzetbe állítjuk a raktárkészlet labelt betöltés közben
-                    labelraktaron.Text = "Betöltés...";
-                    labelraktaron.ForeColor = Color.Black;
-
-                    // Kivesszük a nyers HTML-t
                     string nyersHtml = kivalasztottTermek.LongDescription ?? "";
                     var reszletek = _reptileService.ParseHtmlDescription(nyersHtml);
 
@@ -221,28 +226,12 @@ namespace allatkezelo_kliens
                     textboxGenetika.Text = reszletek.Genetika;
                     textboxSzemelyiseg.Text = reszletek.Szemelyiseg;
 
-                    // --- 3. RAKTÁRKÉSZLET (INVENTORY) LEKÉRDEZÉSE ÉS MEGJELENÍTÉSE ---
-                    try
-                    {
-                        var keszletValasz = _api.ProductInventoryFindForProduct(kivalasztottTermek.Bvin);
-                        int darabszam = 0;
+                    // --- 4. RAKTÁRKÉSZLET MEGJELENÍTÉSE (OPTIMALIZÁLVA) ---
+                    // Nincs több try-catch és API hívás! Közvetlenül a ViewModel-ből olvassuk ki az adatot.
+                    int darabszam = vm.Raktarkeszlet;
 
-                        if (keszletValasz.Content != null && keszletValasz.Content.Count > 0)
-                        {
-                            var inv = keszletValasz.Content[0];
-                            // A Service végzi a matekot
-                            darabszam = _reptileService.CalculateAvailableStock(inv.QuantityOnHand, inv.QuantityReserved);
-                        }
-
-                        labelraktaron.Text = $"{darabszam} db";
-                        // A Service mondja meg a színt
-                        labelraktaron.ForeColor = _reptileService.GetStockStatusColor(darabszam);
-                    }
-                    catch
-                    {
-                        labelraktaron.Text = "Hiba";
-                        labelraktaron.ForeColor = System.Drawing.Color.Red;
-                    }
+                    labelraktaron.Text = $"{darabszam} db";
+                    labelraktaron.ForeColor = _reptileService.GetStockStatusColor(darabszam);
                 }
             }
             else
@@ -263,7 +252,8 @@ namespace allatkezelo_kliens
             }
 
             // 2. Kinyerjük a jelenleg kiválasztott terméket közvetlenül a táblázatból
-            var szerkesztettTermek = (Hotcakes.CommerceDTO.v1.Catalog.ProductDTO)dataGridView1.CurrentRow.DataBoundItem;
+            var vm = (ProductViewModel)dataGridView1.CurrentRow.DataBoundItem;
+            var szerkesztettTermek = vm.EredetiTermek;
 
             // 3. Szöveges és logikai adatok frissítése az űrlapról
             szerkesztettTermek.Sku = txtSku.Text;
@@ -350,7 +340,8 @@ namespace allatkezelo_kliens
             }
 
             // 2. Kinyerjük a kijelölt terméket
-            var kivalasztottTermek = (Hotcakes.CommerceDTO.v1.Catalog.ProductDTO)dataGridView1.CurrentRow.DataBoundItem;
+            var vm = (ProductViewModel)dataGridView1.CurrentRow.DataBoundItem;
+            var kivalasztottTermek = vm.EredetiTermek;
 
             // 3. Megerősítés kérése a felhasználótól
             var megerosites = MessageBox.Show(
@@ -390,5 +381,17 @@ namespace allatkezelo_kliens
                 }
             }
         }
+    }
+    // Ez az osztály fogja tárolni a terméket és a darabszámot együtt
+    public class ProductViewModel
+    {
+        public string Sku { get; set; }
+        public string ProductName { get; set; }
+        public decimal SitePrice { get; set; }
+        public decimal ListPrice { get; set; }
+        public string LongDescription { get; set; }
+        public bool IsAvailableForSale { get; set; }
+        public int Raktarkeszlet { get; set; } // Itt lesz a darabszám!
+        public Hotcakes.CommerceDTO.v1.Catalog.ProductDTO EredetiTermek { get; set; }
     }
 }
