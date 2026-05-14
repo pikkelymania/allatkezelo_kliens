@@ -71,8 +71,9 @@
             this.panel1.Controls.Add(this.btnHalak);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(203, 722);
+            this.panel1.Size = new System.Drawing.Size(304, 1128);
             this.panel1.TabIndex = 8;
             // 
             // buttonTorles
@@ -84,9 +85,10 @@
             this.buttonTorles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonTorles.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonTorles.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonTorles.Location = new System.Drawing.Point(3, 686);
+            this.buttonTorles.Location = new System.Drawing.Point(4, 1072);
+            this.buttonTorles.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonTorles.Name = "buttonTorles";
-            this.buttonTorles.Size = new System.Drawing.Size(197, 33);
+            this.buttonTorles.Size = new System.Drawing.Size(296, 52);
             this.buttonTorles.TabIndex = 11;
             this.buttonTorles.Text = "Foglalás törlése";
             this.buttonTorles.UseVisualStyleBackColor = false;
@@ -101,9 +103,10 @@
             this.buttonTeljesitve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonTeljesitve.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonTeljesitve.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonTeljesitve.Location = new System.Drawing.Point(3, 608);
+            this.buttonTeljesitve.Location = new System.Drawing.Point(4, 950);
+            this.buttonTeljesitve.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonTeljesitve.Name = "buttonTeljesitve";
-            this.buttonTeljesitve.Size = new System.Drawing.Size(197, 33);
+            this.buttonTeljesitve.Size = new System.Drawing.Size(296, 52);
             this.buttonTeljesitve.TabIndex = 9;
             this.buttonTeljesitve.Text = "Teljesítve";
             this.buttonTeljesitve.UseVisualStyleBackColor = false;
@@ -118,9 +121,10 @@
             this.buttonLemondas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLemondas.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonLemondas.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonLemondas.Location = new System.Drawing.Point(3, 647);
+            this.buttonLemondas.Location = new System.Drawing.Point(4, 1011);
+            this.buttonLemondas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonLemondas.Name = "buttonLemondas";
-            this.buttonLemondas.Size = new System.Drawing.Size(197, 33);
+            this.buttonLemondas.Size = new System.Drawing.Size(296, 52);
             this.buttonLemondas.TabIndex = 10;
             this.buttonLemondas.Text = "Lemondva";
             this.buttonLemondas.UseVisualStyleBackColor = false;
@@ -135,10 +139,10 @@
             this.btnAllOrders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAllOrders.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnAllOrders.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnAllOrders.Location = new System.Drawing.Point(3, 2);
-            this.btnAllOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAllOrders.Location = new System.Drawing.Point(4, 3);
+            this.btnAllOrders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAllOrders.Name = "btnAllOrders";
-            this.btnAllOrders.Size = new System.Drawing.Size(197, 33);
+            this.btnAllOrders.Size = new System.Drawing.Size(296, 52);
             this.btnAllOrders.TabIndex = 10;
             this.btnAllOrders.Text = "Összes foglalás";
             this.btnAllOrders.UseVisualStyleBackColor = false;
@@ -153,10 +157,10 @@
             this.btnHullok.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHullok.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnHullok.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnHullok.Location = new System.Drawing.Point(3, 42);
-            this.btnHullok.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnHullok.Location = new System.Drawing.Point(4, 66);
+            this.btnHullok.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnHullok.Name = "btnHullok";
-            this.btnHullok.Size = new System.Drawing.Size(197, 33);
+            this.btnHullok.Size = new System.Drawing.Size(296, 52);
             this.btnHullok.TabIndex = 6;
             this.btnHullok.Text = "Hüllő foglalások";
             this.btnHullok.UseVisualStyleBackColor = false;
@@ -171,10 +175,10 @@
             this.btnHalak.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHalak.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnHalak.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnHalak.Location = new System.Drawing.Point(3, 81);
-            this.btnHalak.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnHalak.Location = new System.Drawing.Point(4, 127);
+            this.btnHalak.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnHalak.Name = "btnHalak";
-            this.btnHalak.Size = new System.Drawing.Size(197, 33);
+            this.btnHalak.Size = new System.Drawing.Size(296, 52);
             this.btnHalak.TabIndex = 1;
             this.btnHalak.Text = "Hal foglalások";
             this.btnHalak.UseVisualStyleBackColor = false;
@@ -183,7 +187,8 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(203, 0);
+            this.splitContainer1.Location = new System.Drawing.Point(304, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -194,8 +199,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Size = new System.Drawing.Size(907, 722);
-            this.splitContainer1.SplitterDistance = 302;
+            this.splitContainer1.Size = new System.Drawing.Size(1361, 1128);
+            this.splitContainer1.SplitterDistance = 471;
+            this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 9;
             // 
             // groupBox1
@@ -203,8 +209,10 @@
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(907, 302);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(1361, 471);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rendelés adatai";
@@ -227,7 +235,8 @@
             this.tableLayoutPanel1.Controls.Add(this.label8, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.labelSku, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 18);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 29);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -236,114 +245,126 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(901, 281);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1353, 437);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // labelVevo
             // 
             this.labelVevo.AutoSize = true;
-            this.labelVevo.Location = new System.Drawing.Point(3, 0);
+            this.labelVevo.Location = new System.Drawing.Point(4, 0);
+            this.labelVevo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelVevo.Name = "labelVevo";
-            this.labelVevo.Size = new System.Drawing.Size(75, 16);
+            this.labelVevo.Size = new System.Drawing.Size(120, 25);
             this.labelVevo.TabIndex = 0;
             this.labelVevo.Text = "Vevő neve:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 46);
+            this.label2.Location = new System.Drawing.Point(4, 72);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 16);
+            this.label2.Size = new System.Drawing.Size(133, 25);
             this.label2.TabIndex = 1;
             this.label2.Text = "Vevő E-mail:";
             // 
             // labelProductName
             // 
             this.labelProductName.AutoSize = true;
-            this.labelProductName.Location = new System.Drawing.Point(3, 92);
+            this.labelProductName.Location = new System.Drawing.Point(4, 144);
+            this.labelProductName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProductName.Name = "labelProductName";
-            this.labelProductName.Size = new System.Drawing.Size(105, 16);
+            this.labelProductName.Size = new System.Drawing.Size(171, 25);
             this.labelProductName.TabIndex = 2;
             this.labelProductName.Text = "Lefoglalt termék:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(130, 0);
+            this.label1.Location = new System.Drawing.Point(203, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 16);
+            this.label1.Size = new System.Drawing.Size(114, 25);
             this.label1.TabIndex = 4;
             this.label1.Text = "Vevő neve";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(130, 46);
+            this.label3.Location = new System.Drawing.Point(203, 72);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(112, 16);
+            this.label3.Size = new System.Drawing.Size(178, 25);
             this.label3.TabIndex = 5;
             this.label3.Text = "Vevő E-mail címe";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(130, 92);
+            this.label4.Location = new System.Drawing.Point(203, 144);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 16);
+            this.label4.Size = new System.Drawing.Size(137, 25);
             this.label4.TabIndex = 6;
             this.label4.Text = "Termék neve";
             // 
             // labelDarab
             // 
             this.labelDarab.AutoSize = true;
-            this.labelDarab.Location = new System.Drawing.Point(3, 184);
+            this.labelDarab.Location = new System.Drawing.Point(4, 288);
+            this.labelDarab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelDarab.Name = "labelDarab";
-            this.labelDarab.Size = new System.Drawing.Size(48, 16);
+            this.labelDarab.Size = new System.Drawing.Size(76, 25);
             this.labelDarab.TabIndex = 10;
             this.labelDarab.Text = "Darab:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(130, 138);
+            this.label5.Location = new System.Drawing.Point(203, 216);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(121, 16);
+            this.label5.Size = new System.Drawing.Size(191, 25);
             this.label5.TabIndex = 7;
             this.label5.Text = "Termék cikkszáma";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(130, 184);
+            this.label6.Location = new System.Drawing.Point(203, 288);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(142, 16);
+            this.label6.Size = new System.Drawing.Size(228, 25);
             this.label6.TabIndex = 9;
             this.label6.Text = "Hány darabot foglalt le";
             // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(3, 230);
+            this.labelStatus.Location = new System.Drawing.Point(4, 360);
+            this.labelStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(121, 16);
+            this.labelStatus.Size = new System.Drawing.Size(191, 25);
             this.labelStatus.TabIndex = 8;
             this.labelStatus.Text = "Rendelés állapota:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(130, 230);
+            this.label8.Location = new System.Drawing.Point(203, 360);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(118, 16);
+            this.label8.Size = new System.Drawing.Size(185, 25);
             this.label8.TabIndex = 11;
             this.label8.Text = "Rendelés állapota";
             // 
             // labelSku
             // 
             this.labelSku.AutoSize = true;
-            this.labelSku.Location = new System.Drawing.Point(3, 138);
+            this.labelSku.Location = new System.Drawing.Point(4, 216);
+            this.labelSku.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelSku.Name = "labelSku";
-            this.labelSku.Size = new System.Drawing.Size(87, 16);
+            this.labelSku.Size = new System.Drawing.Size(139, 25);
             this.labelSku.TabIndex = 3;
             this.labelSku.Text = "Termék SKU:";
             // 
@@ -352,21 +373,23 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(907, 416);
+            this.dataGridView1.Size = new System.Drawing.Size(1361, 651);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // foglalasUC
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "foglalasUC";
-            this.Size = new System.Drawing.Size(1110, 722);
+            this.Size = new System.Drawing.Size(1665, 1128);
             this.Load += new System.EventHandler(this.foglalasUC_Load);
             this.panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);

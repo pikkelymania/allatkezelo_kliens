@@ -160,6 +160,12 @@ namespace allatkezelo_kliens
                 tabControl.DrawItem -= TabControl_DrawItem;
                 tabControl.DrawItem += TabControl_DrawItem;
             }
+            else if (vezerlo is NumericUpDown num)
+            {
+                num.BackColor = FeherHatter;
+                num.ForeColor = SzovegSzin;
+                num.BorderStyle = BorderStyle.FixedSingle;
+            }
         }
     }
 }
