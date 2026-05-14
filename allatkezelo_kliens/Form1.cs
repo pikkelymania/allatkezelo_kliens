@@ -16,6 +16,7 @@ namespace allatkezelo_kliens
         {
             InitializeComponent();
             ThemeManager.ApplyTheme(this);
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void halakUC1_Load(object sender, EventArgs e)
