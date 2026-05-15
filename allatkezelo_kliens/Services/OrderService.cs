@@ -15,6 +15,8 @@ namespace allatkezelo_kliens.Services
         public string Rendelésszám { get; set; }
         public string Dátum { get; set; }
         public string Vevő_Neve { get; set; }
+        public string Termék_Neve { get; set; } // <--- ÚJ: A termék neve
+        public string Darabszám { get; set; }   // <--- ÚJ: A darabszám
         public string Végösszeg { get; set; }
         public string Státuszkód { get; set; }
         public string Státusz { get; set; }
@@ -71,11 +73,16 @@ namespace allatkezelo_kliens.Services
         // 4. A táblázat sorainak (ViewModel) generálása
         public RendelesViewModel MapToViewModel(OrderDTO order)
         {
+            // --- ÚJ RÉSZ: Kinyerjük a termék adatait, mielőtt betennénk a ViewModelbe ---
+            GetFirstItemSummary(order.Items, out string pName, out string pSku, out string pQty);
+
             return new RendelesViewModel
             {
                 Rendelésszám = order.OrderNumber,
                 Dátum = order.TimeOfOrderUtc.ToLocalTime().ToString("yyyy. MM. dd. HH:mm"),
                 Vevő_Neve = GetCustomerFullName(order.BillingAddress),
+                Termék_Neve = pName, // <--- Bekerül a termék neve
+                Darabszám = pQty,    // <--- Bekerül a darabszám
                 Végösszeg = order.TotalGrand.ToString("C"),
                 Státuszkód = order.StatusCode,
                 Státusz = order.StatusName,

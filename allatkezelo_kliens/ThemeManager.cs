@@ -8,13 +8,23 @@ namespace allatkezelo_kliens
     {
         // --- MODERN PREMIUM LIGHT THEME (PikkelyMánia Zöld kiemeléssel) ---
         public static Color FeherHatter = Color.White;
-        public static Color HalvanyHatter = Color.FromArgb(246, 249, 248);     // Picit mentás/zöldes törtfehér
-        public static Color SzovegSzin = Color.FromArgb(30, 41, 59);           // Sötétszürke a kontraszt miatt
+        public static Color HalvanyHatter = Color.FromArgb(246, 249, 248);      // Picit mentás/zöldes törtfehér
+        public static Color SzovegSzin = Color.FromArgb(30, 41, 59);            // Sötétszürke a kontraszt miatt
         public static Color HalvanySzoveg = Color.FromArgb(100, 116, 139);
 
         // A prezentációd alapján kikevert elegáns sötétzöld szín
         public static Color KiemeloZold = Color.FromArgb(55, 95, 82);
         public static Color VonalSzin = Color.FromArgb(226, 232, 240);
+
+        // --- ÁLLAPOT ÉS KÉSZLET SZÍNEK (Halvány pasztell árnyalatok) ---
+        public static Color HalvanyPiros = Color.FromArgb(255, 235, 235);
+        public static Color PirosKijelolt = Color.FromArgb(255, 200, 200);
+
+        public static Color HalvanySarga = Color.FromArgb(255, 250, 205);
+        public static Color SargaKijelolt = Color.FromArgb(255, 240, 150);
+
+        public static Color HalvanyZold = Color.FromArgb(220, 245, 220);
+        public static Color ZoldKijelolt = Color.FromArgb(170, 230, 170);
 
         public static void ApplyTheme(Control szuloVezerlo)
         {
@@ -40,14 +50,13 @@ namespace allatkezelo_kliens
             Rectangle bounds = tab.GetTabRect(e.Index);
             bool isSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 
-            // 1. KÉPMINŐSÉG JAVÍTÁSA (Éles, gyönyörű szövegek recésedés nélkül!)
+            // 1. KÉPMINŐSÉG JAVÍTÁSA
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
-            // 2. HÁTTÉR TISZTÍTÁSA (Eltüntetjük a 3D kereteket egy picit nagyobb kitöltéssel)
+            // 2. HÁTTÉR TISZTÍTÁSA
             Rectangle fillRect = new Rectangle(bounds.X - 2, bounds.Y - 2, bounds.Width + 4, bounds.Height + 4);
 
-            // A kiválasztott sötétzöld, a többi beolvad a fehér háttérbe
             using (SolidBrush bgBrush = new SolidBrush(isSelected ? KiemeloZold : FeherHatter))
             {
                 g.FillRectangle(bgBrush, fillRect);
@@ -66,11 +75,9 @@ namespace allatkezelo_kliens
             Color textColor = isSelected ? Color.White : HalvanySzoveg;
             Font textFont = isSelected ? new Font(tab.Font, FontStyle.Bold) : tab.Font;
 
-            // A TextRenderer a modern WinForms szövegmegjelenítő, sokkal szebb a régi DrawString-nél
             TextFormatFlags flags = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
             TextRenderer.DrawText(g, tab.TabPages[e.Index].Text, textFont, bounds, textColor, flags);
         }
-        public static Color HalvanyPiros = Color.FromArgb(255, 235, 235);
         private static void StilusBeallitasa(Control vezerlo)
         {
             if (vezerlo is Panel pnl)
@@ -94,9 +101,9 @@ namespace allatkezelo_kliens
                 gomb.FlatStyle = FlatStyle.Flat;
 
                 // --- LÁTHATÓ GOMBOK ---
-                gomb.FlatAppearance.BorderSize = 1;           // Visszaadjuk a keretet (0 helyett 1)
-                gomb.FlatAppearance.BorderColor = VonalSzin;  // Finom szürke keretszín
-                gomb.BackColor = FeherHatter;             // Hófehér háttér, hogy elüssön a panel színétől
+                gomb.FlatAppearance.BorderSize = 1;            
+                gomb.FlatAppearance.BorderColor = VonalSzin; 
+                gomb.BackColor = FeherHatter;             
 
                 gomb.ForeColor = SzovegSzin;
                 gomb.Cursor = Cursors.Hand;
@@ -126,7 +133,6 @@ namespace allatkezelo_kliens
                 dgv.RowTemplate.Height = 35;
 
                 // --- 3. ZEBRA-CSÍKOZÁS (Váltakozó sorszínek) ---
-                // Minden második sor egy nagyon halvány zöldes-szürke árnyalatot kap
                 dgv.AlternatingRowsDefaultCellStyle.BackColor = HalvanyHatter;
 
                 // --- 4. VILÁGOS, JÓL OLVASHATÓ PASZTELL FEJLÉC ---
@@ -149,16 +155,15 @@ namespace allatkezelo_kliens
                 dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-                dgv.CellFormatting -= Dgv_CellFormatting; // Biztonsági lecsatolás
-                dgv.CellFormatting += Dgv_CellFormatting; // Feliratkozás a színező eseményre
+                dgv.CellFormatting -= Dgv_CellFormatting; 
+                dgv.CellFormatting += Dgv_CellFormatting; 
             }
             else if (vezerlo is TabControl tabControl)
             {
                 tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
 
-                // --- ÚJ RÉSZ: Fix, egyenletes méretű, modern fülek ---
                 tabControl.SizeMode = TabSizeMode.Fixed;
-                tabControl.ItemSize = new Size(160, 45); // Széles és magas fülek a modern kinézetért
+                tabControl.ItemSize = new Size(160, 45);
 
                 tabControl.DrawItem -= TabControl_DrawItem;
                 tabControl.DrawItem += TabControl_DrawItem;
@@ -175,14 +180,50 @@ namespace allatkezelo_kliens
             var dgv = (DataGridView)sender;
             var sor = dgv.Rows[e.RowIndex];
 
-            // Nullable integereket használunk, hogy tudjuk, egyáltalán megtaláltuk-e az oszlopokat
+            // --------------------------------------------------------------------------
+            // 1. MEGOLDÁS: FOGLALÁSOK (RENDELÉSEK) SZÍNEZÉSE (Ha van "Státusz" oszlop)
+            // --------------------------------------------------------------------------
+            bool isRendelesTabla = false;
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                if (col.Name == "Státusz" || col.HeaderText == "Státusz")
+                {
+                    isRendelesTabla = true;
+                    var statuszErtek = sor.Cells[col.Index].Value?.ToString();
+
+                    if (statuszErtek == "Received")
+                    {
+                        e.CellStyle.BackColor = HalvanySarga;
+                        e.CellStyle.SelectionBackColor = SargaKijelolt;
+                        e.CellStyle.SelectionForeColor = Color.DarkGoldenrod;
+                    }
+                    else if (statuszErtek == "Cancelled")
+                    {
+                        e.CellStyle.BackColor = HalvanyPiros;
+                        e.CellStyle.SelectionBackColor = PirosKijelolt;
+                        e.CellStyle.SelectionForeColor = Color.Maroon;
+                    }
+                    else if (statuszErtek == "Complete")
+                    {
+                        e.CellStyle.BackColor = HalvanyZold;
+                        e.CellStyle.SelectionBackColor = ZoldKijelolt;
+                        e.CellStyle.SelectionForeColor = Color.DarkGreen;
+                    }
+                    break; 
+                }
+            }
+
+            if (isRendelesTabla) return;
+
+
+            // --------------------------------------------------------------------------
+            // 2. MEGOLDÁS: KÉSZLET SZÍNEZÉSE (Hüllők / Halak esetén)
+            // --------------------------------------------------------------------------
             int? elerhetoKeszlet = null;
             int? foglaltKeszlet = null;
 
-            // Végignézzük az oszlopokat, és kinyerjük mindkét adatot
             foreach (DataGridViewColumn col in dgv.Columns)
             {
-                // 1. Készlet / Raktáron adat keresése
                 if (col.HeaderText.Contains("Készlet") || col.HeaderText.Contains("Raktáron") || col.HeaderText.Contains("db"))
                 {
                     var cellaErtek = sor.Cells[col.Index].Value;
@@ -192,7 +233,6 @@ namespace allatkezelo_kliens
                     }
                 }
 
-                // 2. Foglalt adat keresése
                 if (col.HeaderText.Contains("Foglalva"))
                 {
                     var cellaErtek = sor.Cells[col.Index].Value;
@@ -203,26 +243,19 @@ namespace allatkezelo_kliens
                 }
             }
 
-            // Színek beállítása a két érték alapján
+            // Színek beállítása a készlet értékek alapján
             if (elerhetoKeszlet.HasValue && elerhetoKeszlet.Value == 0)
             {
-                // Ha van foglalás, akkor halványsárga
                 if (foglaltKeszlet.HasValue && foglaltKeszlet.Value > 0)
                 {
-                    Color HalvanySarga = Color.FromArgb(255, 250, 205); // LemonChiffon-szerű szín
                     e.CellStyle.BackColor = HalvanySarga;
-
-                    // Kijelöléskor picit sötétebb sárga/arany
-                    e.CellStyle.SelectionBackColor = Color.FromArgb(255, 240, 150);
+                    e.CellStyle.SelectionBackColor = SargaKijelolt;
                     e.CellStyle.SelectionForeColor = Color.DarkGoldenrod;
                 }
-                // Ha nincs foglalás (0), akkor a megszokott piros
                 else
                 {
-                    e.CellStyle.BackColor = HalvanyPiros; // (A te eredeti változód)
-
-                    // Kijelöléskor is maradjon pirosas
-                    e.CellStyle.SelectionBackColor = Color.FromArgb(255, 200, 200);
+                    e.CellStyle.BackColor = HalvanyPiros;
+                    e.CellStyle.SelectionBackColor = PirosKijelolt;
                     e.CellStyle.SelectionForeColor = Color.Maroon;
                 }
             }

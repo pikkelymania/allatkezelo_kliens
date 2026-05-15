@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using allatkezelo_kliens.Services; // Az új Service névtér
+using allatkezelo_kliens.Services;
 
 namespace allatkezelo_kliens
 {
@@ -116,6 +116,26 @@ namespace allatkezelo_kliens
 
                 dataGridView1.DataSource = megjelenitendoAdatok;
 
+                if (dataGridView1.Columns.Contains("Státuszkód"))
+                    dataGridView1.Columns["Státuszkód"].Visible = false;
+                if (dataGridView1.Columns.Contains("Vevő_Neve"))
+                {
+                    dataGridView1.Columns["Vevő_Neve"].HeaderText = "Vevő neve";
+                    dataGridView1.Columns["Vevő_Neve"].DisplayIndex = 2;
+                }
+                if (dataGridView1.Columns.Contains("Termék_Neve"))
+                {
+                    dataGridView1.Columns["Termék_Neve"].HeaderText = "Termék neve";
+                    dataGridView1.Columns["Termék_Neve"].DisplayIndex = 3; 
+                }
+
+                if (dataGridView1.Columns.Contains("Darabszám"))
+                {
+                    dataGridView1.Columns["Darabszám"].HeaderText = "Darab";
+                    dataGridView1.Columns["Darabszám"].DisplayIndex = 4;
+                }
+
+
                 if (megjelenitendoAdatok.Count == 0)
                 {
                     MessageBox.Show($"Jelenleg nincsenek foglalások a(z) '{kategoriaNev}' kategóriában.", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -198,7 +218,7 @@ namespace allatkezelo_kliens
                                 }
                             }
                         }
-                        // --- INNENTŐL KEZDŐDIK AZ ÚJ RÉSZ A "COMPLETE" STÁTUSZHOZ ---
+
                         else if (ujNev == "Complete" && rendeles.Items != null)
                         {
                             foreach (var tetel in rendeles.Items)
@@ -211,7 +231,6 @@ namespace allatkezelo_kliens
                                         var aktualisKeszlet = keszletValasz.Content[0];
                                         int rendeltDarab = (int)tetel.Quantity;
 
-                                        // Levonjuk az OnHand-ből és a Reserved-ből is a rendelt darabszámot
                                         aktualisKeszlet.QuantityOnHand -= rendeltDarab;
                                         if (aktualisKeszlet.QuantityOnHand < 0) aktualisKeszlet.QuantityOnHand = 0;
 
@@ -227,7 +246,6 @@ namespace allatkezelo_kliens
                                 }
                             }
                         }
-                        // --- ITT VÉGE AZ ÚJ RÉSZNEK ---
 
                         MessageBox.Show($"A rendelés állapota sikeresen frissítve erre: {ujNev}", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         kivalasztottSor.Státusz = ujNev;
