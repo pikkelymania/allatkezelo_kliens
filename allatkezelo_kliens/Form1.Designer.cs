@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.hullokPage = new System.Windows.Forms.TabPage();
             this.hullokUC1 = new allatkezelo_kliens.hullokUC();
@@ -86,7 +87,7 @@
             this.halakPage.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.halakPage.Name = "halakPage";
             this.halakPage.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.halakPage.Size = new System.Drawing.Size(1176, 646);
+            this.halakPage.Size = new System.Drawing.Size(1371, 792);
             this.halakPage.TabIndex = 1;
             this.halakPage.Text = "Halak";
             this.halakPage.UseVisualStyleBackColor = true;
@@ -100,7 +101,7 @@
             this.halakUC1.Location = new System.Drawing.Point(3, 4);
             this.halakUC1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.halakUC1.Name = "halakUC1";
-            this.halakUC1.Size = new System.Drawing.Size(1170, 638);
+            this.halakUC1.Size = new System.Drawing.Size(1365, 784);
             this.halakUC1.TabIndex = 0;
             this.halakUC1.Load += new System.EventHandler(this.halakUC1_Load);
             // 
@@ -110,7 +111,7 @@
             this.foglalasokPage.Location = new System.Drawing.Point(4, 29);
             this.foglalasokPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.foglalasokPage.Name = "foglalasokPage";
-            this.foglalasokPage.Size = new System.Drawing.Size(1176, 646);
+            this.foglalasokPage.Size = new System.Drawing.Size(1371, 792);
             this.foglalasokPage.TabIndex = 2;
             this.foglalasokPage.Text = "Foglalások";
             this.foglalasokPage.UseVisualStyleBackColor = true;
@@ -122,9 +123,9 @@
             this.foglalasUC1.Font = new System.Drawing.Font("Segoe UI", 10.5F);
             this.foglalasUC1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             this.foglalasUC1.Location = new System.Drawing.Point(0, 0);
-            this.foglalasUC1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.foglalasUC1.Margin = new System.Windows.Forms.Padding(4);
             this.foglalasUC1.Name = "foglalasUC1";
-            this.foglalasUC1.Size = new System.Drawing.Size(1176, 646);
+            this.foglalasUC1.Size = new System.Drawing.Size(1371, 792);
             this.foglalasUC1.TabIndex = 0;
             // 
             // Form1
@@ -133,6 +134,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1379, 825);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Pikkelymánia Alkalmazás";
