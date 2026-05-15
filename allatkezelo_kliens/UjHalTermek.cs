@@ -24,7 +24,7 @@ namespace allatkezelo_kliens
         public UjHalTermek(Api api)
         {
             InitializeComponent();
-            ThemeManager.ApplyTheme(this);
+            ThemeManager.ApplyPopupTheme(this);
             _api = api;
 
             // 1. Csomagoljuk be a kapott api-t a Wrapperbe

@@ -24,7 +24,7 @@ namespace allatkezelo_kliens
         public UjHulloTermek(Api api)
         {
             InitializeComponent();
-            ThemeManager.ApplyTheme(this);
+            ThemeManager.ApplyPopupTheme(this);
             _api = api;
 
             // A híd bekötése itt is szükséges

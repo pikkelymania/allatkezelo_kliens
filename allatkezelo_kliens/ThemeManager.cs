@@ -80,6 +80,11 @@ namespace allatkezelo_kliens
         }
         private static void StilusBeallitasa(Control vezerlo)
         {
+            if (vezerlo is GroupBox grp)
+            {
+                grp.ForeColor = KiemeloZold; 
+                grp.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            }
             if (vezerlo is Panel pnl)
             {
                 if (pnl.Dock == DockStyle.Left) pnl.BackColor = HalvanyHatter;
@@ -260,5 +265,102 @@ namespace allatkezelo_kliens
                 }
             }
         }
+        // ==============================================================================================
+        // --- ÚJ BLOKK: KIFEJEZETTEN A FELUGRÓ ABLAKOK (UjHalTermek, UjHulloTermek) FORMÁZÁSÁRA ---
+        // ==============================================================================================
+
+        public static void ApplyPopupTheme(Form popupAblak)
+        {
+            // Az űrlap alap beállításai
+            popupAblak.BackColor = FeherHatter;
+            popupAblak.ForeColor = SzovegSzin;
+            popupAblak.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+
+            // A Form összes elemének formázása rekurzívan
+            PopupStilusBeallitasa(popupAblak);
+        }
+
+        private static void PopupStilusBeallitasa(Control szulo)
+        {
+            foreach (Control vezerlo in szulo.Controls)
+            {
+                if (vezerlo is GroupBox grp)
+                {
+                    grp.ForeColor = KiemeloZold; // Elegáns zöld keret és cím
+                    grp.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                }
+                else if (vezerlo is TextBox txt)
+                {
+                    txt.BackColor = HalvanyHatter; // Finom eltérés a fehér Form háttértől
+                    txt.ForeColor = SzovegSzin;
+                    txt.BorderStyle = BorderStyle.FixedSingle;
+                    txt.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+                }
+                else if (vezerlo is ComboBox cmb)
+                {
+                    cmb.BackColor = HalvanyHatter;
+                    cmb.ForeColor = SzovegSzin;
+                    cmb.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+                }
+                else if (vezerlo is NumericUpDown num)
+                {
+                    num.BackColor = HalvanyHatter;
+                    num.ForeColor = SzovegSzin;
+                    num.BorderStyle = BorderStyle.FixedSingle;
+                    num.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+                }
+                else if (vezerlo is DateTimePicker dtp)
+                {
+                    dtp.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+                }
+                else if (vezerlo is CheckBox chk)
+                {
+                    chk.ForeColor = SzovegSzin;
+                    chk.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+                }
+                else if (vezerlo is Label lbl)
+                {
+                    lbl.ForeColor = SzovegSzin;
+                    lbl.BackColor = Color.Transparent;
+                    lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular);
+                }
+                else if (vezerlo is Button gomb)
+                {
+                    gomb.FlatStyle = FlatStyle.Flat;
+                    gomb.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                    gomb.Cursor = Cursors.Hand;
+
+                    // Szemantikus gombok egyedi színezése a feliratuk alapján!
+                    if (gomb.Text.Contains("Mentés"))
+                    {
+                        gomb.BackColor = KiemeloZold;
+                        gomb.ForeColor = Color.White;
+                        gomb.FlatAppearance.BorderSize = 0; // Sima kitöltés (prémium kinézet)
+                    }
+                    else if (gomb.Text.Contains("Mégse"))
+                    {
+                        gomb.BackColor = HalvanyPiros;
+                        gomb.ForeColor = Color.Maroon;
+                        gomb.FlatAppearance.BorderSize = 0; // Sima kitöltés
+                    }
+                    else // pl. "Kép tallózása" gomb
+                    {
+                        gomb.BackColor = FeherHatter;
+                        gomb.ForeColor = SzovegSzin;
+                        gomb.FlatAppearance.BorderColor = VonalSzin;
+                        gomb.FlatAppearance.BorderSize = 1;
+                    }
+                }
+
+                // Rekurzió: Ha a vezérlőnek (pl. GroupBoxnak) vannak beágyazott elemei, menjen beljebb
+                if (vezerlo.HasChildren)
+                {
+                    PopupStilusBeallitasa(vezerlo);
+                }
+            }
+        }
+
+        // ==============================================================================================
+        // ==============================================================================================
     }
 }
