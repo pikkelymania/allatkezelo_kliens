@@ -95,11 +95,14 @@ namespace allatkezelo_kliens
 
                             foglalt = invValasz.Content[0].QuantityReserved; // <--- KINYERJÜK AZ API-BÓL
                         }
+                        string nyersHtml = p.LongDescription ?? "";
+                        var reszletek = _reptileService.ParseHtmlDescription(nyersHtml);
 
                         megjelenitendoLista.Add(new ProductViewModel
                         {
                             Sku = p.Sku,
                             ProductName = p.ProductName,
+                            Nev = reszletek.Nev,
                             SitePrice = p.SitePrice,
                             ListPrice = p.ListPrice,
                             LongDescription = p.LongDescription,
@@ -113,7 +116,7 @@ namespace allatkezelo_kliens
                     dataGridView1.DataSource = megjelenitendoLista.OrderBy(x => x.Sku).ToList();
 
                     // Oszlopok nevei és láthatósága
-                    string[] lathatoOszlopok = { "Sku", "ProductName", "ListPrice", "SitePrice", "Raktarkeszlet", "Foglalva", "IsAvailableForSale" };
+                    string[] lathatoOszlopok = { "Sku", "ProductName", "Nev", "ListPrice", "SitePrice", "Raktarkeszlet", "Foglalva", "IsAvailableForSale" };
                     
                     foreach (DataGridViewColumn oszlop in dataGridView1.Columns)
                     {
@@ -123,6 +126,7 @@ namespace allatkezelo_kliens
                     // Magyarítás
                     if (dataGridView1.Columns.Contains("Sku")) dataGridView1.Columns["Sku"].HeaderText = "Cikkszám";
                     if (dataGridView1.Columns.Contains("ProductName")) dataGridView1.Columns["ProductName"].HeaderText = "Megnevezés";
+                    if (dataGridView1.Columns.Contains("Nev")) dataGridView1.Columns["Nev"].HeaderText = "Név";
                     if (dataGridView1.Columns.Contains("SitePrice"))
                     {
                         dataGridView1.Columns["SitePrice"].HeaderText = "Eladási ár";
@@ -374,6 +378,7 @@ namespace allatkezelo_kliens
     {
         public string Sku { get; set; }
         public string ProductName { get; set; }
+        public string Nev { get; set; }
         public decimal SitePrice { get; set; }
         public decimal ListPrice { get; set; }
         public string LongDescription { get; set; }
