@@ -126,13 +126,13 @@ namespace allatkezelo_kliens
                     if (dataGridView1.Columns.Contains("SitePrice"))
                     {
                         dataGridView1.Columns["SitePrice"].HeaderText = "Eladási ár";
-                        dataGridView1.Columns["SitePrice"].DefaultCellStyle.Format = "C0"; // <--- EZ HIÁNYZOTT!
+                        dataGridView1.Columns["SitePrice"].DefaultCellStyle.Format = "C0";
                     }
 
                     if (dataGridView1.Columns.Contains("ListPrice"))
                     {
                         dataGridView1.Columns["ListPrice"].HeaderText = "Listaár";
-                        dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0"; // <--- EZ HIÁNYZOTT!
+                        dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0";
                     }
                     if (dataGridView1.Columns.Contains("Raktarkeszlet")) dataGridView1.Columns["Raktarkeszlet"].HeaderText = "Raktáron (db)";
                     if (dataGridView1.Columns.Contains("Foglalva")) dataGridView1.Columns["Foglalva"].HeaderText = "Foglalva";
@@ -231,21 +231,15 @@ namespace allatkezelo_kliens
                     textboxSzemelyiseg.Text = reszletek.Szemelyiseg;
 
                     // --- 4. RAKTÁRKÉSZLET MEGJELENÍTÉSE (OPTIMALIZÁLVA) ---
-                    // Nincs több try-catch és API hívás! Közvetlenül a ViewModel-ből olvassuk ki az adatot.
-                    int darabszam = vm.Raktarkeszlet;
-
-                    labelraktaron.Text = $"{darabszam} db";
-                    labelraktaron.ForeColor = _reptileService.GetStockStatusColor(darabszam);
 
                     // RAKTÁRKÉSZLET MEGJELENÍTÉSE
                     labelraktaron.Text = $"{vm.Raktarkeszlet} db";
                     labelraktaron.ForeColor = _reptileService.GetStockStatusColor(vm.Raktarkeszlet);
 
-                    // --- ÚJ: FOGLALT MENNYISÉG MEGJELENÍTÉSE ---
+                    // --- FOGLALT MENNYISÉG MEGJELENÍTÉSE ---
                     labelfoglalt.Text = $"{vm.Foglalva} db";
-
-                    // Sötétsárga szín beállítása (DarkGoldenrod vagy egyedi RGB)
                     labelfoglalt.ForeColor = Color.FromArgb(184, 134, 11);
+
                 }
             }
             else
@@ -287,7 +281,7 @@ namespace allatkezelo_kliens
             if (!_reptileService.ValidatePrices(txtListPrice.Text, txtSitePrice.Text, out decimal ujListPrice, out decimal ujSitePrice))
             {
                 MessageBox.Show("Az árak formátuma hibás! Kérlek, érvényes számot adj meg.", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Ha hiba van, megszakítjuk a mentést
+                return; 
             }
 
             szerkesztettTermek.ListPrice = ujListPrice;
@@ -296,15 +290,12 @@ namespace allatkezelo_kliens
             // 6. Küldés az API-nak a webre
             try
             {
-                // A ProductsUpdate metódus automatikusan frissíti a terméket a Bvin alapján
+                // A ProductsUpdate metódus automatikusan frissíti a terméket 
                 var valasz = _api.ProductsUpdate(szerkesztettTermek);
 
-                // Ellenőrizzük, hogy a szerver dobott-e vissza valamilyen hibát
                 if (valasz.Errors == null || valasz.Errors.Count == 0)
                 {
                     MessageBox.Show("A termék adatai sikeresen frissítve a webshopban!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Frissítjük a táblázatot, hogy azonnal mutassa az új (elmentett) adatokat
                     dataGridView1.Refresh();
                 }
                 else
@@ -314,7 +305,6 @@ namespace allatkezelo_kliens
             }
             catch (Exception ex)
             {
-                // Ha valami váratlan technikai hiba történik (pl. nincs internet)
                 MessageBox.Show($"Váratlan hiba történt a kommunikáció során: {ex.Message}", "Hálózati Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -325,64 +315,47 @@ namespace allatkezelo_kliens
             // Átadjuk neki a hullokUC-ben már meglévő _api objektumot
             using (var ujAblak = new UjHulloTermek(_api))
             {
-                // 2. Megjelenítjük az ablakot felugró (Modal) módban
                 var eredmeny = ujAblak.ShowDialog();
 
-                // 3. Ha a felhasználó a Mentés gombra kattintott és az API válasza sikeres volt
                 if (eredmeny == DialogResult.OK)
                 {
-                    // Itt frissítjük a főtáblázatot, hogy az új állat azonnal megjelenjen a listában.
-                    // Ha van egy külön metódusod a betöltésre (pl. TermekekBetoltese()), hívd meg azt.
-                    // Ha nincs, akkor a legegyszerűbb, ha újra lekérdezed a termékeket.
-
                     MessageBox.Show("Frissítsd a listát, hogy lásd az új terméket!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Példa a frissítésre (használd azt a metódust, amivel az elején betöltötted az adatokat):
-                    // var termekek = _api.ProductsFindAll();
-                    // dataGridView1.DataSource = termekek.Content;
                 }
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            // 1. Ellenőrizzük, hogy van-e kijelölt sor
+            // Ellenőrizzük, hogy van-e kijelölt sor
             if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.DataBoundItem == null)
             {
                 MessageBox.Show("Kérlek, válassz ki egy terméket a törléshez!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 2. Kinyerjük a kijelölt terméket
+            // Kinyerjük a kijelölt terméket
             var vm = (ProductViewModel)dataGridView1.CurrentRow.DataBoundItem;
             var kivalasztottTermek = vm.EredetiTermek;
 
-            // 3. Megerősítés kérése a felhasználótól
+            // Megerősítés kérése a felhasználótól
             var megerosites = MessageBox.Show(
                 $"Biztosan véglegesen törölni szeretnéd a következő terméket?\n\nNév: {kivalasztottTermek.ProductName}\nSKU: {kivalasztottTermek.Sku}",
                 "Törlés megerősítése",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2); // Biztonság kedvéért a "Nem" az alapértelmezett
+                MessageBoxDefaultButton.Button2);
 
             if (megerosites == DialogResult.Yes)
             {
                 try
                 {
-                    // 4. API hívás a törléshez (a Bvin alapján)
+                    // API hívás a törléshez (a Bvin alapján)
                     var valasz = _api.ProductsDelete(kivalasztottTermek.Bvin);
 
                     if (valasz.Errors == null || valasz.Errors.Count == 0)
                     {
                         MessageBox.Show("A termék sikeresen törölve a webshopból!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        // 5. A kezelőfelület frissítése
-                        // A legegyszerűbb, ha "újra kattintunk" az éppen aktív kategória gombjára, 
-                        // vagy csak meghívjuk a szűrést a hüllőkre, hogy eltűnjön a törölt elem.
                         KategoriaSzures("Hüllők");
-
-                        // Ha pontosabb akarsz lenni, tárolhatnád egy változóban, mi volt az utolsó szűrés, 
-                        // és azt hívnád meg itt.
                     }
                     else
                     {
@@ -406,7 +379,7 @@ namespace allatkezelo_kliens
         public string LongDescription { get; set; }
         public bool IsAvailableForSale { get; set; }
         public int Raktarkeszlet { get; set; }
-        public int Foglalva { get; set; } // <--- ÚJ TULAJDONSÁG
+        public int Foglalva { get; set; }
         public Hotcakes.CommerceDTO.v1.Catalog.ProductDTO EredetiTermek { get; set; }
     }
 }

@@ -55,6 +55,8 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.labelfoglalt = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtSitePrice = new System.Windows.Forms.TextBox();
             this.txtListPrice = new System.Windows.Forms.TextBox();
@@ -67,8 +69,6 @@
             this.txtSku = new System.Windows.Forms.TextBox();
             this.chkElerheto = new System.Windows.Forms.CheckBox();
             this.labelraktaron = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.labelfoglalt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -494,6 +494,25 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(463, 310);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 290);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(63, 16);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Foglalva:";
+            // 
+            // labelfoglalt
+            // 
+            this.labelfoglalt.AutoSize = true;
+            this.labelfoglalt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelfoglalt.Location = new System.Drawing.Point(88, 290);
+            this.labelfoglalt.Name = "labelfoglalt";
+            this.labelfoglalt.Size = new System.Drawing.Size(372, 20);
+            this.labelfoglalt.TabIndex = 13;
+            this.labelfoglalt.Text = "labelfoglalt";
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -604,25 +623,6 @@
             this.labelraktaron.Size = new System.Drawing.Size(372, 20);
             this.labelraktaron.TabIndex = 11;
             this.labelraktaron.Text = "labelraktaron";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 290);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(63, 16);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "Foglalva:";
-            // 
-            // labelfoglalt
-            // 
-            this.labelfoglalt.AutoSize = true;
-            this.labelfoglalt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelfoglalt.Location = new System.Drawing.Point(88, 290);
-            this.labelfoglalt.Name = "labelfoglalt";
-            this.labelfoglalt.Size = new System.Drawing.Size(372, 20);
-            this.labelfoglalt.TabIndex = 13;
-            this.labelfoglalt.Text = "labelfoglalt";
             // 
             // hullokUC
             // 
