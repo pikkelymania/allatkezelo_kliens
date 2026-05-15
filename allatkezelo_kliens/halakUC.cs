@@ -25,7 +25,8 @@ namespace allatkezelo_kliens
         {
             InitializeComponent();
 
-            var realApi = new Hotcakes.CommerceDTO.v1.Client.Api("URL", "KEY");
+            // Kijavítva a helykitöltők a megfelelő konstansokra
+            var realApi = new Hotcakes.CommerceDTO.v1.Client.Api(StoreUrl, ApiKey);
             var wrapper = new HotcakesApiWrapper(realApi);
             _fishService = new FishService(wrapper);
         }
@@ -73,10 +74,13 @@ namespace allatkezelo_kliens
                     foreach (var p in termekLista)
                     {
                         int keszlet = 0;
+                        int foglalt = 0; // ÚJ VÁLTOZÓ A FOGLALÁSOKNAK
+
                         var invValasz = _api.ProductInventoryFindForProduct(p.Bvin);
                         if (invValasz.Content != null && invValasz.Content.Count > 0)
                         {
                             keszlet = invValasz.Content[0].QuantityOnHand - invValasz.Content[0].QuantityReserved;
+                            foglalt = invValasz.Content[0].QuantityReserved; // KINYERJÜK AZ API-BÓL
                         }
 
                         megjelenitendoLista.Add(new ProductViewModel
@@ -88,6 +92,7 @@ namespace allatkezelo_kliens
                             LongDescription = p.LongDescription,
                             IsAvailableForSale = p.IsAvailableForSale,
                             Raktarkeszlet = keszlet, // Készlet betöltése
+                            Foglalva = foglalt,      // FOGLALÁS BEÁLLÍTÁSA A VIEWMODEL-BE
                             EredetiTermek = p
                         });
                     }
@@ -95,7 +100,8 @@ namespace allatkezelo_kliens
                     dataGridView1.DataSource = megjelenitendoLista.OrderBy(x => x.Sku).ToList();
 
                     // --- 2. OSZLOPOK SZŰRÉSE ÉS FORMÁZÁSA ---
-                    string[] lathatoOszlopok = { "Sku", "ProductName", "ListPrice", "SitePrice", "Raktarkeszlet", "IsAvailableForSale" };
+                    // Bekerült a "Foglalva" a látható oszlopok közé
+                    string[] lathatoOszlopok = { "Sku", "ProductName", "ListPrice", "SitePrice", "Raktarkeszlet", "Foglalva", "IsAvailableForSale" };
 
                     foreach (DataGridViewColumn oszlop in dataGridView1.Columns)
                     {
@@ -116,6 +122,7 @@ namespace allatkezelo_kliens
                         dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0";
                     }
                     if (dataGridView1.Columns.Contains("Raktarkeszlet")) dataGridView1.Columns["Raktarkeszlet"].HeaderText = "Raktáron (db)";
+                    if (dataGridView1.Columns.Contains("Foglalva")) dataGridView1.Columns["Foglalva"].HeaderText = "Foglalva";
                     if (dataGridView1.Columns.Contains("IsAvailableForSale")) dataGridView1.Columns["IsAvailableForSale"].HeaderText = "Elérhető";
                 }
             }
@@ -214,12 +221,20 @@ namespace allatkezelo_kliens
                         labelraktaron.ForeColor = Color.Red;
                     else
                         labelraktaron.ForeColor = Color.DarkGreen;
+
+                    // --- ÚJ: FOGLALT MENNYISÉG MEGJELENÍTÉSE ---
+                    labelfoglalt.Text = $"{vm.Foglalva} db";
+                    labelfoglalt.ForeColor = Color.FromArgb(184, 134, 11);
                 }
             }
             else
             {
+                // Ha nincs adat, alaphelyzetbe állítjuk a címkéket
                 labelraktaron.Text = "-";
                 labelraktaron.ForeColor = Color.Black;
+
+                labelfoglalt.Text = "-";
+                labelfoglalt.ForeColor = Color.Black;
             }
         }
 

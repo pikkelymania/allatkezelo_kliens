@@ -175,32 +175,56 @@ namespace allatkezelo_kliens
             var dgv = (DataGridView)sender;
             var sor = dgv.Rows[e.RowIndex];
 
-            // Itt keressük meg a "készlet" vagy "darabszám" oszlopot. 
-            // Fontos: a táblázatban az oszlop HEADER szövege alapján keresünk!
-            bool hianyzik = false;
+            // Nullable integereket használunk, hogy tudjuk, egyáltalán megtaláltuk-e az oszlopokat
+            int? elerhetoKeszlet = null;
+            int? foglaltKeszlet = null;
 
-            // Végignézzük az oszlopokat, keressük azt, amiben a darabszám van
+            // Végignézzük az oszlopokat, és kinyerjük mindkét adatot
             foreach (DataGridViewColumn col in dgv.Columns)
             {
+                // 1. Készlet / Raktáron adat keresése
                 if (col.HeaderText.Contains("Készlet") || col.HeaderText.Contains("Raktáron") || col.HeaderText.Contains("db"))
                 {
                     var cellaErtek = sor.Cells[col.Index].Value;
-                    if (cellaErtek != null && int.TryParse(cellaErtek.ToString(), out int db) && db == 0)
+                    if (cellaErtek != null && int.TryParse(cellaErtek.ToString(), out int db))
                     {
-                        hianyzik = true;
-                        break;
+                        elerhetoKeszlet = db;
+                    }
+                }
+
+                // 2. Foglalt adat keresése
+                if (col.HeaderText.Contains("Foglalva"))
+                {
+                    var cellaErtek = sor.Cells[col.Index].Value;
+                    if (cellaErtek != null && int.TryParse(cellaErtek.ToString(), out int foglalt))
+                    {
+                        foglaltKeszlet = foglalt;
                     }
                 }
             }
 
-            // Ha 0 db van, bepirosítjuk a sor hátterét
-            if (hianyzik)
+            // Színek beállítása a két érték alapján
+            if (elerhetoKeszlet.HasValue && elerhetoKeszlet.Value == 0)
             {
+                // Ha van foglalás, akkor halványsárga
+                if (foglaltKeszlet.HasValue && foglaltKeszlet.Value > 0)
+                {
+                    Color HalvanySarga = Color.FromArgb(255, 250, 205); // LemonChiffon-szerű szín
+                    e.CellStyle.BackColor = HalvanySarga;
 
-                e.CellStyle.BackColor = HalvanyPiros;
-                // Kijelöléskor is maradjon pirosas, vagy legyen egyértelmű
-                e.CellStyle.SelectionBackColor = Color.FromArgb(255, 200, 200);
-                e.CellStyle.SelectionForeColor = Color.Maroon;
+                    // Kijelöléskor picit sötétebb sárga/arany
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(255, 240, 150);
+                    e.CellStyle.SelectionForeColor = Color.DarkGoldenrod;
+                }
+                // Ha nincs foglalás (0), akkor a megszokott piros
+                else
+                {
+                    e.CellStyle.BackColor = HalvanyPiros; // (A te eredeti változód)
+
+                    // Kijelöléskor is maradjon pirosas
+                    e.CellStyle.SelectionBackColor = Color.FromArgb(255, 200, 200);
+                    e.CellStyle.SelectionForeColor = Color.Maroon;
+                }
             }
         }
     }
