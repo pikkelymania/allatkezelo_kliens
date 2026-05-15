@@ -31,10 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.hullokPage = new System.Windows.Forms.TabPage();
-            this.hullokUC1 = new allatkezelo_kliens.hullokUC();
             this.halakPage = new System.Windows.Forms.TabPage();
-            this.halakUC1 = new allatkezelo_kliens.halakUC();
             this.foglalasokPage = new System.Windows.Forms.TabPage();
+            this.hullokUC1 = new allatkezelo_kliens.hullokUC();
+            this.halakUC1 = new allatkezelo_kliens.halakUC();
             this.foglalasUC1 = new allatkezelo_kliens.foglalasUC();
             this.tabControl1.SuspendLayout();
             this.hullokPage.SuspendLayout();
@@ -68,18 +68,6 @@
             this.hullokPage.Text = "Hüllők";
             this.hullokPage.UseVisualStyleBackColor = true;
             // 
-            // hullokUC1
-            // 
-            this.hullokUC1.BackColor = System.Drawing.Color.White;
-            this.hullokUC1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.hullokUC1.Font = new System.Drawing.Font("Segoe UI", 10.5F);
-            this.hullokUC1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.hullokUC1.Location = new System.Drawing.Point(3, 4);
-            this.hullokUC1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.hullokUC1.Name = "hullokUC1";
-            this.hullokUC1.Size = new System.Drawing.Size(1365, 784);
-            this.hullokUC1.TabIndex = 0;
-            // 
             // halakPage
             // 
             this.halakPage.Controls.Add(this.halakUC1);
@@ -91,6 +79,29 @@
             this.halakPage.TabIndex = 1;
             this.halakPage.Text = "Halak";
             this.halakPage.UseVisualStyleBackColor = true;
+            // 
+            // foglalasokPage
+            // 
+            this.foglalasokPage.Controls.Add(this.foglalasUC1);
+            this.foglalasokPage.Location = new System.Drawing.Point(4, 29);
+            this.foglalasokPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.foglalasokPage.Name = "foglalasokPage";
+            this.foglalasokPage.Size = new System.Drawing.Size(1371, 792);
+            this.foglalasokPage.TabIndex = 2;
+            this.foglalasokPage.Text = "Foglalások";
+            this.foglalasokPage.UseVisualStyleBackColor = true;
+            // 
+            // hullokUC1
+            // 
+            this.hullokUC1.BackColor = System.Drawing.Color.White;
+            this.hullokUC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hullokUC1.Font = new System.Drawing.Font("Segoe UI", 10.5F);
+            this.hullokUC1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.hullokUC1.Location = new System.Drawing.Point(3, 4);
+            this.hullokUC1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.hullokUC1.Name = "hullokUC1";
+            this.hullokUC1.Size = new System.Drawing.Size(1365, 784);
+            this.hullokUC1.TabIndex = 0;
             // 
             // halakUC1
             // 
@@ -105,17 +116,6 @@
             this.halakUC1.TabIndex = 0;
             this.halakUC1.Load += new System.EventHandler(this.halakUC1_Load);
             // 
-            // foglalasokPage
-            // 
-            this.foglalasokPage.Controls.Add(this.foglalasUC1);
-            this.foglalasokPage.Location = new System.Drawing.Point(4, 29);
-            this.foglalasokPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.foglalasokPage.Name = "foglalasokPage";
-            this.foglalasokPage.Size = new System.Drawing.Size(1371, 792);
-            this.foglalasokPage.TabIndex = 2;
-            this.foglalasokPage.Text = "Foglalások";
-            this.foglalasokPage.UseVisualStyleBackColor = true;
-            // 
             // foglalasUC1
             // 
             this.foglalasUC1.BackColor = System.Drawing.Color.White;
@@ -127,6 +127,7 @@
             this.foglalasUC1.Name = "foglalasUC1";
             this.foglalasUC1.Size = new System.Drawing.Size(1371, 792);
             this.foglalasUC1.TabIndex = 0;
+            this.foglalasUC1.Load += new System.EventHandler(this.foglalasUC1_Load);
             // 
             // Form1
             // 

@@ -337,15 +337,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PikkelyKliensInstaller"
-        "ProductCode" = "8:{1B9C0F88-49D8-4B87-BCF0-EC39FA0705EB}"
-        "PackageCode" = "8:{9B088772-8C63-474A-9D58-282F08A3B308}"
+        "ProductCode" = "8:{233C1113-A925-428B-B01A-B233C908BD3D}"
+        "PackageCode" = "8:{7BF6239C-23D1-41A9-8ECB-311A7EC2F47D}"
         "UpgradeCode" = "8:{A0D107C8-E032-4542-8DC3-FA9A71DEF26E}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.2.0"
+        "ProductVersion" = "8:1.2.2"
         "Manufacturer" = "8:hargitai.marcell@gmail.com"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -887,7 +887,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A7C903D3CA4E40E09AF012CA841A317E"
             {
-            "SourcePath" = "8:..\\allatkezelo_kliens\\obj\\Debug\\allatkezelo_kliens.exe"
+            "SourcePath" = "8:..\\allatkezelo_kliens\\obj\\Release\\allatkezelo_kliens.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_8AA5F8386E99474D8E948C6C25B74FB4"

@@ -23,5 +23,10 @@ namespace allatkezelo_kliens
         {
 
         }
+
+        private void foglalasUC1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
