@@ -85,13 +85,15 @@ namespace allatkezelo_kliens
                     foreach (var p in termekLista)
                     {
                         int keszlet = 0;
+                        int foglalt = 0; // <--- ÚJ VÁLTOZÓ
                         var invValasz = _api.ProductInventoryFindForProduct(p.Bvin);
                         if (invValasz.Content != null && invValasz.Content.Count > 0)
                         {
-                            // Itt használjuk a szervized matekját
                             keszlet = _reptileService.CalculateAvailableStock(
                                 invValasz.Content[0].QuantityOnHand,
                                 invValasz.Content[0].QuantityReserved);
+
+                            foglalt = invValasz.Content[0].QuantityReserved; // <--- KINYERJÜK AZ API-BÓL
                         }
 
                         megjelenitendoLista.Add(new ProductViewModel
@@ -102,7 +104,8 @@ namespace allatkezelo_kliens
                             ListPrice = p.ListPrice,
                             LongDescription = p.LongDescription,
                             IsAvailableForSale = p.IsAvailableForSale,
-                            Raktarkeszlet = keszlet, // Beállítjuk a darabszámot
+                            Raktarkeszlet = keszlet,
+                            Foglalva = foglalt, // <--- BEÁLLÍTJUK A VIEWMODEL-BE
                             EredetiTermek = p
                         });
                     }
@@ -110,8 +113,8 @@ namespace allatkezelo_kliens
                     dataGridView1.DataSource = megjelenitendoLista.OrderBy(x => x.Sku).ToList();
 
                     // Oszlopok nevei és láthatósága
-                    string[] lathatoOszlopok = { "Sku", "ProductName","ListPrice" ,"SitePrice", "Raktarkeszlet", "IsAvailableForSale" };
-
+                    string[] lathatoOszlopok = { "Sku", "ProductName", "ListPrice", "SitePrice", "Raktarkeszlet", "Foglalva", "IsAvailableForSale" };
+                    
                     foreach (DataGridViewColumn oszlop in dataGridView1.Columns)
                     {
                         oszlop.Visible = lathatoOszlopok.Contains(oszlop.Name);
@@ -132,6 +135,7 @@ namespace allatkezelo_kliens
                         dataGridView1.Columns["ListPrice"].DefaultCellStyle.Format = "C0"; // <--- EZ HIÁNYZOTT!
                     }
                     if (dataGridView1.Columns.Contains("Raktarkeszlet")) dataGridView1.Columns["Raktarkeszlet"].HeaderText = "Raktáron (db)";
+                    if (dataGridView1.Columns.Contains("Foglalva")) dataGridView1.Columns["Foglalva"].HeaderText = "Foglalva";
                     if (dataGridView1.Columns.Contains("IsAvailableForSale")) dataGridView1.Columns["IsAvailableForSale"].HeaderText = "Elérhető";
                 }
             }
@@ -232,6 +236,16 @@ namespace allatkezelo_kliens
 
                     labelraktaron.Text = $"{darabszam} db";
                     labelraktaron.ForeColor = _reptileService.GetStockStatusColor(darabszam);
+
+                    // RAKTÁRKÉSZLET MEGJELENÍTÉSE
+                    labelraktaron.Text = $"{vm.Raktarkeszlet} db";
+                    labelraktaron.ForeColor = _reptileService.GetStockStatusColor(vm.Raktarkeszlet);
+
+                    // --- ÚJ: FOGLALT MENNYISÉG MEGJELENÍTÉSE ---
+                    labelfoglalt.Text = $"{vm.Foglalva} db";
+
+                    // Sötétsárga szín beállítása (DarkGoldenrod vagy egyedi RGB)
+                    labelfoglalt.ForeColor = Color.FromArgb(184, 134, 11);
                 }
             }
             else
@@ -391,7 +405,8 @@ namespace allatkezelo_kliens
         public decimal ListPrice { get; set; }
         public string LongDescription { get; set; }
         public bool IsAvailableForSale { get; set; }
-        public int Raktarkeszlet { get; set; } // Itt lesz a darabszám!
+        public int Raktarkeszlet { get; set; }
+        public int Foglalva { get; set; } // <--- ÚJ TULAJDONSÁG
         public Hotcakes.CommerceDTO.v1.Catalog.ProductDTO EredetiTermek { get; set; }
     }
 }
